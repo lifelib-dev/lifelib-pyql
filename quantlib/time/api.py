@@ -37,8 +37,7 @@ from .date import (
     September, November, December,
     Jan, Feb, Mar, Apr, Jun, Jul, Aug, Sep, Oct, Nov, Dec,
     pydate_from_qldate, qldate_from_pydate,
-    local_date_time, universal_date_time
-
+    # local_date_time, universal_date_time  # Require QL_HIGH_RESOLUTION_DATE
 )
 from .frequency import (
     Frequency, Daily, Monthly, Quarterly, Semiannual, Annual, NoFrequency, Once

@@ -225,13 +225,14 @@ cdef class Date:
     """
 
     def __init__(self, day=None, month=None, year=None, hours=None, minutes=None, seconds=None, Millisecond millisec=0, Microsecond microsec=0):
-        if hours is None and minutes is None and seconds is None:
-            if day is None and month is None and year is None:
-                self._thisptr = QlDate()
-            elif day is not None and month is not None and year is not None:
-                self._thisptr = QlDate(<Day>day, <Month>month, <Year>year)
-        elif hours is not None and minutes is not None and seconds is not None:
-            self._thisptr = QlDate(<Day>day, <Month>month, <Year>year, <Hour>hours, <Minute>minutes, <Second>seconds, millisec, microsec)
+        # Time-based constructors require QL_HIGH_RESOLUTION_DATE in QuantLib
+        if hours is not None or minutes is not None or seconds is not None:
+            raise NotImplementedError("Time-based Date construction requires QuantLib compiled with QL_HIGH_RESOLUTION_DATE")
+        
+        if day is None and month is None and year is None:
+            self._thisptr = QlDate()
+        elif day is not None and month is not None and year is not None:
+            self._thisptr = QlDate(<Day>day, <Month>month, <Year>year)
         else:
             raise ValueError("Invalid constructor")
 
@@ -259,33 +260,34 @@ cdef class Date:
     property day_of_year:
         def __get__(self):
             return self._thisptr.dayOfYear()
-    @property
-    def hours(self):
-        return self._thisptr.hours()
+    # The following properties require QL_HIGH_RESOLUTION_DATE
+    # @property
+    # def hours(self):
+    #     return self._thisptr.hours()
 
-    @property
-    def minutes(self):
-        return self._thisptr.minutes()
+    # @property
+    # def minutes(self):
+    #     return self._thisptr.minutes()
 
-    @property
-    def seconds(self):
-        return self._thisptr.seconds()
+    # @property
+    # def seconds(self):
+    #     return self._thisptr.seconds()
 
-    @property
-    def milliseconds(self):
-        return self._thisptr.milliseconds()
+    # @property
+    # def milliseconds(self):
+    #     return self._thisptr.milliseconds()
 
-    @property
-    def microseconds(self):
-        return self._thisptr.microseconds()
+    # @property
+    # def microseconds(self):
+    #     return self._thisptr.microseconds()
 
-    @property
-    def fraction_of_day(self):
-        return self._thisptr.fractionOfDay()
+    # @property
+    # def fraction_of_day(self):
+    #     return self._thisptr.fractionOfDay()
 
-    @property
-    def fraction_of_second(self):
-        return self._thisptr.fractionOfSecond()
+    # @property
+    # def fraction_of_second(self):
+    #     return self._thisptr.fractionOfSecond()
 
     def __str__(self):
         cdef _date.stringstream ss
@@ -294,7 +296,7 @@ cdef class Date:
 
     def __repr__(self):
         cdef _date.stringstream ss
-        ss << string(b"Date('") << _date.iso_datetime(self._thisptr) << string(b"')")
+        ss << string(b"Date('") << _date.iso_date(self._thisptr) << string(b"')")
         return ss.str().decode()
 
     def __format__(self, str fmt):
@@ -446,15 +448,16 @@ def is_leap(int year):
     '''Whether the given year is a leap one.'''
     return isLeap(<Year> year)
 
-def local_date_time():
-    """local date time, based on the time zone settings of the computer"""
-    cdef QlDate ldt = _date.localDateTime()
-    return date_from_qldate(ldt)
-
-def universal_date_time():
-    """UTC date time"""
-    cdef QlDate utc = _date.universalDateTime()
-    return date_from_qldate(utc)
+# The following functions require QL_HIGH_RESOLUTION_DATE
+# def local_date_time():
+#     """local date time, based on the time zone settings of the computer"""
+#     cdef QlDate ldt = _date.localDateTime()
+#     return date_from_qldate(ldt)
+#
+# def universal_date_time():
+#     """UTC date time"""
+#     cdef QlDate utc = _date.universalDateTime()
+#     return date_from_qldate(utc)
 
 cdef Date date_from_qldate(const QlDate& date):
     '''Converts a QuantLib::Date (QlDate) to a cython Date instance.'''
@@ -479,10 +482,9 @@ cpdef object pydate_from_qldate(Date qdate):
 
 cdef inline QlDate _qldate_from_pydate(object pydate):
     """ Converts a datetime.date to a QuantLib (C++) object. """
+    # Note: Time components are ignored unless QuantLib is compiled with QL_HIGH_RESOLUTION_DATE
     if PyDateTime_Check(pydate):
-        return QlDate(datetime_day(pydate), <Month>datetime_month(pydate), datetime_year(pydate),
-                      datetime_hour(pydate), datetime_minute(pydate), datetime_second(pydate),
-                      0, datetime_microsecond(pydate))
+        return QlDate(datetime_day(pydate), <Month>datetime_month(pydate), datetime_year(pydate))
     if PyDate_Check(pydate):
         return QlDate(date_day(pydate), <Month>date_month(pydate), date_year(pydate))
     raise TypeError

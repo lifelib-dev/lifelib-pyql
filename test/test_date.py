@@ -28,7 +28,7 @@ from quantlib.time.date import (
     today,
     pydate_from_qldate,
     qldate_from_pydate,
-    local_date_time,
+    # local_date_time,  # Requires QL_HIGH_RESOLUTION_DATE
 )
 from quantlib.time.frequency import (
     Frequency,
@@ -53,9 +53,10 @@ class TestQuantLibDate(unittest.TestCase):
         self.assertEqual(py_today.month, ql_today.month)
         self.assertEqual(py_today.year, ql_today.year)
 
-        py_now = datetime.datetime.now()
-        ql_datetime = local_date_time()
-        self.assertAlmostEqual(Date.from_datetime(py_now), ql_datetime)
+        # The following test requires QL_HIGH_RESOLUTION_DATE
+        # py_now = datetime.datetime.now()
+        # ql_datetime = local_date_time()
+        # self.assertAlmostEqual(Date.from_datetime(py_now), ql_datetime)
 
     def test_date_empty_initialisation(self):
 
