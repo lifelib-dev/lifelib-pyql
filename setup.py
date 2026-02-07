@@ -43,18 +43,18 @@ elif sys.platform == 'win32':
     # With MSVC2008, the library is called QuantLib.lib but with MSVC2010, the
     # naming is QuantLib-vc100-mt
     if VC_VERSION >= 10.0:
-        QL_LIBRARY = 'QuantLib-vc%d0-%s-mt' % (VC_VERSION, ARCH)
+        QL_LIBRARY = 'QuantLib-%s-mt' % (ARCH,)    # 'QuantLib-vc%d0-%s-mt' % (VC_VERSION, ARCH)
 
     INCLUDE_DIRS = [
-        r'c:\dev\QuantLib-1.4',  # QuantLib headers
-        r'c:\dev\boost_1_56_0',  # Boost headers
+        r'c:\Users\fumito\QuantLib-1.41',  # QuantLib headers
+        r'c:\Users\fumito\boost_1_78_0',  # Boost headers
         '.',
         SUPPORT_CODE_INCLUDE
     ]
     LIBRARY_DIRS = [
-        r"C:\dev\QuantLib-1.4\build\vc%d0\%s\Release" % (
+        r"c:\Users\fumito\QuantLib-1.41\build\vc%d0\%s\Release" % (
             VC_VERSION, ("x64" if ARCH == "x64" else "Win32")),  # for the dll lib
-        r"C:\dev\QuantLib-1.4\lib",
+        r"c:\Users\fumito\QuantLib-1.41\lib",
         '.',
         r'.\dll',
     ]
@@ -83,7 +83,7 @@ def get_define_macros():
 
 def get_extra_compile_args():
     if sys.platform == 'win32':
-        args = ['/GR', '/FD', '/Zm250', '/EHsc']
+        args = ['/GR', '/FD', '/Zm250', '/EHsc', '/std:c++latest']
         if DEBUG:
             args.append('/Z7')
     else:
@@ -237,7 +237,7 @@ if __name__ == '__main__':
         version = '0.1',
         author = 'Didrik Pinte,Patrick Henaff',
         license = 'BSD',
-        packages = ['quantlib'],
+        packages = find_packages(),
         include_package_data = True,
         ext_modules = collect_extensions(),
         setup_requires=['cython'],

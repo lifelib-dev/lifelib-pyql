@@ -1,0 +1,32 @@
+[build-system]
+requires = [
+    "setuptools<74",
+    "wheel",
+    "Cython>=3.0",
+    "numpy"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "quantlib"
+version = "0.1"
+description = "QuantLib Cython wrappers"
+readme = "README.md"
+license = { file = "LICENSE.txt" }
+authors = [
+    { name = "Didrik Pinte" },
+    { name = "Patrick Henaff" }
+]
+dependencies = [
+    "tabulate",
+    "pandas",
+    "six"
+]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["quantlib*"]
+exclude = ["test*"]
