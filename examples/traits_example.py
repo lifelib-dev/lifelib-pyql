@@ -4,17 +4,17 @@ import datetime
 from traits.api import HasTraits, Enum, Float, Date, Property, Range
 from traitsui.api import View, Item, HGroup, EnumEditor
 
-from quantlib.option import OptionType
-from quantlib.exercise import EuropeanExercise
-from quantlib.payoffs import PlainVanillaPayoff
-from quantlib.instruments.vanillaoption import VanillaOption
-from quantlib.pricingengines.api import AnalyticEuropeanEngine
-from quantlib.processes.black_scholes_process import BlackScholesMertonProcess
-from quantlib.quotes import SimpleQuote
-from quantlib.settings import Settings
-from quantlib.time.api import TARGET, Actual365Fixed, today, Date as QlDate
-from quantlib.termstructures.yields.api import FlatForward
-from quantlib.termstructures.volatility.equityfx.black_vol_term_structure \
+from lifelib_pyql.option import OptionType
+from lifelib_pyql.exercise import EuropeanExercise
+from lifelib_pyql.payoffs import PlainVanillaPayoff
+from lifelib_pyql.instruments.vanillaoption import VanillaOption
+from lifelib_pyql.pricingengines.api import AnalyticEuropeanEngine
+from lifelib_pyql.processes.black_scholes_process import BlackScholesMertonProcess
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.time.api import TARGET, Actual365Fixed, today, Date as QlDate
+from lifelib_pyql.termstructures.yields.api import FlatForward
+from lifelib_pyql.termstructures.volatility.equityfx.black_vol_term_structure \
     import BlackConstantVol
 
 

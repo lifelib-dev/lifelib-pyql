@@ -1,10 +1,10 @@
 import unittest
 
-from quantlib.time.calendar_registry import (
+from lifelib_pyql.time.calendar_registry import (
    initialize_code_registry, calendar_from_name
 )
-from quantlib.time.calendars.target import TARGET
-from quantlib.time.calendars.united_states import UnitedStates
+from lifelib_pyql.time.calendars.target import TARGET
+from lifelib_pyql.time.calendars.united_states import UnitedStates
 
 class CalendarRegistryTestCase(unittest.TestCase):
 

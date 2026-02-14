@@ -3,22 +3,22 @@ import unittest
 
 import numpy as np
 
-from quantlib.settings import Settings
-from quantlib.exercise import EuropeanExercise
-from quantlib.option import OptionType
-from quantlib.instruments.variance_swap import VarianceSwap, SwapType
-from quantlib.math.matrix import Matrix
-from quantlib.pricingengines.forward.replicating_variance_swap_engine import ReplicatingVarianceSwapEngine
-from quantlib.pricingengines.forward.mc_variance_swap_engine import MCVarianceSwapEngine
-from quantlib.processes.api import BlackScholesMertonProcess
-from quantlib.quotes import SimpleQuote
-from quantlib.termstructures.yield_term_structure import HandleYieldTermStructure
-from quantlib.termstructures.yields.flat_forward import FlatForward
-from quantlib.termstructures.volatility.equityfx.black_variance_curve import BlackVarianceCurve
-from quantlib.termstructures.volatility.equityfx.black_variance_surface import BlackVarianceSurface
-from quantlib.time.api import Date, today, NullCalendar, Actual365Fixed
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.exercise import EuropeanExercise
+from lifelib_pyql.option import OptionType
+from lifelib_pyql.instruments.variance_swap import VarianceSwap, SwapType
+from lifelib_pyql.math.matrix import Matrix
+from lifelib_pyql.pricingengines.forward.replicating_variance_swap_engine import ReplicatingVarianceSwapEngine
+from lifelib_pyql.pricingengines.forward.mc_variance_swap_engine import MCVarianceSwapEngine
+from lifelib_pyql.processes.api import BlackScholesMertonProcess
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.termstructures.yield_term_structure import HandleYieldTermStructure
+from lifelib_pyql.termstructures.yields.flat_forward import FlatForward
+from lifelib_pyql.termstructures.volatility.equityfx.black_variance_curve import BlackVarianceCurve
+from lifelib_pyql.termstructures.volatility.equityfx.black_variance_surface import BlackVarianceSurface
+from lifelib_pyql.time.api import Date, today, NullCalendar, Actual365Fixed
 
-# Tests adapted from Quantlib test-suite/varianceswaps.cpp
+# Tests adapted from lifelib_pyql test-suite/varianceswaps.cpp
 
 class VarianceSwapTestCase(unittest.TestCase):
 

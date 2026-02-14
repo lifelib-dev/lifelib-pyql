@@ -9,7 +9,7 @@
 
 import unittest
 
-from quantlib.indexes.api import Region, CustomRegion, USRegion
+from lifelib_pyql.indexes.api import Region, CustomRegion, USRegion
 
 
 class TestRegion(unittest.TestCase):

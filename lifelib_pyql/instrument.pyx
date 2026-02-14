@@ -1,0 +1,51 @@
+"""Abstract instrument class"""
+from lifelib_pyql.time.date cimport date_from_qldate
+from lifelib_pyql.pricingengines.engine cimport PricingEngine
+from lifelib_pyql.handle cimport static_pointer_cast
+from lifelib_pyql._observable cimport Observable as QlObservable
+
+cdef class Instrument(Observable):
+    """Abstract instrument class
+
+    This class is purely abstract and defines the interface of concrete
+    instruments which will be derived from this one.
+    """
+
+    def set_pricing_engine(self, PricingEngine engine not None):
+        '''Sets the pricing engine.
+
+        '''
+        self._thisptr.get().setPricingEngine(engine._thisptr)
+
+    cdef shared_ptr[QlObservable] as_observable(self) noexcept nogil:
+        return static_pointer_cast[QlObservable](self._thisptr)
+
+    property net_present_value:
+        """ Instrument net present value. """
+        def __get__(self):
+            return self._thisptr.get().NPV()
+
+    @property
+    def error_estimate(self) -> Real:
+        """error estimate on the NPV when available"""
+        return self._thisptr.get().errorEstimate()
+
+    property npv:
+        """ Shortcut to the net_present_value property. """
+        def __get__(self):
+            return self._thisptr.get().NPV()
+
+    @property
+    def is_expired(self) -> bool:
+        """whether the instrument might ave value greater than zero."""
+        return self._thisptr.get().isExpired()
+
+    @property
+    def valuation_date(self):
+        """the date the net present value refers to.
+
+        Returns
+        -------
+        valuation_date: :class:`~quantlib.time.date.Date`
+        """
+        return date_from_qldate(self._thisptr.get().valuationDate())

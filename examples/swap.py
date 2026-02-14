@@ -2,21 +2,21 @@
 
 Warning: this is work in progress and currently not working.
 """
-from quantlib.indexes.api import Euribor6M
-from quantlib.math.interpolation import LogLinear
-from quantlib.instruments.api import VanillaSwap
-from quantlib.pricingengines.swap import DiscountingSwapEngine
-from quantlib.settings import Settings
-from quantlib.quotes import SimpleQuote
-from quantlib.termstructures.yields.api import DepositRateHelper, FraRateHelper
-from quantlib.termstructures.yields.api import FuturesRateHelper, SwapRateHelper
-from quantlib.termstructures.yields.api import HandleYieldTermStructure
-from quantlib.termstructures.yields.api import (
+from lifelib_pyql.indexes.api import Euribor6M
+from lifelib_pyql.math.interpolation import LogLinear
+from lifelib_pyql.instruments.api import VanillaSwap
+from lifelib_pyql.pricingengines.swap import DiscountingSwapEngine
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.termstructures.yields.api import DepositRateHelper, FraRateHelper
+from lifelib_pyql.termstructures.yields.api import FuturesRateHelper, SwapRateHelper
+from lifelib_pyql.termstructures.yields.api import HandleYieldTermStructure
+from lifelib_pyql.termstructures.yields.api import (
     PiecewiseYieldCurve, BootstrapTrait )
-from quantlib.time.api import Actual360, Date, November, TARGET, Weeks, Annual
-from quantlib.time.api import Months, Years, Period, ModifiedFollowing
-from quantlib.time.api import Unadjusted, Thirty360, Semiannual, Schedule
-from quantlib.time.api import ActualActual, ISDA, DateGeneration
+from lifelib_pyql.time.api import Actual360, Date, November, TARGET, Weeks, Annual
+from lifelib_pyql.time.api import Months, Years, Period, ModifiedFollowing
+from lifelib_pyql.time.api import Unadjusted, Thirty360, Semiannual, Schedule
+from lifelib_pyql.time.api import ActualActual, ISDA, DateGeneration
 # global data
 calendar = TARGET()
 todaysDate = Date(6,November,2001);

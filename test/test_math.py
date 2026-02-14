@@ -1,6 +1,6 @@
 import unittest
 
-from quantlib.math.array import Array, qlarray_from_pyarray
+from lifelib_pyql.math.array import Array, qlarray_from_pyarray
 
 
 class TestMath(unittest.TestCase):

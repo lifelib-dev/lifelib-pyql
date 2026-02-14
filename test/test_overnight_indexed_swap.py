@@ -1,10 +1,10 @@
 from itertools import product
-from quantlib.cashflows.rateaveraging import RateAveraging
-from quantlib.indexes.api import Eonia
-from quantlib.instruments.api import MakeOIS
-from quantlib.settings import Settings
-from quantlib.time.api import Date, Days, Weeks, Months, Years, Following, Actual360
-from quantlib.termstructures.yields.api import HandleYieldTermStructure
+from lifelib_pyql.cashflows.rateaveraging import RateAveraging
+from lifelib_pyql.indexes.api import Eonia
+from lifelib_pyql.instruments.api import MakeOIS
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.time.api import Date, Days, Weeks, Months, Years, Following, Actual360
+from lifelib_pyql.termstructures.yields.api import HandleYieldTermStructure
 
 from .utilities import flat_rate
 import math

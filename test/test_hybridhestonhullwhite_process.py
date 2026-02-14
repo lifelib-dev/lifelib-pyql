@@ -2,32 +2,32 @@ import unittest
 
 import numpy as np
 
-from quantlib.settings import Settings
+from lifelib_pyql.settings import Settings
 
-from quantlib.option import OptionType
-from quantlib.exercise import EuropeanExercise
+from lifelib_pyql.option import OptionType
+from lifelib_pyql.exercise import EuropeanExercise
 
-from quantlib.models.shortrate.onefactormodels.hullwhite import HullWhite
+from lifelib_pyql.models.shortrate.onefactormodels.hullwhite import HullWhite
 
-from quantlib.instruments.vanillaoption import VanillaOption
+from lifelib_pyql.instruments.vanillaoption import VanillaOption
 
-from quantlib.time.api import (today, Years, Actual365Fixed,
+from lifelib_pyql.time.api import (today, Years, Actual365Fixed,
                                Period, May, Date, Actual360,
                                NullCalendar)
 
-from quantlib.processes.api import (BlackScholesMertonProcess,
+from lifelib_pyql.processes.api import (BlackScholesMertonProcess,
                                     HestonProcess,
                                     HullWhiteProcess,
                                     HullWhiteForwardProcess,
                                     HybridHestonHullWhiteProcess)
 
-from quantlib.models.equity.heston_model import (
+from lifelib_pyql.models.equity.heston_model import (
     HestonModel)
 
-from quantlib.termstructures.yields.api import ZeroCurve, FlatForward, HandleYieldTermStructure
-from quantlib.termstructures.volatility.api import BlackConstantVol
+from lifelib_pyql.termstructures.yields.api import ZeroCurve, FlatForward, HandleYieldTermStructure
+from lifelib_pyql.termstructures.volatility.api import BlackConstantVol
 
-from quantlib.pricingengines.api import (
+from lifelib_pyql.pricingengines.api import (
     AnalyticEuropeanEngine,
     AnalyticBSMHullWhiteEngine,
     AnalyticHestonEngine,
@@ -35,11 +35,11 @@ from quantlib.pricingengines.api import (
     FdHestonHullWhiteVanillaEngine,
     MCHestonHullWhiteEngine)
 
-from quantlib.quotes import SimpleQuote
+from lifelib_pyql.quotes import SimpleQuote
 
-from quantlib.payoffs import PlainVanillaPayoff
+from lifelib_pyql.payoffs import PlainVanillaPayoff
 
-from quantlib.methods.finitedifferences.solvers.fdmbackwardsolver import FdmSchemeDesc
+from lifelib_pyql.methods.finitedifferences.solvers.fdmbackwardsolver import FdmSchemeDesc
 
 from .utilities import flat_rate
 

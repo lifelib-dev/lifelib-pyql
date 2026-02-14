@@ -1,16 +1,16 @@
 import unittest
-from quantlib.math.matrix import Matrix
-from quantlib.time.api import (Period, Years, Months, UnitedStates,
+from lifelib_pyql.math.matrix import Matrix
+from lifelib_pyql.time.api import (Period, Years, Months, UnitedStates,
                                Following, Actual365Fixed)
-from quantlib.termstructures.yields.api import FlatForward, HandleYieldTermStructure
-from quantlib.quotes import SimpleQuote
-from quantlib.termstructures.volatility.swaption.swaption_vol_matrix \
+from lifelib_pyql.termstructures.yields.api import FlatForward, HandleYieldTermStructure
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.termstructures.volatility.swaption.swaption_vol_matrix \
     import SwaptionVolatilityMatrix
-from quantlib.termstructures.volatility.swaption.sabr_swaption_volatility_cube \
+from lifelib_pyql.termstructures.volatility.swaption.sabr_swaption_volatility_cube \
     import SabrSwaptionVolatilityCube
-from quantlib.termstructures.volatility.swaption.spreaded_swaption_vol \
+from lifelib_pyql.termstructures.volatility.swaption.spreaded_swaption_vol \
     import SpreadedSwaptionVolatility
-from quantlib.indexes.api import EuriborSwapIsdaFixA
+from lifelib_pyql.indexes.api import EuriborSwapIsdaFixA
 import numpy as np
 
 

@@ -3,22 +3,22 @@ from __future__ import print_function
 
 import unittest
 
-from quantlib.models.shortrate.onefactormodels.hullwhite import HullWhite
-from quantlib.settings import Settings
+from lifelib_pyql.models.shortrate.onefactormodels.hullwhite import HullWhite
+from lifelib_pyql.settings import Settings
 
-from quantlib.time.api import (Date, Years, Actual365Fixed,
+from lifelib_pyql.time.api import (Date, Years, Actual365Fixed,
                                Thirty360, Actual360, Period,
                                February, NullCalendar)
 
-from quantlib.termstructures.yields.flat_forward import FlatForward
-from quantlib.termstructures.yield_term_structure import HandleYieldTermStructure
-from quantlib.indexes.ibor.euribor import Euribor6M
-from quantlib.pricingengines.swaption.jamshidian_swaption_engine import JamshidianSwaptionEngine
-from quantlib.quotes import SimpleQuote
-from quantlib.models.shortrate.calibrationhelpers.swaption_helper \
+from lifelib_pyql.termstructures.yields.flat_forward import FlatForward
+from lifelib_pyql.termstructures.yield_term_structure import HandleYieldTermStructure
+from lifelib_pyql.indexes.ibor.euribor import Euribor6M
+from lifelib_pyql.pricingengines.swaption.jamshidian_swaption_engine import JamshidianSwaptionEngine
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.models.shortrate.calibrationhelpers.swaption_helper \
     import SwaptionHelper
 
-from quantlib.math.optimization import LevenbergMarquardt, EndCriteria
+from lifelib_pyql.math.optimization import LevenbergMarquardt, EndCriteria
 
 from .utilities import flat_rate
 

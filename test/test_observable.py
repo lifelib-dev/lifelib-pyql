@@ -1,8 +1,8 @@
 import unittest
-from quantlib.quotes import SimpleQuote
-from quantlib.observable import Observer
-from quantlib.settings import Settings
-from quantlib.time.api import Date
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.observable import Observer
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.time.api import Date
 
 class SimpleObserverTestCase(unittest.TestCase):
     def setUp(self):

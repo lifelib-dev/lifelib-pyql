@@ -1,17 +1,17 @@
 import unittest
-from quantlib.cashflows.ibor_coupon import IborCoupon
-from quantlib.instruments.api import VanillaSwap, Swaption
-from quantlib.instruments.swap import Swap
-from quantlib.time.api import (
+from lifelib_pyql.cashflows.ibor_coupon import IborCoupon
+from lifelib_pyql.instruments.api import VanillaSwap, Swaption
+from lifelib_pyql.instruments.swap import Swap
+from lifelib_pyql.time.api import (
     Date, today, Unadjusted, ModifiedFollowing, Annual, Semiannual,
     Thirty360, Days, Years, DateGeneration, Schedule, Actual365Fixed, Period)
-from quantlib.time.daycounters.thirty360 import Convention
-from quantlib.indexes.api import Euribor6M
-from quantlib.termstructures.yields.api import HandleYieldTermStructure
-from quantlib.models.api import HullWhite
-from quantlib.settings import Settings
-from quantlib.pricingengines.api import DiscountingSwapEngine, TreeSwaptionEngine
-from quantlib.exercise import BermudanExercise
+from lifelib_pyql.time.daycounters.thirty360 import Convention
+from lifelib_pyql.indexes.api import Euribor6M
+from lifelib_pyql.termstructures.yields.api import HandleYieldTermStructure
+from lifelib_pyql.models.api import HullWhite
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.pricingengines.api import DiscountingSwapEngine, TreeSwaptionEngine
+from lifelib_pyql.exercise import BermudanExercise
 from .utilities import flat_rate
 
 

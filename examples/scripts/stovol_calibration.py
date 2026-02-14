@@ -24,26 +24,26 @@ from pandas import DataFrame
 import datetime
 from six.moves import input
 
-from quantlib.models.equity.heston_model import (
+from lifelib_pyql.models.equity.heston_model import (
     HestonModelHelper, HestonModel)
-from quantlib.models.calibration_helper import ImpliedVolError
-from quantlib.models.equity.bates_model import (BatesModel,
+from lifelib_pyql.models.calibration_helper import ImpliedVolError
+from lifelib_pyql.models.equity.bates_model import (BatesModel,
                                                 BatesDetJumpModel,
                                                 BatesDoubleExpModel)
 
-from quantlib.pricingengines.api import (AnalyticHestonEngine,
+from lifelib_pyql.pricingengines.api import (AnalyticHestonEngine,
                                          BatesEngine,
                                          BatesDetJumpEngine,
                                          BatesDoubleExpEngine)
 
-from quantlib.processes.heston_process import HestonProcess
-from quantlib.processes.bates_process import BatesProcess
+from lifelib_pyql.processes.heston_process import HestonProcess
+from lifelib_pyql.processes.bates_process import BatesProcess
 
-from quantlib.math.optimization import LevenbergMarquardt, EndCriteria
-from quantlib.settings import Settings
-from quantlib.time.api import Period, Date, Actual365Fixed, TARGET, Days
-from quantlib.quotes import SimpleQuote
-from quantlib.termstructures.yields.zero_curve import ZeroCurve
+from lifelib_pyql.math.optimization import LevenbergMarquardt, EndCriteria
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.time.api import Period, Date, Actual365Fixed, TARGET, Days
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.termstructures.yields.zero_curve import ZeroCurve
 
 import matplotlib.pyplot as plt
 

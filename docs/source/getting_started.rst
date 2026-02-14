@@ -102,7 +102,7 @@ Prerequisites:
 
 2. Install Quantlib
 
-   a. Download Quantlib 1.5 from Quantlib.org and copy to /opt
+   a. Download Quantlib 1.5 from lifelib_pyql.org and copy to /opt
 
       .. code-block:: bash
 
@@ -175,7 +175,7 @@ Prerequisites:
    a. Install the latest version of Boost from sourceforge. You can get the
       binaries of 1.55 for windows 32 or 64bit depending on your target.
 
-   b. Download Quantlib 1.5 from Quantlib.org and unzip locally
+   b. Download Quantlib 1.5 from lifelib_pyql.org and unzip locally
 
    c. Extract the Quantlib folder
 

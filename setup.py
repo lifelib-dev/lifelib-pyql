@@ -117,7 +117,7 @@ CYTHON_DIRECTIVES = {"embedsignature": True,
 def render_templates():
     for basename in ["piecewise_yield_curve", "discount_curve", "forward_curve", "zero_curve"]:
         for ext in ("pxd", "pyx"):
-            fname = f"quantlib/termstructures/yields/{basename}.{ext}.in"
+            fname = f"lifelib_pyql/termstructures/yields/{basename}.{ext}.in"
             output = fname[:-3]
             if not os.path.exists(output) or (os.stat(output).st_mtime < os.stat(fname).st_mtime):
                 template = Template.from_filename(fname, encoding="utf-8")
@@ -143,18 +143,18 @@ def collect_extensions():
     }
 
     multipath_extension = Extension(
-        name='quantlib.sim.simulate',
+        name='lifelib_pyql.sim.simulate',
         sources=[
-            'quantlib/sim/simulate.pyx',
+            'lifelib_pyql/sim/simulate.pyx',
             'cpp_layer/simulate_support_code.cpp'
         ],
         **kwargs
     )
 
     hestonhw_constraint_extension = Extension(
-        name='quantlib.math.hestonhwcorrelationconstraint',
+        name='lifelib_pyql.math.hestonhwcorrelationconstraint',
         sources=[
-            'quantlib/math/hestonhwcorrelationconstraint.pyx',
+            'lifelib_pyql/math/hestonhwcorrelationconstraint.pyx',
             'cpp_layer/constraint_support_code.cpp'
         ],
         **kwargs
@@ -182,8 +182,8 @@ def collect_extensions():
 
 class pyql_build_ext(build_ext):
     """
-    Custom build command for quantlib that on Windows copies the quantlib dll
-    and optionally c runtime dlls to the quantlib package.
+    Custom build command for lifelib_pyql that on Windows copies the quantlib dll
+    and optionally c runtime dlls to the lifelib_pyql package.
     """
     def build_extensions(self):
         build_ext.build_extensions(self)
@@ -222,10 +222,10 @@ class pyql_build_ext(build_ext):
                 raise AssertionError("%s.dll not found" % QL_LIBRARY)
 
             for dll in dlls:
-                self.copy_file(dll, os.path.join(self.build_lib, "quantlib", os.path.basename(dll)))
+                self.copy_file(dll, os.path.join(self.build_lib, "lifelib_pyql", os.path.basename(dll)))
 
             # Write the list of dlls to be pre-loaded
-            filename = os.path.join(self.build_lib, "quantlib", "preload_dlls.txt")
+            filename = os.path.join(self.build_lib, "lifelib_pyql", "preload_dlls.txt")
             log.info("writing preload dlls list to %s", filename)
             if not self.dry_run:
                 with open(filename, "wt") as fh:
@@ -233,7 +233,7 @@ class pyql_build_ext(build_ext):
 
 if __name__ == '__main__':
     setup(
-        name = 'quantlib',
+        name = 'lifelib_pyql',
         version = '0.1',
         author = 'Didrik Pinte,Patrick Henaff',
         license = 'BSD',

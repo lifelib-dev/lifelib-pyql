@@ -1,17 +1,17 @@
 import unittest
 
-from quantlib.time.daycounter import DayCounter
+from lifelib_pyql.time.daycounter import DayCounter
 
-from quantlib.time.daycounters.simple import (
+from lifelib_pyql.time.daycounters.simple import (
     Actual360, SimpleDayCounter
 )
 
-from quantlib.time.daycounters.actual_actual import ActualActual
+from lifelib_pyql.time.daycounters.actual_actual import ActualActual
 
-from quantlib.time.daycounters.thirty360 import (
+from lifelib_pyql.time.daycounters.thirty360 import (
         Thirty360, Convention
 )
-from quantlib.time.date import (
+from lifelib_pyql.time.date import (
     Date, November, May, February, July, January, Period,
     Months
 )

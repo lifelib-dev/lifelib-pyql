@@ -1,9 +1,9 @@
 import unittest
 
-from quantlib.quotes import SimpleQuote, FuturesConvAdjustmentQuote
-from quantlib.indexes.api import USDLibor
-from quantlib.time.api import Period, Months, Date
-from quantlib.settings import Settings
+from lifelib_pyql.quotes import SimpleQuote, FuturesConvAdjustmentQuote
+from lifelib_pyql.indexes.api import USDLibor
+from lifelib_pyql.time.api import Period, Months, Date
+from lifelib_pyql.settings import Settings
 
 class SimpleQuoteTestCase(unittest.TestCase):
 

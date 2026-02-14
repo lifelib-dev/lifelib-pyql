@@ -1,6 +1,6 @@
 import unittest
 
-from quantlib.currency.api import Currency, USDCurrency
+from lifelib_pyql.currency.api import Currency, USDCurrency
 
 class TestCurrency(unittest.TestCase):
 

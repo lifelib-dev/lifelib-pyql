@@ -2,34 +2,34 @@ import unittest
 
 import numpy as np
 
-from quantlib.math.hestonhwcorrelationconstraint import (
+from lifelib_pyql.math.hestonhwcorrelationconstraint import (
     HestonHullWhiteCorrelationConstraint)
 
-from quantlib.time.api import (
+from lifelib_pyql.time.api import (
     Period, Months, March, Date,
     Actual365Fixed, TARGET
 )
 
-from quantlib.settings import Settings
+from lifelib_pyql.settings import Settings
 
-from quantlib.math.optimization import LevenbergMarquardt, EndCriteria
+from lifelib_pyql.math.optimization import LevenbergMarquardt, EndCriteria
 
-from quantlib.quotes import SimpleQuote
-from quantlib.termstructures.yields.api import FlatForward, HandleYieldTermStructure
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.termstructures.yields.api import FlatForward, HandleYieldTermStructure
 
-from quantlib.models.equity.heston_model import (
+from lifelib_pyql.models.equity.heston_model import (
     HestonModelHelper, HestonModel
 )
 
-from quantlib.models.calibration_helper import PriceError
+from lifelib_pyql.models.calibration_helper import PriceError
 
-from quantlib.processes.api import HullWhiteProcess, HestonProcess
+from lifelib_pyql.processes.api import HullWhiteProcess, HestonProcess
 
-from quantlib.pricingengines.api import (
+from lifelib_pyql.pricingengines.api import (
     AnalyticHestonEngine,
     FdHestonHullWhiteVanillaEngine)
 
-from quantlib.methods.finitedifferences.solvers.fdmbackwardsolver import (
+from lifelib_pyql.methods.finitedifferences.solvers.fdmbackwardsolver import (
     FdmSchemeDesc)
 
 from .utilities import flat_rate
@@ -39,7 +39,7 @@ class TestHHWCalibration(unittest.TestCase):
 
     def test_heston_hw_calibration(self):
         """
-        From Quantlib test suite
+        from lifelib_pyql test suite
         """
 
         print("Testing Heston Hull-White calibration...")

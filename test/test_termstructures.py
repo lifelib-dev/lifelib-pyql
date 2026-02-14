@@ -8,22 +8,22 @@
 """
 
 import unittest
-from quantlib.termstructures.yields.api import (
+from lifelib_pyql.termstructures.yields.api import (
     FlatForward, YieldTermStructure, ForwardSpreadedTermStructure,
     DiscountCurve, ImpliedTermStructure
 )
-from quantlib.termstructures.yield_term_structure import HandleYieldTermStructure
-from quantlib.quotes import SimpleQuote
+from lifelib_pyql.termstructures.yield_term_structure import HandleYieldTermStructure
+from lifelib_pyql.quotes import SimpleQuote
 
-from quantlib.settings import Settings
-from quantlib.time.calendars.target import TARGET
-from quantlib.time.calendars.null_calendar import NullCalendar
-from quantlib.time.daycounters.simple import Actual360, Actual365Fixed
-from quantlib.time.date import today, Days
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.time.calendars.target import TARGET
+from lifelib_pyql.time.calendars.null_calendar import NullCalendar
+from lifelib_pyql.time.daycounters.simple import Actual360, Actual365Fixed
+from lifelib_pyql.time.date import today, Days
 
-from quantlib.compounding import Simple
-from quantlib.time.api import Date, Actual360
-from quantlib.market.market import libor_market, IborMarket
+from lifelib_pyql.compounding import Simple
+from lifelib_pyql.time.api import Date, Actual360
+from lifelib_pyql.market.market import libor_market, IborMarket
 
 
 class YieldTermStructureTestCase(unittest.TestCase):

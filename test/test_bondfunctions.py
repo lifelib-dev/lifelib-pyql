@@ -1,37 +1,37 @@
 
 import unittest
 
-from quantlib.instruments.bonds import (
+from lifelib_pyql.instruments.bonds import (
     FixedRateBond, ZeroCouponBond
 )
-from quantlib.time.calendars.united_states import (
+from lifelib_pyql.time.calendars.united_states import (
     UnitedStates, Market
 )
-from quantlib.currency.api import USDCurrency
+from lifelib_pyql.currency.api import USDCurrency
 
-from quantlib.compounding import Compounded, Continuous
-from quantlib.instruments.bond import Price
-from quantlib.time.date import (
+from lifelib_pyql.compounding import Compounded, Continuous
+from lifelib_pyql.instruments.bond import Price
+from lifelib_pyql.time.date import (
     Date, Days, Years, January, August, Period, April
 )
-from quantlib.time.api import (TARGET, Months,
+from lifelib_pyql.time.api import (TARGET, Months,
     ModifiedFollowing, Unadjusted, Actual360, Thirty360, ActualActual, Actual365Fixed,
     Annual, Months, Actual365Fixed, Annual, Semiannual)
-from quantlib.time.schedule import Schedule
-from quantlib.time.dategeneration import DateGeneration
-from quantlib.settings import Settings
-from quantlib.indexes.ibor.libor import Libor
+from lifelib_pyql.time.schedule import Schedule
+from lifelib_pyql.time.dategeneration import DateGeneration
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.indexes.ibor.libor import Libor
 
-from quantlib.termstructures.yields.rate_helpers import (
+from lifelib_pyql.termstructures.yields.rate_helpers import (
     DepositRateHelper, SwapRateHelper)
-from quantlib.termstructures.yields.piecewise_yield_curve import PiecewiseYieldCurve
-from quantlib.termstructures.yields.api import (
+from lifelib_pyql.termstructures.yields.piecewise_yield_curve import PiecewiseYieldCurve
+from lifelib_pyql.termstructures.yields.api import (
     FlatForward, YieldTermStructure, BootstrapTrait
 )
-from quantlib.math.interpolation import LogLinear
-from quantlib.quotes import SimpleQuote
+from lifelib_pyql.math.interpolation import LogLinear
+from lifelib_pyql.quotes import SimpleQuote
 
-import quantlib.pricingengines.bond.bondfunctions as bf
+import lifelib_pyql.pricingengines.bond.bondfunctions as bf
 
 
 class BondFunctionTestCase(unittest.TestCase):

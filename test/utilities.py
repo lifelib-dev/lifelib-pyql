@@ -1,5 +1,5 @@
-from quantlib.time.api import Actual365Fixed, NullCalendar
-from quantlib.termstructures.yields.api import FlatForward
+from lifelib_pyql.time.api import Actual365Fixed, NullCalendar
+from lifelib_pyql.termstructures.yields.api import FlatForward
 
 def flat_rate(rate, dc=Actual365Fixed(), reference_date=None):
      if reference_date is None:

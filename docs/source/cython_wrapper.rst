@@ -21,7 +21,7 @@ measurement. The C++ class is defined as follows:
 
 After wrapping the C++ class, this class is now available in python::
 
-   from quantlib.quotes.simplequote import SimpleQuote
+   from lifelib_pyql.quotes.simplequote import SimpleQuote
    spot = SimpleQuote(3.14)
    print('Spot %f' % spot.value)
 
@@ -55,8 +55,8 @@ This file contains the declaration of the QL
 class being exposed. For example, the header file ``_simplequote.pxd`` is
 as follows::
 
-  from quantlib.types cimport Real
-  from quantlib._quote cimport Quote
+  from lifelib_pyql.types cimport Real
+  from lifelib_pyql._quote cimport Quote
 
   cdef extern from 'ql/quotes/simplequote.hpp' namespace 'QuantLib':
 
@@ -76,7 +76,7 @@ Declaration of the python class
 The second header file declares the python classes that will be wrapping
 the QL classes. The file ``simplequote.pxd`` is reproduced below::
 
-    from quantlib.quote cimport Quote
+    from lifelib_pyql.quote cimport Quote
 
     cdef class SimpleQuote(Quote):
         pass

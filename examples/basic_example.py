@@ -2,15 +2,15 @@
 using a Black&Scholes Merton process."""
 from __future__ import print_function
 
-from quantlib.instruments.api import (EuropeanExercise, PlainVanillaPayoff, OptionType,
+from lifelib_pyql.instruments.api import (EuropeanExercise, PlainVanillaPayoff, OptionType,
                                       VanillaOption)
-from quantlib.pricingengines.api import AnalyticEuropeanEngine
-from quantlib.processes.black_scholes_process import BlackScholesMertonProcess
-from quantlib.quotes import SimpleQuote
-from quantlib.settings import Settings
-from quantlib.time.api import TARGET, Actual365Fixed, today
-from quantlib.termstructures.yields.api import FlatForward, HandleYieldTermStructure
-from quantlib.termstructures.volatility.api import BlackConstantVol
+from lifelib_pyql.pricingengines.api import AnalyticEuropeanEngine
+from lifelib_pyql.processes.black_scholes_process import BlackScholesMertonProcess
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.time.api import TARGET, Actual365Fixed, today
+from lifelib_pyql.termstructures.yields.api import FlatForward, HandleYieldTermStructure
+from lifelib_pyql.termstructures.volatility.api import BlackConstantVol
 
 
 settings = Settings.instance()

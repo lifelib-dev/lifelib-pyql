@@ -1,10 +1,10 @@
 import unittest
-from quantlib.cashflows.api import OvernightIndexedCoupon
-from quantlib.time.date import Date, October, November, December, January, March
-from quantlib.settings import Settings
-from quantlib.termstructures.yields.api import HandleYieldTermStructure, FlatForward
-from quantlib.time.api import Actual360
-from quantlib.indexes.api import Sofr
+from lifelib_pyql.cashflows.api import OvernightIndexedCoupon
+from lifelib_pyql.time.date import Date, October, November, December, January, March
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.termstructures.yields.api import HandleYieldTermStructure, FlatForward
+from lifelib_pyql.time.api import Actual360
+from lifelib_pyql.indexes.api import Sofr
 from .utilities import flat_rate
 
 class TestOvernightIndexedCoupon(unittest.TestCase):

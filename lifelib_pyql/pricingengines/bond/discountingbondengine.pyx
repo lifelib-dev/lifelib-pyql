@@ -1,0 +1,20 @@
+"""
+ Copyright (C) 2011, Enthought Inc
+
+ This program is distributed in the hope that it will be useful, but WITHOUT
+ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ FOR A PARTICULAR PURPOSE.  See the license for more details.
+"""
+from . cimport _discountingbondengine as _dbe
+
+from ..engine cimport PricingEngine
+
+from lifelib_pyql.termstructures.yield_term_structure cimport HandleYieldTermStructure
+
+cdef class DiscountingBondEngine(PricingEngine):
+
+    def __init__(self, HandleYieldTermStructure discount_curve):
+        """
+        """
+
+        self._thisptr.reset(new _dbe.DiscountingBondEngine(discount_curve.handle))

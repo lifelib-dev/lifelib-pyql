@@ -1,10 +1,10 @@
 import unittest
 
-from quantlib.interest_rate import InterestRate
+from lifelib_pyql.interest_rate import InterestRate
 
-from quantlib.compounding import Continuous, Compounded
-from quantlib.time.api import Actual360, Monthly, NoFrequency, Once, Thirty360
-from quantlib.time.daycounters.thirty360 import Thirty360
+from lifelib_pyql.compounding import Continuous, Compounded
+from lifelib_pyql.time.api import Actual360, Monthly, NoFrequency, Once, Thirty360
+from lifelib_pyql.time.daycounters.thirty360 import Thirty360
 
 class InterestRateTestCase(unittest.TestCase):
 

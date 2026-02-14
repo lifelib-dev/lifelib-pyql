@@ -2,10 +2,10 @@ from __future__ import print_function
 # simple example to demonstrate the use of Settings()
 
 
-from quantlib.quotes import SimpleQuote
-from quantlib.settings import Settings
-from quantlib.termstructures.yields.api import FlatForward
-from quantlib.time.api import Actual360, Date, NullCalendar, TARGET
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.termstructures.yields.api import FlatForward
+from lifelib_pyql.time.api import Actual360, Date, NullCalendar, TARGET
 
 calendar = TARGET()
 settings = Settings()

@@ -1,6 +1,6 @@
 import unittest
 
-from quantlib.util.version import parse_ql_version_string
+from lifelib_pyql.util.version import parse_ql_version_string
 
 
 class TestParseQlVersionString(unittest.TestCase):

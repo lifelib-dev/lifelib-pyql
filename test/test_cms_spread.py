@@ -1,25 +1,25 @@
 import unittest
 
-from quantlib.time.api import (
+from lifelib_pyql.time.api import (
     Date, Period, Years, TARGET, Actual365Fixed, Following, Actual360)
-from quantlib.indexes.api import EuriborSwapIsdaFixA
-from quantlib.termstructures.yields.api import FlatForward, HandleYieldTermStructure
-from quantlib.termstructures.volatility.api import (
+from lifelib_pyql.indexes.api import EuriborSwapIsdaFixA
+from lifelib_pyql.termstructures.yields.api import FlatForward, HandleYieldTermStructure
+from lifelib_pyql.termstructures.volatility.api import (
         ConstantSwaptionVolatility, VolatilityType)
-from quantlib.experimental.coupons.lognormal_cmsspread_pricer import \
+from lifelib_pyql.experimental.coupons.lognormal_cmsspread_pricer import \
         LognormalCmsSpreadPricer
-from quantlib.experimental.coupons.swap_spread_index import SwapSpreadIndex
-from quantlib.experimental.coupons.cms_spread_coupon import (
+from lifelib_pyql.experimental.coupons.swap_spread_index import SwapSpreadIndex
+from lifelib_pyql.experimental.coupons.cms_spread_coupon import (
     CmsSpreadCoupon, CappedFlooredCmsSpreadCoupon)
-from quantlib.indexes.api import EuriborSwapIsdaFixA
-from quantlib.cashflows.cms_coupon import CmsCoupon
-from quantlib.cashflows.linear_tsr_pricer import LinearTsrPricer
-from quantlib.quotes import SimpleQuote
-from quantlib.settings import Settings
-from quantlib.defines import QL_MAX_REAL, QL_NULL_REAL
-from quantlib.math.matrix import Matrix
-from quantlib.math.matrixutilities.pseudosqrt import pseudo_sqrt
-from quantlib.math.randomnumbers.rngtraits import LowDiscrepancy
+from lifelib_pyql.indexes.api import EuriborSwapIsdaFixA
+from lifelib_pyql.cashflows.cms_coupon import CmsCoupon
+from lifelib_pyql.cashflows.linear_tsr_pricer import LinearTsrPricer
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.defines import QL_MAX_REAL, QL_NULL_REAL
+from lifelib_pyql.math.matrix import Matrix
+from lifelib_pyql.math.matrixutilities.pseudosqrt import pseudo_sqrt
+from lifelib_pyql.math.randomnumbers.rngtraits import LowDiscrepancy
 from math import sqrt
 import numpy as np
 

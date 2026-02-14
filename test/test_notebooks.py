@@ -3,9 +3,9 @@ import unittest
 import pandas as pd
 import numpy as np
 
-import quantlib.reference.names as nm
-from quantlib.pricingengines.blackformula import blackFormulaImpliedStdDev
-from quantlib.option import OptionType
+import lifelib_pyql.reference.names as nm
+from lifelib_pyql.pricingengines.blackformula import blackFormulaImpliedStdDev
+from lifelib_pyql.option import OptionType
 
 def Compute_IV(optionDataFrame, tMin=0, nMin=0, QDMin=0, QDMax=1,
                keepOTMData=True):

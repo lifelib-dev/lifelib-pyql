@@ -1,24 +1,24 @@
 import unittest
 
-from quantlib.settings import Settings
+from lifelib_pyql.settings import Settings
 
-from quantlib.currency.api import USDCurrency
-from quantlib.indexes.ibor.libor import Libor
-from quantlib.quotes import SimpleQuote
-from quantlib.termstructures.yields.rate_helpers import (
+from lifelib_pyql.currency.api import USDCurrency
+from lifelib_pyql.indexes.ibor.libor import Libor
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.termstructures.yields.rate_helpers import (
     DepositRateHelper, SwapRateHelper)
-from quantlib.termstructures.yields.api import (
+from lifelib_pyql.termstructures.yields.api import (
     PiecewiseYieldCurve, BootstrapTrait )
-from quantlib.math.interpolation import LogLinear
+from lifelib_pyql.math.interpolation import LogLinear
 
-from quantlib.time.api import (
+from lifelib_pyql.time.api import (
     Period, Months, Date, Days, TARGET, ModifiedFollowing,
     Years, Actual360, Semiannual,
     Thirty360, ActualActual
 )
 
 from datetime import date
-from quantlib.util.converter import pydate_to_qldate
+from lifelib_pyql.util.converter import pydate_to_qldate
 
 
 def build_helpers():

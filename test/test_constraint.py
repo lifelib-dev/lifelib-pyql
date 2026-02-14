@@ -1,9 +1,9 @@
 import unittest
 
-from quantlib.math.hestonhwcorrelationconstraint import (
+from lifelib_pyql.math.hestonhwcorrelationconstraint import (
     HestonHullWhiteCorrelationConstraint)
 
-from quantlib.math.array import qlarray_from_pyarray
+from lifelib_pyql.math.array import qlarray_from_pyarray
 
 
 class TestConstraint(unittest.TestCase):

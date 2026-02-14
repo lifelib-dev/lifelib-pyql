@@ -1,0 +1,128 @@
+# Copyright (C) 2011, Enthought Inc
+# Copyright (C) 2011, Patrick Henaff
+
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the license for more details.
+""" Heston model for the stochastic volatility of an asset"""
+from lifelib_pyql.types cimport Real
+from libcpp cimport bool
+from cython.operator cimport dereference as deref
+
+from libcpp.vector cimport vector
+
+from . cimport _heston_model as _hm
+cimport lifelib_pyql.models._calibration_helper as _ch
+cimport lifelib_pyql.processes._heston_process as _hp
+cimport lifelib_pyql._stochastic_process as _sp
+cimport lifelib_pyql.termstructures.yields._flat_forward as _ffwd
+cimport lifelib_pyql.pricingengines._pricing_engine as _pe
+
+from lifelib_pyql.handle cimport shared_ptr, static_pointer_cast
+from lifelib_pyql.math.optimization cimport (Constraint,OptimizationMethod,
+                                         EndCriteria)
+
+from lifelib_pyql.processes.heston_process cimport HestonProcess
+from lifelib_pyql.pricingengines.engine cimport PricingEngine
+from lifelib_pyql.quote cimport Quote
+from lifelib_pyql.time.calendar cimport Calendar
+from lifelib_pyql.time.date cimport Period
+from lifelib_pyql.termstructures.yield_term_structure cimport (
+    HandleYieldTermStructure
+)
+from lifelib_pyql.models.calibration_helper cimport BlackCalibrationHelper, CalibrationErrorType
+
+
+cdef class HestonModelHelper(BlackCalibrationHelper):
+
+    def __str__(self):
+        return 'Heston model helper'
+
+    def __init__(self,
+        Period maturity,
+        Calendar calendar,
+        Real s0,
+        Real strike_price,
+        Quote volatility,
+        HandleYieldTermStructure risk_free_rate,
+        HandleYieldTermStructure dividend_yield,
+        CalibrationErrorType error_type=_ch.RelativePriceError
+    ):
+        self._thisptr = shared_ptr[_ch.CalibrationHelper](
+            new _hm.HestonModelHelper(
+                deref(maturity._thisptr),
+                calendar._thisptr,
+                s0,
+                strike_price,
+                volatility.handle(),
+                risk_free_rate.handle,
+                dividend_yield.handle,
+                error_type
+            )
+        )
+
+cdef class HestonModel:
+    """Heston model for the stochastic volatility of an asset
+
+    References
+    ----------
+    Heston, Steven L., 1993. "A Closed-Form Solution for Options with Stochastic Volatility with Applications to Bond and Currency Options."  *The review of Financial Studies, Volume 6, Issue 2, 327-343.*
+   """
+
+    def __init__(self, HestonProcess process):
+        self._thisptr = shared_ptr[_hm.HestonModel](
+            new _hm.HestonModel(static_pointer_cast[_hp.HestonProcess](
+                process._thisptr))
+        )
+
+    def process(self):
+        """underlying process"""
+        cdef HestonProcess process = HestonProcess.__new__(HestonProcess)
+        process._thisptr = static_pointer_cast[_sp.StochasticProcess](
+            self._thisptr.get().process())
+        return process
+
+    @property
+    def theta(self):
+        """variance mean reversion level"""
+        return self._thisptr.get().theta()
+
+    @property
+    def kappa(self):
+        """variance mean reversion speed"""
+        return self._thisptr.get().kappa()
+
+    @property
+    def sigma(self):
+        """volatility of the volatility"""
+        return self._thisptr.get().sigma()
+
+    @property
+    def rho(self):
+        """correlation"""
+        return self._thisptr.get().rho()
+
+    @property
+    def v0(self):
+        """spot variance"""
+        return self._thisptr.get().v0()
+
+    def calibrate(self, list helpers, OptimizationMethod method, EndCriteria
+                  end_criteria, Constraint constraint=Constraint(),
+                  vector[Real] weights=[], vector[bool] fix_parameters=[]):
+
+        #convert list to vector
+        cdef vector[shared_ptr[_ch.CalibrationHelper]] helpers_vector
+
+        cdef shared_ptr[_ch.CalibrationHelper] chelper
+        for helper in helpers:
+            chelper = (<HestonModelHelper>helper)._thisptr
+            helpers_vector.push_back(chelper)
+
+        self._thisptr.get().calibrate(
+            helpers_vector,
+            deref(method._thisptr),
+            deref(end_criteria._thisptr),
+            deref(constraint._thisptr),
+            weights,
+            fix_parameters)

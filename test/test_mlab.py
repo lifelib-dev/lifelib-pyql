@@ -1,20 +1,20 @@
 import unittest
 
 from datetime import date
-from quantlib.mlab.option_pricing import heston_pricer, blsprice, blsimpv
-from quantlib.mlab.fixed_income import bndprice, cfamounts
-from quantlib.mlab.term_structure import zbt_libor_yield
-from quantlib.option import OptionType
+from lifelib_pyql.mlab.option_pricing import heston_pricer, blsprice, blsimpv
+from lifelib_pyql.mlab.fixed_income import bndprice, cfamounts
+from lifelib_pyql.mlab.term_structure import zbt_libor_yield
+from lifelib_pyql.option import OptionType
 
-from quantlib.util.rates import make_rate_helper, zero_rate
-import quantlib.reference.names as nm
-import quantlib.reference.data_structures as ds
+from lifelib_pyql.util.rates import make_rate_helper, zero_rate
+import lifelib_pyql.reference.names as nm
+import lifelib_pyql.reference.data_structures as ds
 
-from quantlib.termstructures.yields.api import (
+from lifelib_pyql.termstructures.yields.api import (
     PiecewiseYieldCurve, BootstrapTrait )
-from quantlib.math.interpolation import LogLinear
-from quantlib.time.api import ActualActual, Frequency
-from quantlib.util.converter import pydate_to_qldate
+from lifelib_pyql.math.interpolation import LogLinear
+from lifelib_pyql.time.api import ActualActual, Frequency
+from lifelib_pyql.util.converter import pydate_to_qldate
 
 
 class MLabTestCase(unittest.TestCase):

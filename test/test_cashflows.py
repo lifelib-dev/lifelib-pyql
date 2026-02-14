@@ -1,7 +1,7 @@
 import unittest
 
-from quantlib.time.date import Date
-import quantlib.cashflow as cf
+from lifelib_pyql.time.date import Date
+import lifelib_pyql.cashflow as cf
 from datetime import date
 
 

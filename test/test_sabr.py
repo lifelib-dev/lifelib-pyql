@@ -1,11 +1,11 @@
 import math
 import unittest
-from quantlib.time.api import Date
-from quantlib.quotes import SimpleQuote
-from quantlib.settings import Settings
-from quantlib.termstructures.volatility.sabr_interpolated_smilesection \
+from lifelib_pyql.time.api import Date
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.termstructures.volatility.sabr_interpolated_smilesection \
     import SabrInterpolatedSmileSection
-from quantlib.termstructures.volatility.sabr import unsafe_sabr_volatility
+from lifelib_pyql.termstructures.volatility.sabr import unsafe_sabr_volatility
 
 import numpy as np
 

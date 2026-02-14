@@ -6,17 +6,17 @@
  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  FOR A PARTICULAR PURPOSE.  See the license for more details.
 """
-from quantlib.instruments.api import AmericanExercise, VanillaOption, OptionType
-from quantlib.instruments.payoffs import PlainVanillaPayoff
-from quantlib.pricingengines.api import BaroneAdesiWhaleyApproximationEngine
-from quantlib.pricingengines.api import FdBlackScholesVanillaEngine
-from quantlib.processes.black_scholes_process import BlackScholesMertonProcess
-from quantlib.quotes import SimpleQuote
-from quantlib.settings import Settings
-from quantlib.time.api import Actual365Fixed, Date, May, TARGET
-from quantlib.termstructures.volatility.api import BlackConstantVol
-from quantlib.termstructures.yields.api import HandleYieldTermStructure, FlatForward
-from quantlib.methods.finitedifferences.solvers.fdmbackwardsolver \
+from lifelib_pyql.instruments.api import AmericanExercise, VanillaOption, OptionType
+from lifelib_pyql.instruments.payoffs import PlainVanillaPayoff
+from lifelib_pyql.pricingengines.api import BaroneAdesiWhaleyApproximationEngine
+from lifelib_pyql.pricingengines.api import FdBlackScholesVanillaEngine
+from lifelib_pyql.processes.black_scholes_process import BlackScholesMertonProcess
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.time.api import Actual365Fixed, Date, May, TARGET
+from lifelib_pyql.termstructures.volatility.api import BlackConstantVol
+from lifelib_pyql.termstructures.yields.api import HandleYieldTermStructure, FlatForward
+from lifelib_pyql.methods.finitedifferences.solvers.fdmbackwardsolver \
     import FdmSchemeDesc
 
 def main():

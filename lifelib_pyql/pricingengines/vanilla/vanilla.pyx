@@ -1,0 +1,180 @@
+include '../../types.pxi'
+
+from libcpp.vector cimport vector
+from libcpp cimport bool
+
+from cython.operator cimport dereference as deref
+from lifelib_pyql.instruments.dividendschedule cimport DividendSchedule
+from lifelib_pyql.handle cimport shared_ptr, static_pointer_cast
+cimport lifelib_pyql.processes._black_scholes_process as _bsp
+cimport lifelib_pyql.models.equity._bates_model as _bm
+cimport lifelib_pyql.models.shortrate.onefactormodels._hullwhite as _hw
+from . cimport _vanilla as _va
+from lifelib_pyql.models.equity.heston_model cimport HestonModel
+
+from lifelib_pyql.models.shortrate.onefactormodels.hullwhite cimport HullWhite
+from lifelib_pyql.processes.hullwhite_process cimport HullWhiteProcess
+cimport lifelib_pyql.processes._hullwhite_process as _hwp
+from lifelib_pyql.models.equity.bates_model cimport (BatesModel, BatesDetJumpModel, BatesDoubleExpModel, BatesDoubleExpDetJumpModel)
+from lifelib_pyql.processes.black_scholes_process cimport GeneralizedBlackScholesProcess
+
+from lifelib_pyql.pricingengines.engine cimport PricingEngine
+from lifelib_pyql.methods.finitedifferences.solvers.fdmbackwardsolver cimport FdmSchemeDesc
+
+cdef class VanillaOptionEngine(PricingEngine):
+    pass
+
+cdef class AnalyticEuropeanEngine(VanillaOptionEngine):
+
+    def __init__(self, GeneralizedBlackScholesProcess process):
+
+        cdef shared_ptr[_bsp.GeneralizedBlackScholesProcess] process_ptr = \
+            static_pointer_cast[_bsp.GeneralizedBlackScholesProcess](process._thisptr)
+
+        self._thisptr.reset(
+            new _va.AnalyticEuropeanEngine(process_ptr)
+        )
+
+cdef class BaroneAdesiWhaleyApproximationEngine(VanillaOptionEngine):
+
+    def __init__(self, GeneralizedBlackScholesProcess process):
+
+        cdef shared_ptr[_bsp.GeneralizedBlackScholesProcess] process_ptr = \
+            static_pointer_cast[_bsp.GeneralizedBlackScholesProcess](process._thisptr)
+
+        self._thisptr.reset(
+            new _va.BaroneAdesiWhaleyApproximationEngine(process_ptr)
+        )
+
+
+cdef class AnalyticBSMHullWhiteEngine(PricingEngine):
+
+    def __init__(self, Real equity_short_rate_correlation,
+            GeneralizedBlackScholesProcess process,
+            HullWhite hw_model):
+
+        cdef shared_ptr[_bsp.GeneralizedBlackScholesProcess] process_ptr = \
+            static_pointer_cast[_bsp.GeneralizedBlackScholesProcess](process._thisptr)
+
+        self._thisptr.reset(
+            new _va.AnalyticBSMHullWhiteEngine(
+                equity_short_rate_correlation,
+                process_ptr,
+                static_pointer_cast[_hw.HullWhite](hw_model._thisptr)
+            )
+        )
+
+
+cdef class AnalyticHestonHullWhiteEngine(PricingEngine):
+
+    def __init__(self, HestonModel heston_model,
+                 HullWhite hw_model,
+                 int integration_order=144):
+
+        self._thisptr.reset(
+            new _va.AnalyticHestonHullWhiteEngine(
+                heston_model._thisptr,
+                static_pointer_cast[_hw.HullWhite](hw_model._thisptr),
+                <Size>integration_order
+            )
+        )
+
+
+cdef class FdHestonHullWhiteVanillaEngine(PricingEngine):
+    def __init__(self, HestonModel heston_model,
+            HullWhiteProcess hw_process,
+            Real corr_equity_short_rate,
+            Size t_grid=50,
+            Size x_grid=100,
+            Size v_grid=40,
+            Size r_grid=20,
+            Size damping_steps=0,
+            bool control_variate=True,
+            FdmSchemeDesc desc=FdmSchemeDesc.Hundsdorfer(),
+            DividendSchedule dividends=None):
+
+        if dividends is not None:
+            self._thisptr.reset(
+                new _va.FdHestonHullWhiteVanillaEngine(
+                    heston_model._thisptr,
+                    static_pointer_cast[_hwp.HullWhiteProcess](hw_process._thisptr),
+                    dividends.schedule,
+                    corr_equity_short_rate,
+                    t_grid,
+                    x_grid,
+                    v_grid,
+                    r_grid,
+                    damping_steps,
+                    control_variate,
+                    deref(desc._thisptr)
+                )
+            )
+        else:
+            self._thisptr.reset(
+                new _va.FdHestonHullWhiteVanillaEngine(
+                    heston_model._thisptr,
+                    static_pointer_cast[_hwp.HullWhiteProcess](hw_process._thisptr),
+                    corr_equity_short_rate,
+                    t_grid,
+                    x_grid,
+                    v_grid,
+                    r_grid,
+                    damping_steps,
+                    control_variate,
+                    deref(desc._thisptr)
+                )
+            )
+
+    def enable_multiple_strikes_caching(self, strikes):
+        cdef vector[double] v = strikes
+        (<_va.FdHestonHullWhiteVanillaEngine *> self._thisptr.get()).enableMultipleStrikesCaching(v)
+
+cdef class BatesEngine(AnalyticHestonEngine):
+
+    def __init__(self, BatesModel model, int integration_order=144):
+
+        self._thisptr.reset(
+            new _va.BatesEngine(
+                static_pointer_cast[_bm.BatesModel](model._thisptr),
+                <Size>integration_order
+            )
+        )
+
+cdef class BatesDetJumpEngine(BatesEngine):
+
+    def __init__(self, BatesDetJumpModel model, int integration_order=144):
+
+        self._thisptr.reset(
+            new _va.BatesDetJumpEngine(
+                static_pointer_cast[_bm.BatesDetJumpModel](model._thisptr),
+                <Size>integration_order))
+
+cdef class BatesDoubleExpEngine(AnalyticHestonEngine):
+
+    def __init__(self, BatesDoubleExpModel model, int integration_order=144):
+
+        self._thisptr.reset(
+            new _va.BatesDoubleExpEngine(
+                static_pointer_cast[_bm.BatesDoubleExpModel](model._thisptr),
+                <Size>integration_order))
+
+cdef class BatesDoubleExpDetJumpEngine(BatesDoubleExpEngine):
+
+    def __init__(self, BatesDoubleExpDetJumpModel model, int integration_order=144):
+
+        self._thisptr.reset(
+            new _va.BatesDoubleExpDetJumpEngine(
+                static_pointer_cast[_bm.BatesDoubleExpDetJumpModel](model._thisptr),
+                <Size>integration_order))
+
+
+cdef class AnalyticDividendEuropeanEngine(PricingEngine):
+
+    def __init__(self, GeneralizedBlackScholesProcess process not None, DividendSchedule dividends not None):
+
+        cdef shared_ptr[_bsp.GeneralizedBlackScholesProcess] process_ptr = \
+            static_pointer_cast[_bsp.GeneralizedBlackScholesProcess](process._thisptr)
+
+        self._thisptr.reset(
+            new _va.AnalyticDividendEuropeanEngine(process_ptr, dividends.schedule)
+        )

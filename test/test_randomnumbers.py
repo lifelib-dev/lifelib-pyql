@@ -1,8 +1,8 @@
 import unittest
 
 import numpy as np
-from quantlib.math.randomnumbers.rngtraits import LowDiscrepancy
-from quantlib.math.randomnumbers.sobol_rsg import SobolRsg, DirectionIntegers
+from lifelib_pyql.math.randomnumbers.rngtraits import LowDiscrepancy
+from lifelib_pyql.math.randomnumbers.sobol_rsg import SobolRsg, DirectionIntegers
 
 
 class SobolRsgTestCase(unittest.TestCase):

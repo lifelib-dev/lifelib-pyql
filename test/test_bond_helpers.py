@@ -1,9 +1,9 @@
 import unittest
 
-from quantlib.quotes import SimpleQuote
-from quantlib.termstructures.yields.bond_helpers import (
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.termstructures.yields.bond_helpers import (
     FixedRateBondHelper)
-from quantlib.time.api import (
+from lifelib_pyql.time.api import (
     Annual, DateGeneration, Date, DayCounter, ModifiedFollowing, Following, Period, Schedule, TARGET)
 
 class TestFixedRateBondHelper(unittest.TestCase):

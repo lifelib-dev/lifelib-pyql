@@ -1,22 +1,22 @@
 import unittest
 
-from quantlib.currency.api import USDCurrency
-from quantlib.instruments.swap import Swap
-from quantlib.instruments.vanillaswap import VanillaSwap
-from quantlib.indexes.ibor.libor import Libor
-from quantlib.market.market import libor_market
-from quantlib.pricingengines.swap import DiscountingSwapEngine
-from quantlib.settings import Settings
-from quantlib.termstructures.yields.api import (
+from lifelib_pyql.currency.api import USDCurrency
+from lifelib_pyql.instruments.swap import Swap
+from lifelib_pyql.instruments.vanillaswap import VanillaSwap
+from lifelib_pyql.indexes.ibor.libor import Libor
+from lifelib_pyql.market.market import libor_market
+from lifelib_pyql.pricingengines.swap import DiscountingSwapEngine
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.termstructures.yields.api import (
     FlatForward, HandleYieldTermStructure
 )
-from quantlib.time.api import (
+from lifelib_pyql.time.api import (
     Unadjusted, ModifiedFollowing, Date, Days, Semiannual, January, Period,
     Annual, Years, Months, Actual365Fixed, Thirty360, TARGET, Actual360,
     Schedule, DateGeneration
 )
-from quantlib.util.converter import pydate_to_qldate
-from quantlib.quotes import SimpleQuote
+from lifelib_pyql.util.converter import pydate_to_qldate
+from lifelib_pyql.quotes import SimpleQuote
 
 
 class TestQuantLibSwap(unittest.TestCase):

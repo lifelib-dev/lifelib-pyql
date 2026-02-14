@@ -29,16 +29,16 @@
 #
 # $dW_t^s$ and $dW_t^{\nu}$ are Wiener processes with correlation $\rho$.
 
-from quantlib.processes.bates_process import BatesProcess
-from quantlib.models.equity.bates_model import BatesModel
-from quantlib.processes.heston_process import HestonProcess
-from quantlib.models.equity.heston_model import HestonModel
-from quantlib.quotes import SimpleQuote
-from quantlib.settings import Settings
-from quantlib.time.api import today, NullCalendar, ActualActual
-from quantlib.util.rates import flat_rate
+from lifelib_pyql.processes.bates_process import BatesProcess
+from lifelib_pyql.models.equity.bates_model import BatesModel
+from lifelib_pyql.processes.heston_process import HestonProcess
+from lifelib_pyql.models.equity.heston_model import HestonModel
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.time.api import today, NullCalendar, ActualActual
+from lifelib_pyql.util.rates import flat_rate
 import pylab as pl
-from quantlib.sim.simulate import simulate_model
+from lifelib_pyql.sim.simulate import simulate_model
 
 # The Heston Process
 # ------------------

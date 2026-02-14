@@ -3,7 +3,7 @@ import numpy as np
 from datetime import date, timedelta
 
 import unittest
-import quantlib.reference.data_structures as df
+import lifelib_pyql.reference.data_structures as df
 import  quantlib.reference.names as nm
 
 class ReferenceTestCase(unittest.TestCase):

@@ -9,20 +9,20 @@
 
 import unittest
 
-from quantlib.currency.api import USDCurrency, EURCurrency
-from quantlib.index import Index
-from quantlib.indexes.interest_rate_index import InterestRateIndex
-from quantlib.indexes.api import (
+from lifelib_pyql.currency.api import USDCurrency, EURCurrency
+from lifelib_pyql.index import Index
+from lifelib_pyql.indexes.interest_rate_index import InterestRateIndex
+from lifelib_pyql.indexes.api import (
     Libor, SwapIndex, IborIndex, Euribor6M, USDLibor,
     UsdLiborSwapIsdaFixAm, IndexManager)
-from quantlib.settings import Settings
-from quantlib.time.api import (Days, Months, Years, Period, TARGET, Actual360,
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.time.api import (Days, Months, Years, Period, TARGET, Actual360,
                                today, Actual365Fixed, UnitedStates, Thirty360)
-from quantlib.time.api import ModifiedFollowing
-from quantlib.time.calendars.united_states import Market
-from quantlib.termstructures.yields.api import (
+from lifelib_pyql.time.api import ModifiedFollowing
+from lifelib_pyql.time.calendars.united_states import Market
+from lifelib_pyql.termstructures.yields.api import (
     FlatForward, HandleYieldTermStructure)
-from quantlib.time.api import Date, January
+from lifelib_pyql.time.api import Date, January
 
 
 class TestIndex(unittest.TestCase):

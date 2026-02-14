@@ -8,7 +8,7 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "quantlib"
+name = "lifelib_pyql"
 version = "0.1"
 description = "QuantLib Cython wrappers"
 readme = "README.md"
@@ -28,5 +28,5 @@ include-package-data = true
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["quantlib*"]
+include = ["lifelib_pyql*"]
 exclude = ["test*"]

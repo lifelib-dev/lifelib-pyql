@@ -1,11 +1,11 @@
 import unittest
-from quantlib.time.date import (
+from lifelib_pyql.time.date import (
     Date, Period, Jan, Dec, Weeks, Sep, Months, Nov
 )
-from quantlib.time.businessdayconvention import Following, Preceding
-from quantlib.time.calendars.united_kingdom import UnitedKingdom
-from quantlib.time.schedule import Schedule
-from quantlib.time.dategeneration import DateGeneration
+from lifelib_pyql.time.businessdayconvention import Following, Preceding
+from lifelib_pyql.time.calendars.united_kingdom import UnitedKingdom
+from lifelib_pyql.time.schedule import Schedule
+from lifelib_pyql.time.dategeneration import DateGeneration
 
 class ScheduleTestCase(unittest.TestCase):
 

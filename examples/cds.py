@@ -5,23 +5,23 @@ This example is based on the QuantLib CDS official example.
 Copyright (C) 2012 Enthought Inc.
 
 """
-from quantlib.instruments.api import CreditDefaultSwap, Protection, PricingModel
-from quantlib.pricingengines.credit.midpoint_cds_engine import MidPointCdsEngine
-from quantlib.pricingengines.credit.isda_cds_engine import (
+from lifelib_pyql.instruments.api import CreditDefaultSwap, Protection, PricingModel
+from lifelib_pyql.pricingengines.credit.midpoint_cds_engine import MidPointCdsEngine
+from lifelib_pyql.pricingengines.credit.isda_cds_engine import (
     IsdaCdsEngine, NumericalFix, AccrualBias, ForwardsInCouponPeriod )
-from quantlib.settings import Settings
-from quantlib.time.api import (
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.time.api import (
     Date, May, September, Actual365Fixed, Following, TARGET, Period, Months,
     Quarterly, Annual, DateGeneration, Years, Schedule, Unadjusted, ModifiedFollowing,
     WeekendsOnly, Actual360, Thirty360
 )
-from quantlib.termstructures.credit.api import (
+from lifelib_pyql.termstructures.credit.api import (
         SpreadCdsHelper, PiecewiseDefaultCurve, ProbabilityTrait, Interpolator,
         FlatHazardRate, HandleDefaultProbabilityTermStructure)
-from quantlib.indexes.api import Euribor6M
-from quantlib.quotes import SimpleQuote
-from quantlib.math.interpolation import LogLinear
-from quantlib.termstructures.yields.api import ( BootstrapTrait,
+from lifelib_pyql.indexes.api import Euribor6M
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.math.interpolation import LogLinear
+from lifelib_pyql.termstructures.yields.api import ( BootstrapTrait,
                                                  FlatForward, DepositRateHelper, SwapRateHelper, PiecewiseYieldCurve, HandleYieldTermStructure)
 
 def example01():

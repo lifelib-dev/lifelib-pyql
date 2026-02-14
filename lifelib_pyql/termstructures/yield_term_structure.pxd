@@ -1,0 +1,9 @@
+from ..termstructure cimport TermStructure
+cimport lifelib_pyql.termstructures._yield_term_structure as _yts
+from lifelib_pyql.handle cimport RelinkableHandle, shared_ptr
+
+cdef class YieldTermStructure(TermStructure):
+    cdef inline _yts.YieldTermStructure* as_yts_ptr(self) except NULL
+
+cdef class HandleYieldTermStructure:
+    cdef RelinkableHandle[_yts.YieldTermStructure] handle

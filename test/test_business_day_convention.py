@@ -1,9 +1,9 @@
 import unittest
 
-from quantlib.time.businessdayconvention import (
+from lifelib_pyql.time.businessdayconvention import (
     Following, Preceding)
 
-from quantlib.time.businessdayconvention import BusinessDayConvention
+from lifelib_pyql.time.businessdayconvention import BusinessDayConvention
 
 
 class TestBusinessDayConvention(unittest.TestCase):

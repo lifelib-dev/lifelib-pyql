@@ -14,20 +14,20 @@ from __future__ import print_function
 # curves from deposits and swap rates, and plot
 # a series of such curves
 
-from quantlib.settings import Settings
-from quantlib.termstructures.yields.rate_helpers import \
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.termstructures.yields.rate_helpers import \
     DepositRateHelper, SwapRateHelper
-from quantlib.termstructures.yields.piecewise_yield_curve import \
+from lifelib_pyql.termstructures.yields.piecewise_yield_curve import \
     PiecewiseYieldCurve, BootstrapTrait, Interpolator
-from quantlib.time.api import Date, TARGET, Period, Months, Years, Days
-from quantlib.time.api import (ModifiedFollowing, Actual360,
+from lifelib_pyql.time.api import Date, TARGET, Period, Months, Years, Days
+from lifelib_pyql.time.api import (ModifiedFollowing, Actual360,
                                Thirty360, Semiannual, ActualActual)
 
-from quantlib.time.api import ISDA, pydate_from_qldate
-from quantlib.currency.api import USDCurrency
-from quantlib.quotes import SimpleQuote
+from lifelib_pyql.time.api import ISDA, pydate_from_qldate
+from lifelib_pyql.currency.api import USDCurrency
+from lifelib_pyql.quotes import SimpleQuote
 
-from quantlib.indexes.libor import Libor
+from lifelib_pyql.indexes.libor import Libor
 
 import datetime
 

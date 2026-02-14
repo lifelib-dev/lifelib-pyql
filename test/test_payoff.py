@@ -1,7 +1,7 @@
 import unittest
 
-from quantlib.payoffs import PlainVanillaPayoff
-from quantlib.option import OptionType
+from lifelib_pyql.payoffs import PlainVanillaPayoff
+from lifelib_pyql.option import OptionType
 
 class PayoffTestCase(unittest.TestCase):
 

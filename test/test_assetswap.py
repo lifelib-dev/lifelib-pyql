@@ -1,10 +1,10 @@
 import unittest
 
-from quantlib.time.api import Date, Period, Annual, TARGET, Unadjusted, Schedule, DateGeneration, Actual365Fixed, Semiannual, ActualActual, Following
-from quantlib.instruments.api import FixedRateBond, AssetSwap
-from quantlib.pricingengines.api import DiscountingBondEngine, DiscountingSwapEngine
-from quantlib.termstructures.yields.api import HandleYieldTermStructure
-from quantlib.indexes.api import Euribor
+from lifelib_pyql.time.api import Date, Period, Annual, TARGET, Unadjusted, Schedule, DateGeneration, Actual365Fixed, Semiannual, ActualActual, Following
+from lifelib_pyql.instruments.api import FixedRateBond, AssetSwap
+from lifelib_pyql.pricingengines.api import DiscountingBondEngine, DiscountingSwapEngine
+from lifelib_pyql.termstructures.yields.api import HandleYieldTermStructure
+from lifelib_pyql.indexes.api import Euribor
 from .utilities import flat_rate
 
 class TestMarketASWSpread(unittest.TestCase):

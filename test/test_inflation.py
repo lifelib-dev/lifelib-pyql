@@ -9,24 +9,24 @@
 
 import unittest
 
-from quantlib.indexes.inflation.aucpi import AUCPI
-from quantlib.time.date import Months, Period, Date
-from quantlib.time.api import ( UnitedKingdom, ModifiedFollowing, ActualActual,
+from lifelib_pyql.indexes.inflation.aucpi import AUCPI
+from lifelib_pyql.time.date import Months, Period, Date
+from lifelib_pyql.time.api import ( UnitedKingdom, ModifiedFollowing, ActualActual,
                                 Schedule, Actual365Fixed, Unadjusted, Monthly )
-from quantlib.time.dategeneration import DateGeneration
-from quantlib.instruments.bonds.cpibond import CPIBond, InterpolationType
-from quantlib.pricingengines.bond import DiscountingBondEngine
-from quantlib.settings import Settings
-from quantlib.termstructures.inflation_term_structure import \
+from lifelib_pyql.time.dategeneration import DateGeneration
+from lifelib_pyql.instruments.bonds.cpibond import CPIBond, InterpolationType
+from lifelib_pyql.pricingengines.bond import DiscountingBondEngine
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.termstructures.inflation_term_structure import \
     ZeroInflationTermStructure
-from quantlib.termstructures.yields.api import FlatForward, HandleYieldTermStructure
-from quantlib.indexes.inflation.ukrpi import UKRPI
-from quantlib.indexes.inflation_index import InterpolationType
-from quantlib.termstructures.inflation.api import \
+from lifelib_pyql.termstructures.yields.api import FlatForward, HandleYieldTermStructure
+from lifelib_pyql.indexes.inflation.ukrpi import UKRPI
+from lifelib_pyql.indexes.inflation_index import InterpolationType
+from lifelib_pyql.termstructures.inflation.api import \
     ZeroCouponInflationSwapHelper, PiecewiseZeroInflationCurve, Interpolator
-from quantlib.quotes import SimpleQuote
-from quantlib.cashflows.cpi_coupon_pricer import CPICouponPricer
-from quantlib.cashflows.inflation_coupon_pricer import set_coupon_pricer
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.cashflows.cpi_coupon_pricer import CPICouponPricer
+from lifelib_pyql.cashflows.inflation_coupon_pricer import set_coupon_pricer
 
 class TestInflationIndex(unittest.TestCase):
 

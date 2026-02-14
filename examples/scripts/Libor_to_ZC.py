@@ -29,7 +29,7 @@ import matplotlib.pyplot as plt
 import matplotlib.mlab as ml
 
 import pandas as pd
-from quantlib.util.rates import zero_rate, make_term_structure
+from lifelib_pyql.util.rates import zero_rate, make_term_structure
 
 
 if __name__ == '__main__':

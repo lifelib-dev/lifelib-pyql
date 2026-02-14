@@ -1,20 +1,20 @@
 from tabulate import tabulate
-from quantlib.time.api import (TARGET, Date, Weeks, Days, Months, Years,
+from lifelib_pyql.time.api import (TARGET, Date, Weeks, Days, Months, Years,
                                Actual360, Actual365Fixed, Following, Annual, Unadjusted, Thirty360, Schedule, ModifiedFollowing, Semiannual, Period, DateGeneration)
-from quantlib.time.daycounters.thirty360 import European
-from quantlib.settings import Settings
-from quantlib.quotes import SimpleQuote
-from quantlib.termstructures.yields.rate_helpers import DepositRateHelper, FraRateHelper, SwapRateHelper
-from quantlib.termstructures.yields.ois_rate_helper import OISRateHelper
-from quantlib.termstructures.yields.piecewise_yield_curve import PiecewiseYieldCurve
-from quantlib.termstructures.yields.bootstraptraits import Discount
-from quantlib.termstructures.yields.api import HandleYieldTermStructure
-from quantlib.math.interpolation import Cubic
-from quantlib.indexes.ibor.eonia import Eonia
-from quantlib.indexes.api import Euribor6M
-from quantlib.instruments.swap import Swap
-from quantlib.instruments.vanillaswap import VanillaSwap
-from quantlib.pricingengines.swap import DiscountingSwapEngine
+from lifelib_pyql.time.daycounters.thirty360 import European
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.termstructures.yields.rate_helpers import DepositRateHelper, FraRateHelper, SwapRateHelper
+from lifelib_pyql.termstructures.yields.ois_rate_helper import OISRateHelper
+from lifelib_pyql.termstructures.yields.piecewise_yield_curve import PiecewiseYieldCurve
+from lifelib_pyql.termstructures.yields.bootstraptraits import Discount
+from lifelib_pyql.termstructures.yields.api import HandleYieldTermStructure
+from lifelib_pyql.math.interpolation import Cubic
+from lifelib_pyql.indexes.ibor.eonia import Eonia
+from lifelib_pyql.indexes.api import Euribor6M
+from lifelib_pyql.instruments.swap import Swap
+from lifelib_pyql.instruments.vanillaswap import VanillaSwap
+from lifelib_pyql.pricingengines.swap import DiscountingSwapEngine
 
 calendar = TARGET()
 todays_date = Date(11, 12, 2012)

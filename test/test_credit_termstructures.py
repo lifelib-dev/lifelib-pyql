@@ -2,14 +2,14 @@
 
 import  unittest
 
-from quantlib.settings import Settings
-from quantlib.quotes import SimpleQuote
-from quantlib.termstructures.yields.api import FlatForward, HandleYieldTermStructure
-from quantlib.termstructures.credit.api import (
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.termstructures.yields.api import FlatForward, HandleYieldTermStructure
+from lifelib_pyql.termstructures.credit.api import (
     SpreadCdsHelper, PiecewiseDefaultCurve, FlatHazardRate,
     InterpolatedHazardRateCurve, ProbabilityTrait, Interpolator)
-from quantlib.instruments.api import PricingModel
-from quantlib.time.api import TARGET, Date, Actual365Fixed, Years, \
+from lifelib_pyql.instruments.api import PricingModel
+from lifelib_pyql.time.api import TARGET, Date, Actual365Fixed, Years, \
         Following, Quarterly, DateGeneration, May, Period, Days
 import math
 

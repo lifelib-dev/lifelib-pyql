@@ -119,9 +119,9 @@ from scipy.interpolate import interp1d
 from scipy.stats import norm
 from scipy.linalg import lstsq
 
-import quantlib.pricingengines.blackformula
-from quantlib.pricingengines.blackformula import blackFormulaImpliedStdDev
-from quantlib.instruments.option import Call, Put
+import lifelib_pyql.pricingengines.blackformula
+from lifelib_pyql.pricingengines.blackformula import blackFormulaImpliedStdDev
+from lifelib_pyql.instruments.option import Call, Put
 
 def Compute_IV(optionDataFrame, tMin=0, nMin=0, QDMin=0, QDMax=1, keepOTMData=True):
     

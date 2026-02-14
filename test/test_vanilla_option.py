@@ -1,27 +1,27 @@
 import unittest
 
 import datetime
-from quantlib.exercise import (
+from lifelib_pyql.exercise import (
     EuropeanExercise, AmericanExercise)
-from quantlib.instruments.dividendschedule import DividendSchedule
+from lifelib_pyql.instruments.dividendschedule import DividendSchedule
 
-from quantlib.payoffs import PlainVanillaPayoff
-from quantlib.instruments.vanillaoption import VanillaOption
-from quantlib.pricingengines.vanilla.vanilla import (
+from lifelib_pyql.payoffs import PlainVanillaPayoff
+from lifelib_pyql.instruments.vanillaoption import VanillaOption
+from lifelib_pyql.pricingengines.vanilla.vanilla import (
     AnalyticEuropeanEngine, BaroneAdesiWhaleyApproximationEngine)
-from quantlib.pricingengines.vanilla.fdblackscholesvanillaengine import (
+from lifelib_pyql.pricingengines.vanilla.fdblackscholesvanillaengine import (
     FdBlackScholesVanillaEngine)
 
-from quantlib.instruments.implied_volatility import ImpliedVolatilityHelper
+from lifelib_pyql.instruments.implied_volatility import ImpliedVolatilityHelper
 
-from quantlib.processes.black_scholes_process import BlackScholesMertonProcess
-from quantlib.settings import Settings
-from quantlib.time.api import Date, TARGET, May, Actual365Fixed
-from quantlib.termstructures.yield_term_structure import HandleYieldTermStructure
-from quantlib.termstructures.yields.flat_forward import FlatForward
-from quantlib.quotes import SimpleQuote
-from quantlib.methods.finitedifferences.solvers.fdmbackwardsolver import FdmSchemeDesc
-from quantlib.termstructures.volatility.api \
+from lifelib_pyql.processes.black_scholes_process import BlackScholesMertonProcess
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.time.api import Date, TARGET, May, Actual365Fixed
+from lifelib_pyql.termstructures.yield_term_structure import HandleYieldTermStructure
+from lifelib_pyql.termstructures.yields.flat_forward import FlatForward
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.methods.finitedifferences.solvers.fdmbackwardsolver import FdmSchemeDesc
+from lifelib_pyql.termstructures.volatility.api \
     import BlackConstantVol
 
 

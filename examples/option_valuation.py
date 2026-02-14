@@ -20,32 +20,32 @@ NPV of the American Option with discrete dividends=0:   18.5707
 NPV of the American Option without dividend:                    17.9647
 
 """
-from quantlib.settings import Settings
-from quantlib.compounding import Simple
-from quantlib.instruments.dividendschedule import DividendSchedule
-from quantlib.currency.api import USDCurrency
-from quantlib.indexes.api import Libor
-from quantlib.indexes.swap_index import SwapIndex
-from quantlib.exercise import EuropeanExercise, AmericanExercise
-from quantlib.instruments.vanillaoption import VanillaOption
-from quantlib.option import OptionType
-from quantlib.payoffs import PlainVanillaPayoff
-from quantlib.math.interpolation import Linear
-from quantlib.pricingengines.api import AnalyticDividendEuropeanEngine
-from quantlib.pricingengines.api import FdBlackScholesVanillaEngine
-from quantlib.pricingengines.api import AnalyticEuropeanEngine
-from quantlib.processes.black_scholes_process import BlackScholesProcess
-from quantlib.quotes import SimpleQuote
-from quantlib.time.api import (
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.compounding import Simple
+from lifelib_pyql.instruments.dividendschedule import DividendSchedule
+from lifelib_pyql.currency.api import USDCurrency
+from lifelib_pyql.indexes.api import Libor
+from lifelib_pyql.indexes.swap_index import SwapIndex
+from lifelib_pyql.exercise import EuropeanExercise, AmericanExercise
+from lifelib_pyql.instruments.vanillaoption import VanillaOption
+from lifelib_pyql.option import OptionType
+from lifelib_pyql.payoffs import PlainVanillaPayoff
+from lifelib_pyql.math.interpolation import Linear
+from lifelib_pyql.pricingengines.api import AnalyticDividendEuropeanEngine
+from lifelib_pyql.pricingengines.api import FdBlackScholesVanillaEngine
+from lifelib_pyql.pricingengines.api import AnalyticEuropeanEngine
+from lifelib_pyql.processes.black_scholes_process import BlackScholesProcess
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.time.api import (
     Date, Days, Period, Actual360, Months, Jan, ModifiedFollowing, Years, Feb, pydate_from_qldate
 )
-from quantlib.methods.finitedifferences.solvers.fdmbackwardsolver import FdmSchemeDesc
-from quantlib.time.calendars.united_states import UnitedStates
-from quantlib.termstructures.yields.api import (
+from lifelib_pyql.methods.finitedifferences.solvers.fdmbackwardsolver import FdmSchemeDesc
+from lifelib_pyql.time.calendars.united_states import UnitedStates
+from lifelib_pyql.termstructures.yields.api import (
     PiecewiseYieldCurve, DepositRateHelper, BootstrapTrait, HandleYieldTermStructure
 )
-from quantlib.termstructures.volatility.api import BlackConstantVol
-from quantlib.termstructures.yields.api import SwapRateHelper
+from lifelib_pyql.termstructures.volatility.api import BlackConstantVol
+from lifelib_pyql.termstructures.yields.api import SwapRateHelper
 
 def dividendOption():
     # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

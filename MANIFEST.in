@@ -1,2 +1,2 @@
 global-include *.dll
-include quantlib/preload_dlls.txt
+include lifelib_pyql/preload_dlls.txt

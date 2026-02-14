@@ -15,7 +15,7 @@ set by:
 
 .. code-block:: python
    
-   import quantlib.reference.names as nm
+   import lifelib_pyql.reference.names as nm
    strike = option_quotes[nm.STRIKE]
    
 rather than:
@@ -38,7 +38,7 @@ An option quotes data structure with 10 rows is created with the statements:
 
 .. code-block:: python
    
-   import quantlib.reference.data_structures as ds
+   import lifelib_pyql.reference.data_structures as ds
    option_quotes = ds.option_quotes_template().reindex(index=range(10))
 
 

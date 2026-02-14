@@ -1,0 +1,14 @@
+cimport lifelib_pyql.time.calendars._weekends_only as _wo
+from lifelib_pyql.time.calendar cimport Calendar
+
+
+cdef class WeekendsOnly(Calendar):
+    '''Calendar for reproducing SNAC computations.
+
+    This calendar has no bank holidays except for weekends (Saturdays and Sundays)
+    as required by ISDA for calculating conventional CDS spreads.
+
+    '''
+
+    def __cinit__(self):
+        self._thisptr = _wo.WeekendsOnly()

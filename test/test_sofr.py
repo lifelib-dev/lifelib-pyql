@@ -1,11 +1,11 @@
-from quantlib.cashflows.rateaveraging import RateAveraging
-from quantlib.math.interpolation import Linear
-from quantlib.termstructures.yields.api import SofrFutureRateHelper, PiecewiseYieldCurve, BootstrapTrait, HandleYieldTermStructure
-from quantlib.instruments.api import OvernightIndexFuture
-from quantlib.time.date import Jan, Feb, Mar, Jun, Sep, Oct, Nov, Dec, October
-from quantlib.time.api import Date, Monthly, Quarterly, Actual365Fixed
-from quantlib.indexes.ibor.sofr import Sofr
-from quantlib.settings import Settings
+from lifelib_pyql.cashflows.rateaveraging import RateAveraging
+from lifelib_pyql.math.interpolation import Linear
+from lifelib_pyql.termstructures.yields.api import SofrFutureRateHelper, PiecewiseYieldCurve, BootstrapTrait, HandleYieldTermStructure
+from lifelib_pyql.instruments.api import OvernightIndexFuture
+from lifelib_pyql.time.date import Jan, Feb, Mar, Jun, Sep, Oct, Nov, Dec, October
+from lifelib_pyql.time.api import Date, Monthly, Quarterly, Actual365Fixed
+from lifelib_pyql.indexes.ibor.sofr import Sofr
+from lifelib_pyql.settings import Settings
 
 import unittest
 

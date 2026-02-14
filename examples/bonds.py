@@ -3,18 +3,18 @@
 This example is based on the QuantLib Excel bond demo.
 
 """
-from quantlib.instruments.bonds import FixedRateBond
-from quantlib.time.api import (
+from lifelib_pyql.instruments.bonds import FixedRateBond
+from lifelib_pyql.time.api import (
     Date, Period, Annual, TARGET, Unadjusted, ModifiedFollowing, Following, NullCalendar, Years,
     DateGeneration
 )
-from quantlib.compounding import Continuous
-from quantlib.pricingengines.bond import DiscountingBondEngine
-from quantlib.time.daycounters.simple import Actual365Fixed
-from quantlib.time.daycounters.actual_actual import ActualActual, ISMA
-from quantlib.time.schedule import Schedule
-from quantlib.settings import Settings
-from quantlib.termstructures.yields.api import (
+from lifelib_pyql.compounding import Continuous
+from lifelib_pyql.pricingengines.bond import DiscountingBondEngine
+from lifelib_pyql.time.daycounters.simple import Actual365Fixed
+from lifelib_pyql.time.daycounters.actual_actual import ActualActual, ISMA
+from lifelib_pyql.time.schedule import Schedule
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.termstructures.yields.api import (
     FlatForward, HandleYieldTermStructure
 )
 

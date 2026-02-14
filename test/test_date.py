@@ -2,7 +2,7 @@ import datetime
 
 import unittest
 
-from quantlib.time.date import (
+from lifelib_pyql.time.date import (
     Date,
     Jan,
     Feb,
@@ -30,7 +30,7 @@ from quantlib.time.date import (
     qldate_from_pydate,
     # local_date_time,  # Requires QL_HIGH_RESOLUTION_DATE
 )
-from quantlib.time.frequency import (
+from lifelib_pyql.time.frequency import (
     Frequency,
     Annual,
     Semiannual,
@@ -39,7 +39,7 @@ from quantlib.time.frequency import (
     OtherFrequency,
 )
 
-import quantlib.time.imm as imm
+import lifelib_pyql.time.imm as imm
 from datetime import date
 
 

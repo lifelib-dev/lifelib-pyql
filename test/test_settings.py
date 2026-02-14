@@ -1,12 +1,12 @@
 import unittest
-from quantlib.instruments.bonds import FixedRateBond
-from quantlib.time.api import (
+from lifelib_pyql.instruments.bonds import FixedRateBond
+from lifelib_pyql.time.api import (
     Date, Days, August, Period, Jul, Annual, today, Years, TARGET,
     Unadjusted, Schedule, ModifiedFollowing, DateGeneration, ActualActual,
     Following
 )
 
-from quantlib.settings import Settings
+from lifelib_pyql.settings import Settings
 
 class SettingsTestCase(unittest.TestCase):
 

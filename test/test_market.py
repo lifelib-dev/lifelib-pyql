@@ -1,8 +1,8 @@
 import unittest
-from quantlib.compounding import Simple
-from quantlib.time.api import Date, Actual360, Frequency
-from quantlib.market.market import libor_market, IborMarket
-from quantlib.quotes import SimpleQuote
+from lifelib_pyql.compounding import Simple
+from lifelib_pyql.time.api import Date, Actual360, Frequency
+from lifelib_pyql.market.market import libor_market, IborMarket
+from lifelib_pyql.quotes import SimpleQuote
 
 class MarketTestCase(unittest.TestCase):
 

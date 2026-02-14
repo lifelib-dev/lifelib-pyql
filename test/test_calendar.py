@@ -1,24 +1,24 @@
 import unittest
 
-from quantlib.time.businessdayconvention import (
+from lifelib_pyql.time.businessdayconvention import (
     Following, ModifiedFollowing, ModifiedPreceding, Preceding,
 )
-from quantlib.time.calendars.target import TARGET
-from quantlib.time.calendars.united_kingdom import UnitedKingdom, Market as ukMarket
-from quantlib.time.calendars.united_states import UnitedStates, Market as usMarket
-from quantlib.time.calendars.canada import Canada, Market as CanMarket
-from quantlib.time.calendars.null_calendar import NullCalendar
-from quantlib.time.calendars.germany import (
+from lifelib_pyql.time.calendars.target import TARGET
+from lifelib_pyql.time.calendars.united_kingdom import UnitedKingdom, Market as ukMarket
+from lifelib_pyql.time.calendars.united_states import UnitedStates, Market as usMarket
+from lifelib_pyql.time.calendars.canada import Canada, Market as CanMarket
+from lifelib_pyql.time.calendars.null_calendar import NullCalendar
+from lifelib_pyql.time.calendars.germany import (
     Germany, Market
 )
-from quantlib.time.calendars.weekends_only import WeekendsOnly
-from quantlib.time.date import (
+from lifelib_pyql.time.calendars.weekends_only import WeekendsOnly
+from lifelib_pyql.time.date import (
     Date, May, March, June, Jan, August, Months,November, Period, Days,
     Apr, Jul, Sep, Oct, Dec, Nov)
-from quantlib.time.calendars.jointcalendar import (
+from lifelib_pyql.time.calendars.jointcalendar import (
     JointCalendar, JointCalendarRule
 )
-from quantlib.util.version import QUANTLIB_VERSION
+from lifelib_pyql.util.version import QUANTLIB_VERSION
 
 # QuantLib 1.4 added one extra holiday to the 2011 UK calendar (29 April 2011,
 # the royal wedding), bringing the total to 9 holidays.

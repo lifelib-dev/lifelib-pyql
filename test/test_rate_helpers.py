@@ -1,24 +1,24 @@
 import unittest
 
-from quantlib.currency.api import USDCurrency
-from quantlib.indexes.swap_index import SwapIndex
-from quantlib.indexes.ibor.libor import Libor
-from quantlib.indexes.api import Euribor3M, USDLibor, Eonia
-from quantlib.quotes import SimpleQuote
-from quantlib.experimental.termstructures.crosscurrencyratehelpers import ConstNotionalCrossCurrencyBasisSwapRateHelper
-from quantlib.termstructures.yields.rate_helpers import (
+from lifelib_pyql.currency.api import USDCurrency
+from lifelib_pyql.indexes.swap_index import SwapIndex
+from lifelib_pyql.indexes.ibor.libor import Libor
+from lifelib_pyql.indexes.api import Euribor3M, USDLibor, Eonia
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.experimental.termstructures.crosscurrencyratehelpers import ConstNotionalCrossCurrencyBasisSwapRateHelper
+from lifelib_pyql.termstructures.yields.rate_helpers import (
     DepositRateHelper, FraRateHelper, FuturesRateHelper, SwapRateHelper, FxSwapRateHelper
 )
-from quantlib.termstructures.yields.ois_rate_helper import OISRateHelper
-from quantlib.termstructures.yields.api import HandleYieldTermStructure, PiecewiseYieldCurve, FlatForward
-from quantlib.math.interpolation import BackwardFlat, LogLinear
-from quantlib.termstructures.yields.bootstraptraits import Discount, ForwardRate
-from quantlib.time.api import (
+from lifelib_pyql.termstructures.yields.ois_rate_helper import OISRateHelper
+from lifelib_pyql.termstructures.yields.api import HandleYieldTermStructure, PiecewiseYieldCurve, FlatForward
+from lifelib_pyql.math.interpolation import BackwardFlat, LogLinear
+from lifelib_pyql.termstructures.yields.bootstraptraits import Discount, ForwardRate
+from lifelib_pyql.time.api import (
     Period, Months, TARGET, ModifiedFollowing, Actual365Fixed, Date, Years,
     UnitedStates, Actual360, Annual, Following, NullCalendar, Days, Weeks,
     JointCalendar, Poland
 )
-from quantlib.settings import Settings
+from lifelib_pyql.settings import Settings
 from .utilities import flat_rate
 
 class RateHelpersTestCase(unittest.TestCase):

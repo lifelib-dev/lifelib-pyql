@@ -10,23 +10,23 @@ from __future__ import division
 
 import unittest
 
-from quantlib.currency.api import USDCurrency
-from quantlib.indexes.swap_index import SwapIndex
-from quantlib.settings import Settings
-from quantlib.termstructures.yields.rate_helpers import (
+from lifelib_pyql.currency.api import USDCurrency
+from lifelib_pyql.indexes.swap_index import SwapIndex
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.termstructures.yields.rate_helpers import (
     DepositRateHelper, SwapRateHelper)
-from quantlib.termstructures.yields.piecewise_yield_curve import (
+from lifelib_pyql.termstructures.yields.piecewise_yield_curve import (
     PiecewiseYieldCurve
 )
-from quantlib.time.api import Date, TARGET, Period, Months, Years, Days
-from quantlib.time.api import September, today, Mar
-from quantlib.time.api import ModifiedFollowing, Unadjusted, Actual360
-from quantlib.time.api import Thirty360, ActualActual, Actual365Fixed
-from quantlib.time.api import Annual, UnitedStates
-from quantlib.quotes import SimpleQuote
-from quantlib.math.interpolation import Linear, LogLinear, BackwardFlat
-from quantlib.termstructures.yields.api import BootstrapTrait, DiscountCurve
-from quantlib.indexes.ibor.libor import Libor
+from lifelib_pyql.time.api import Date, TARGET, Period, Months, Years, Days
+from lifelib_pyql.time.api import September, today, Mar
+from lifelib_pyql.time.api import ModifiedFollowing, Unadjusted, Actual360
+from lifelib_pyql.time.api import Thirty360, ActualActual, Actual365Fixed
+from lifelib_pyql.time.api import Annual, UnitedStates
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.math.interpolation import Linear, LogLinear, BackwardFlat
+from lifelib_pyql.termstructures.yields.api import BootstrapTrait, DiscountCurve
+from lifelib_pyql.indexes.ibor.libor import Libor
 
 
 class PiecewiseYieldCurveTestCase(unittest.TestCase):

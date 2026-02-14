@@ -1,15 +1,15 @@
 import  unittest
 
-from quantlib.settings import Settings
-from quantlib.quotes import SimpleQuote
-from quantlib.termstructures.yields.api import FlatForward, HandleYieldTermStructure
-from quantlib.termstructures.credit.api import FlatHazardRate, HandleDefaultProbabilityTermStructure
-from quantlib.pricingengines.credit.api import MidPointCdsEngine
-from quantlib.instruments.api import CreditDefaultSwap
-from quantlib.default import Protection
-from quantlib.instruments.credit_default_swap import cds_maturity
-from quantlib.instruments.make_cds import MakeCreditDefaultSwap
-from quantlib.time.api import ( TARGET, today, Years, Schedule,
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.termstructures.yields.api import FlatForward, HandleYieldTermStructure
+from lifelib_pyql.termstructures.credit.api import FlatHazardRate, HandleDefaultProbabilityTermStructure
+from lifelib_pyql.pricingengines.credit.api import MidPointCdsEngine
+from lifelib_pyql.instruments.api import CreditDefaultSwap
+from lifelib_pyql.default import Protection
+from lifelib_pyql.instruments.credit_default_swap import cds_maturity
+from lifelib_pyql.instruments.make_cds import MakeCreditDefaultSwap
+from lifelib_pyql.time.api import ( TARGET, today, Years, Schedule,
     Following, Quarterly, DateGeneration, Actual360, Period )
 import math
 

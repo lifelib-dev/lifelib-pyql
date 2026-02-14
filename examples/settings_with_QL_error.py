@@ -5,9 +5,9 @@ from __future__ import print_function
 import logging
 
 
-from quantlib.quotes import SimpleQuote
-from quantlib.termstructures.yields.api import FlatForward
-from quantlib.time.api import Actual360, Date, NullCalendar, TARGET
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.termstructures.yields.api import FlatForward
+from lifelib_pyql.time.api import Actual360, Date, NullCalendar, TARGET
 
 
 logging.basicConfig(level=logging.INFO)

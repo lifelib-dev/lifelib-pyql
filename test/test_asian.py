@@ -1,26 +1,26 @@
 from itertools import product
 
-from quantlib.exercise import EuropeanExercise
+from lifelib_pyql.exercise import EuropeanExercise
 
-from quantlib.payoffs import PlainVanillaPayoff
-from quantlib.option import OptionType
-from quantlib.instruments.asian_options import (
+from lifelib_pyql.payoffs import PlainVanillaPayoff
+from lifelib_pyql.option import OptionType
+from lifelib_pyql.instruments.asian_options import (
     ContinuousAveragingAsianOption, DiscreteAveragingAsianOption, AverageType
 )
-from quantlib.pricingengines.asian.analyticcontgeomavprice import (
+from lifelib_pyql.pricingengines.asian.analyticcontgeomavprice import (
     AnalyticContinuousGeometricAveragePriceAsianEngine
 )
-from quantlib.pricingengines.asian.analyticdiscrgeomavprice import (
+from lifelib_pyql.pricingengines.asian.analyticdiscrgeomavprice import (
     AnalyticDiscreteGeometricAveragePriceAsianEngine
 )
 
-from quantlib.processes.black_scholes_process import BlackScholesMertonProcess
-from quantlib.settings import Settings
-from quantlib.time.api import Date, NullCalendar, June, Actual360, Years
-from quantlib.termstructures.yield_term_structure import HandleYieldTermStructure
-from quantlib.termstructures.yields.flat_forward import FlatForward
-from quantlib.quotes import SimpleQuote
-from quantlib.termstructures.volatility.api import BlackConstantVol
+from lifelib_pyql.processes.black_scholes_process import BlackScholesMertonProcess
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.time.api import Date, NullCalendar, June, Actual360, Years
+from lifelib_pyql.termstructures.yield_term_structure import HandleYieldTermStructure
+from lifelib_pyql.termstructures.yields.flat_forward import FlatForward
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.termstructures.volatility.api import BlackConstantVol
 
 import contextlib
 import unittest

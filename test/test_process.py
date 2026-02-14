@@ -1,14 +1,14 @@
 import unittest
-from quantlib.models.equity.bates_model import (BatesModel, BatesDoubleExpModel)
-from quantlib.processes.heston_process import HestonProcess
-from quantlib.processes.bates_process import BatesProcess
+from lifelib_pyql.models.equity.bates_model import (BatesModel, BatesDoubleExpModel)
+from lifelib_pyql.processes.heston_process import HestonProcess
+from lifelib_pyql.processes.bates_process import BatesProcess
 
-from quantlib.settings import Settings
-from quantlib.time.api import (
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.time.api import (
     today, NullCalendar, ActualActual
 )
-from quantlib.termstructures.yields.api import HandleYieldTermStructure
-from quantlib.quotes import SimpleQuote
+from lifelib_pyql.termstructures.yields.api import HandleYieldTermStructure
+from lifelib_pyql.quotes import SimpleQuote
 
 from .utilities import flat_rate
 

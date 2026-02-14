@@ -1,15 +1,15 @@
 import unittest
 
-from quantlib.indexes.swap.usd_libor_swap import UsdLiborSwapIsdaFixAm
-from quantlib.instruments.make_swaption import MakeSwaption
-from quantlib.pricingengines.api import BlackSwaptionEngine
-from quantlib.instruments.swap import Swap
-from quantlib.instruments.swaption import Settlement
-from quantlib.pricingengines.api import BlackSwaptionEngine
-from quantlib.termstructures.yields.api import FlatForward, HandleYieldTermStructure
-from quantlib.time.api import (ModifiedFollowing, Period, Years,
+from lifelib_pyql.indexes.swap.usd_libor_swap import UsdLiborSwapIsdaFixAm
+from lifelib_pyql.instruments.make_swaption import MakeSwaption
+from lifelib_pyql.pricingengines.api import BlackSwaptionEngine
+from lifelib_pyql.instruments.swap import Swap
+from lifelib_pyql.instruments.swaption import Settlement
+from lifelib_pyql.pricingengines.api import BlackSwaptionEngine
+from lifelib_pyql.termstructures.yields.api import FlatForward, HandleYieldTermStructure
+from lifelib_pyql.time.api import (ModifiedFollowing, Period, Years,
                                Actual365Fixed, UnitedStates, Date)
-from quantlib.settings import Settings
+from lifelib_pyql.settings import Settings
 
 class TestQuantLibSwaption(unittest.TestCase):
 

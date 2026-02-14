@@ -1,33 +1,33 @@
 import unittest
 
-from quantlib.instruments.bonds import (
+from lifelib_pyql.instruments.bonds import (
     FixedRateBond, ZeroCouponBond, FloatingRateBond
 )
-from quantlib.pricingengines.bond import DiscountingBondEngine
-from quantlib.time.calendars.united_states import (
+from lifelib_pyql.pricingengines.bond import DiscountingBondEngine
+from lifelib_pyql.time.calendars.united_states import (
     UnitedStates, Market
 )
-from quantlib.time.calendars.null_calendar import NullCalendar
-from quantlib.time.calendars.target import TARGET
-from quantlib.compounding import Compounded, Continuous
-from quantlib.time.frequency import Quarterly, Semiannual, Annual
-from quantlib.time.date import (
+from lifelib_pyql.time.calendars.null_calendar import NullCalendar
+from lifelib_pyql.time.calendars.target import TARGET
+from lifelib_pyql.compounding import Compounded, Continuous
+from lifelib_pyql.time.frequency import Quarterly, Semiannual, Annual
+from lifelib_pyql.time.date import (
     Date, Days, January, August, Period, March, February,Oct,Nov,
     Jul, Years
 )
-from quantlib.time.daycounters.simple import Actual365Fixed, Actual360
-from quantlib.time.daycounters.actual_actual import ActualActual
-from quantlib.time.schedule import Schedule
-from quantlib.time.dategeneration import DateGeneration
-from quantlib.settings import Settings
-from quantlib.termstructures.yields.api import (
+from lifelib_pyql.time.daycounters.simple import Actual365Fixed, Actual360
+from lifelib_pyql.time.daycounters.actual_actual import ActualActual
+from lifelib_pyql.time.schedule import Schedule
+from lifelib_pyql.time.dategeneration import DateGeneration
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.termstructures.yields.api import (
     FlatForward, HandleYieldTermStructure
 )
-from quantlib.indexes.api import Libor, Euribor6M
-from quantlib.currency.api import USDCurrency
-from quantlib.time.api import Months, Unadjusted, Following, ModifiedFollowing
-from quantlib.cashflows.coupon_pricer import IborCouponPricer, BlackIborCouponPricer, set_coupon_pricer
-from quantlib.termstructures.volatility.optionlet.optionlet_volatility_structure import ConstantOptionletVolatility, OptionletVolatilityStructure
+from lifelib_pyql.indexes.api import Libor, Euribor6M
+from lifelib_pyql.currency.api import USDCurrency
+from lifelib_pyql.time.api import Months, Unadjusted, Following, ModifiedFollowing
+from lifelib_pyql.cashflows.coupon_pricer import IborCouponPricer, BlackIborCouponPricer, set_coupon_pricer
+from lifelib_pyql.termstructures.volatility.optionlet.optionlet_volatility_structure import ConstantOptionletVolatility, OptionletVolatilityStructure
 
 class BondTestCase(unittest.TestCase):
 

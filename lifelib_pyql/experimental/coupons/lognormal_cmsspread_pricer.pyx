@@ -1,0 +1,36 @@
+include '../../types.pxi'
+
+from lifelib_pyql.handle cimport Handle, optional, shared_ptr, static_pointer_cast
+
+from .cms_spread_coupon cimport CmsSpreadCouponPricer
+from lifelib_pyql.cashflows.coupon_pricer cimport CmsCouponPricer
+from lifelib_pyql.quote cimport Quote
+from lifelib_pyql.termstructures.yield_term_structure cimport HandleYieldTermStructure
+from lifelib_pyql.termstructures.volatility.volatilitytype cimport VolatilityType
+from lifelib_pyql.utilities.null cimport Null
+cimport lifelib_pyql.cashflows._coupon_pricer as _cp
+from . cimport _lognormal_cmsspread_pricer as _lcp
+
+cdef class LognormalCmsSpreadPricer(CmsSpreadCouponPricer):
+    def __init__(self, CmsCouponPricer cms_pricer not None,
+                 Quote correlation not None,
+                 HandleYieldTermStructure coupon_discount_curve=HandleYieldTermStructure(),
+                 Size integration_points=16,
+                 vol_type=None,
+                 Real shift1=Null[Real](),
+                 Real shift2=Null[Real]()):
+        cdef optional[VolatilityType] vol_type_option
+        if vol_type is not None:
+            vol_type_option = <VolatilityType>vol_type
+
+        self._thisptr = shared_ptr[_cp.FloatingRateCouponPricer](
+            new _lcp.LognormalCmsSpreadPricer(
+                static_pointer_cast[_cp.CmsCouponPricer](cms_pricer._thisptr),
+                correlation.handle(),
+                coupon_discount_curve.handle,
+                integration_points,
+                vol_type_option,
+                shift1,
+                shift2
+            )
+        )

@@ -1,9 +1,9 @@
 import datetime
 
 import unittest
-from quantlib.time.date import Date, Nov, today
+from lifelib_pyql.time.date import Date, Nov, today
 
-from quantlib.util.converter import pydate_to_qldate
+from lifelib_pyql.util.converter import pydate_to_qldate
 
 
 class TestUtil(unittest.TestCase):

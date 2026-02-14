@@ -4,33 +4,33 @@ import numpy as np
 
 import unittest
 
-from quantlib.exercise import EuropeanExercise
-from quantlib.instruments.vanillaoption import VanillaOption
-from quantlib.payoffs import PlainVanillaPayoff
-from quantlib.models.calibration_helper import ImpliedVolError
-from quantlib.models.equity.heston_model import (
+from lifelib_pyql.exercise import EuropeanExercise
+from lifelib_pyql.instruments.vanillaoption import VanillaOption
+from lifelib_pyql.payoffs import PlainVanillaPayoff
+from lifelib_pyql.models.calibration_helper import ImpliedVolError
+from lifelib_pyql.models.equity.heston_model import (
     HestonModelHelper, HestonModel
 )
 
-from quantlib.processes.heston_process import HestonProcess
-from quantlib.processes.bates_process import BatesProcess
-from quantlib.models.equity.bates_model import BatesDetJumpModel
+from lifelib_pyql.processes.heston_process import HestonProcess
+from lifelib_pyql.processes.bates_process import BatesProcess
+from lifelib_pyql.models.equity.bates_model import BatesDetJumpModel
 
-from quantlib.pricingengines.blackformula import blackFormula
-from quantlib.pricingengines.vanilla.vanilla import BatesDetJumpEngine
-from quantlib.pricingengines.vanilla.analytic_heston_engine import AnalyticHestonEngine, Integration
-from quantlib.math.optimization import LevenbergMarquardt, EndCriteria
-from quantlib.settings import Settings
-from quantlib.time.api import (
+from lifelib_pyql.pricingengines.blackformula import blackFormula
+from lifelib_pyql.pricingengines.vanilla.vanilla import BatesDetJumpEngine
+from lifelib_pyql.pricingengines.vanilla.analytic_heston_engine import AnalyticHestonEngine, Integration
+from lifelib_pyql.math.optimization import LevenbergMarquardt, EndCriteria
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.time.api import (
     today, Actual360, NullCalendar, Period, Months, Years, Date, July,
     Actual365Fixed, TARGET, Weeks, ActualActual
 )
-from quantlib.termstructures.yields.flat_forward import FlatForward
-from quantlib.termstructures.yield_term_structure import HandleYieldTermStructure
-from quantlib.quotes import SimpleQuote
-from quantlib.termstructures.yields.zero_curve import ZeroCurve
+from lifelib_pyql.termstructures.yields.flat_forward import FlatForward
+from lifelib_pyql.termstructures.yield_term_structure import HandleYieldTermStructure
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.termstructures.yields.zero_curve import ZeroCurve
 
-from quantlib.pricingengines.vanilla.mceuropeanhestonengine import MCEuropeanHestonEngine
+from lifelib_pyql.pricingengines.vanilla.mceuropeanhestonengine import MCEuropeanHestonEngine
 from .utilities import flat_rate
 
 

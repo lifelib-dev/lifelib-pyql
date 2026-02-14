@@ -1,10 +1,10 @@
 import unittest
-from quantlib.time.api import TARGET, Date, Actual360, Days, Months, NoFrequency
-from quantlib.termstructures.yields.api import HandleYieldTermStructure, ZeroCurve, PiecewiseZeroSpreadedTermStructure
-from quantlib.compounding import Continuous
-from quantlib.settings import Settings
-from quantlib.quotes import SimpleQuote
-from quantlib.interest_rate import InterestRate
+from lifelib_pyql.time.api import TARGET, Date, Actual360, Days, Months, NoFrequency
+from lifelib_pyql.termstructures.yields.api import HandleYieldTermStructure, ZeroCurve, PiecewiseZeroSpreadedTermStructure
+from lifelib_pyql.compounding import Continuous
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.interest_rate import InterestRate
 
 class TestPiecewiseZeroSpreadedTermStructure(unittest.TestCase):
 

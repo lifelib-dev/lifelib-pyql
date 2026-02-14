@@ -10,44 +10,44 @@ from __future__ import print_function
 
 import numpy as np
 
-from quantlib.settings import Settings
+from lifelib_pyql.settings import Settings
 
-from quantlib.instruments.option import (
+from lifelib_pyql.instruments.option import (
     EuropeanExercise)
 
-from quantlib.instruments.payoffs import PAYOFF_TO_STR
+from lifelib_pyql.instruments.payoffs import PAYOFF_TO_STR
 
-from quantlib.models.shortrate.onefactormodels.hullwhite import HullWhite
+from lifelib_pyql.models.shortrate.onefactormodels.hullwhite import HullWhite
 
-from quantlib.instruments.option import VanillaOption
+from lifelib_pyql.instruments.option import VanillaOption
 
-from quantlib.time.api import (today, Years, Actual365Fixed,
+from lifelib_pyql.time.api import (today, Years, Actual365Fixed,
                                Period, May, Date,
                                NullCalendar)
 
-from quantlib.processes.api import (BlackScholesMertonProcess,
+from lifelib_pyql.processes.api import (BlackScholesMertonProcess,
                                     HestonProcess,
                                     HullWhiteProcess)
 
-from quantlib.models.equity.heston_model import (
+from lifelib_pyql.models.equity.heston_model import (
     HestonModel)
 
-from quantlib.termstructures.yields.api import ZeroCurve, FlatForward
-from quantlib.termstructures.volatility.api import BlackConstantVol
+from lifelib_pyql.termstructures.yields.api import ZeroCurve, FlatForward
+from lifelib_pyql.termstructures.volatility.api import BlackConstantVol
 
-from quantlib.pricingengines.api import (
+from lifelib_pyql.pricingengines.api import (
     AnalyticEuropeanEngine,
     AnalyticBSMHullWhiteEngine,
     AnalyticHestonEngine,
     AnalyticHestonHullWhiteEngine,
     FdHestonHullWhiteVanillaEngine)
 
-from quantlib.quotes import SimpleQuote
+from lifelib_pyql.quotes import SimpleQuote
 
-from quantlib.instruments.payoffs import (
+from lifelib_pyql.instruments.payoffs import (
     PlainVanillaPayoff, Put, Call)
 
-from quantlib.methods.finitedifferences.solvers.fdmbackwardsolver \
+from lifelib_pyql.methods.finitedifferences.solvers.fdmbackwardsolver \
      import FdmSchemeDesc
 
 

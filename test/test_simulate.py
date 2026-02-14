@@ -1,20 +1,20 @@
 import numpy as np
 
 import unittest
-from quantlib.processes.heston_process import HestonProcess
-from quantlib.processes.bates_process import BatesProcess
-from quantlib.processes.hullwhite_process import HullWhiteProcess
+from lifelib_pyql.processes.heston_process import HestonProcess
+from lifelib_pyql.processes.bates_process import BatesProcess
+from lifelib_pyql.processes.hullwhite_process import HullWhiteProcess
 
-from quantlib.settings import Settings
-from quantlib.time.api import (
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.time.api import (
     today, NullCalendar, ActualActual
 )
-from quantlib.termstructures.yields.api import FlatForward, HandleYieldTermStructure
-from quantlib.quotes import SimpleQuote
+from lifelib_pyql.termstructures.yields.api import FlatForward, HandleYieldTermStructure
+from lifelib_pyql.quotes import SimpleQuote
 
 
-from quantlib.sim.simulate import simulate_process
-from quantlib.time_grid import TimeGrid
+from lifelib_pyql.sim.simulate import simulate_process
+from lifelib_pyql.time_grid import TimeGrid
 
 from .utilities import flat_rate
 

@@ -1,10 +1,10 @@
 import unittest
-from quantlib.settings import Settings
-from quantlib.time.api import ActualActual, Annual, Date, DateGeneration, Period, Schedule, Following, TARGET, Actual365Fixed
-from quantlib.instruments.api import BondForward, FixedRateBond
-from quantlib.termstructures.yield_term_structure import HandleYieldTermStructure
-from quantlib.pricingengines.api import DiscountingBondEngine
-from quantlib.position import Position
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.time.api import ActualActual, Annual, Date, DateGeneration, Period, Schedule, Following, TARGET, Actual365Fixed
+from lifelib_pyql.instruments.api import BondForward, FixedRateBond
+from lifelib_pyql.termstructures.yield_term_structure import HandleYieldTermStructure
+from lifelib_pyql.pricingengines.api import DiscountingBondEngine
+from lifelib_pyql.position import Position
 from .utilities import flat_rate
 
 def build_bond(issue, maturity, cpn):

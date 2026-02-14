@@ -1,23 +1,23 @@
 import unittest
 
-from quantlib.time.api import (
+from lifelib_pyql.time.api import (
     Period, Months, Days, Years, Following, Actual365Fixed,
     UnitedStates, today, Unadjusted)
-from quantlib.math.matrix import Matrix
+from lifelib_pyql.math.matrix import Matrix
 import numpy as np
-from quantlib.termstructures.yield_term_structure import HandleYieldTermStructure
-from quantlib.termstructures.volatility.swaption.swaption_vol_matrix \
+from lifelib_pyql.termstructures.yield_term_structure import HandleYieldTermStructure
+from lifelib_pyql.termstructures.volatility.swaption.swaption_vol_matrix \
     import SwaptionVolatilityMatrix
-from quantlib.indexes.api import EuriborSwapIsdaFixA
-from quantlib.instruments.make_cms import MakeCms
-from quantlib.termstructures.yields.api import FlatForward
-from quantlib.cashflows.coupon_pricer import set_coupon_pricer
-from quantlib.cashflows.cap_floored_coupon import CappedFlooredCmsCoupon
-from quantlib.cashflows.conundrum_pricer import (
+from lifelib_pyql.indexes.api import EuriborSwapIsdaFixA
+from lifelib_pyql.instruments.make_cms import MakeCms
+from lifelib_pyql.termstructures.yields.api import FlatForward
+from lifelib_pyql.cashflows.coupon_pricer import set_coupon_pricer
+from lifelib_pyql.cashflows.cap_floored_coupon import CappedFlooredCmsCoupon
+from lifelib_pyql.cashflows.conundrum_pricer import (
     YieldCurveModel, NumericHaganPricer, AnalyticHaganPricer)
-from quantlib.cashflows.linear_tsr_pricer import LinearTsrPricer
-from quantlib.quotes import SimpleQuote
-from quantlib.settings import Settings
+from lifelib_pyql.cashflows.linear_tsr_pricer import LinearTsrPricer
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.settings import Settings
 
 class CmsFairRateTestCase(unittest.TestCase):
     def setUp(self):
