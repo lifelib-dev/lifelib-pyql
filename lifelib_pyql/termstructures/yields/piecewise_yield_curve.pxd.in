@@ -3,7 +3,7 @@ from . cimport _bootstraptraits as _trait
 from .bootstraptraits cimport BootstrapTrait as Trait
 from . cimport _piecewise_yield_curve as _pyc
 
-cimport quantlib.math._interpolations as intpl
+cimport lifelib_pyql.math._interpolations as intpl
 
 
 {{py: from itertools import product}}

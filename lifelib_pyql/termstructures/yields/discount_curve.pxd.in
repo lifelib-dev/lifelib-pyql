@@ -1,5 +1,5 @@
 from ..yield_term_structure cimport YieldTermStructure
-cimport quantlib.math._interpolations as intpl
+cimport lifelib_pyql.math._interpolations as intpl
 from . cimport _discount_curve as _dc
 
 {{for I in ["Linear", "LogLinear", "BackwardFlat", "Cubic"]}}

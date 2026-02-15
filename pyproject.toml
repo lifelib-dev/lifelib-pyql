@@ -13,6 +13,7 @@ version = "0.1"
 description = "QuantLib Cython wrappers"
 readme = "README.md"
 license = { file = "LICENSE.txt" }
+requires-python = ">=3.10"
 authors = [
     { name = "Didrik Pinte" },
     { name = "Patrick Henaff" }
@@ -30,3 +31,28 @@ include-package-data = true
 where = ["."]
 include = ["lifelib_pyql*"]
 exclude = ["test*"]
+
+# ---------------------------------------------------------------------------
+# cibuildwheel configuration
+# ---------------------------------------------------------------------------
+[tool.cibuildwheel]
+build = "cp310-* cp311-* cp312-* cp313-* cp314-*"
+skip = "*-musllinux_* *-win32 *-manylinux_i686"
+before-build = "pip install numpy cython"
+test-requires = ["pandas", "tabulate", "six"]
+test-command = "python -m unittest discover -s {project}/test -v"
+build-verbosity = 1
+
+[tool.cibuildwheel.linux]
+manylinux-x86_64-image = "manylinux_2_28"
+before-all = "bash {project}/ci/install_quantlib_linux.sh"
+environment = { QUANTLIB_INCLUDE_DIR="/usr/local/include", BOOST_INCLUDE_DIR="/usr/local/include", QUANTLIB_LIBRARY_DIR="/usr/local/lib" }
+
+[tool.cibuildwheel.macos]
+before-all = "brew install boost quantlib"
+environment = { QUANTLIB_INCLUDE_DIR="/usr/local/include", BOOST_INCLUDE_DIR="/usr/local/include", QUANTLIB_LIBRARY_DIR="/usr/local/lib" }
+
+[tool.cibuildwheel.windows]
+before-all = "powershell -ExecutionPolicy Bypass -File {project}\\ci\\install_quantlib_windows.ps1"
+environment = { QUANTLIB_INCLUDE_DIR='C:\quantlib-deps\include', BOOST_INCLUDE_DIR='C:\quantlib-deps\include', QUANTLIB_LIBRARY_DIR='C:\quantlib-deps\lib', QL_LIBRARY_NAME="QuantLib-x64-mt" }
+repair-wheel-command = "delvewheel repair --add-path C:\\quantlib-deps\\bin -w {dest_dir} {wheel}"

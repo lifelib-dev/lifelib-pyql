@@ -1,16 +1,16 @@
 from libcpp.vector cimport vector
 from libcpp.pair cimport pair
-from quantlib.types cimport DiscountFactor
+from lifelib_pyql.types cimport DiscountFactor
 from cython.operator cimport dereference as deref, preincrement as preinc
-from quantlib.handle cimport shared_ptr
+from lifelib_pyql.handle cimport shared_ptr
 
-from quantlib.time.date cimport Date, date_from_qldate
-cimport quantlib.time._date as _date
+from lifelib_pyql.time.date cimport Date, date_from_qldate
+cimport lifelib_pyql.time._date as _date
 from .. cimport _yield_term_structure as _yts
 
-from quantlib.time.daycounter cimport DayCounter
-from quantlib.time.calendar cimport Calendar
-from quantlib.math.interpolation cimport Linear, LogLinear, BackwardFlat, Cubic
+from lifelib_pyql.time.daycounter cimport DayCounter
+from lifelib_pyql.time.calendar cimport Calendar
+from lifelib_pyql.math.interpolation cimport Linear, LogLinear, BackwardFlat, Cubic
 
 # with cython3 and python>=3.7 we could use __class_getitem__ instead
 cdef class Meta(type):

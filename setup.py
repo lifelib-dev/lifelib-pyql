@@ -13,10 +13,7 @@ from Cython.Tempita import Template
 
 if sys.platform == 'win32':
     VC_INCLUDE_REDIST = False  # Set to True to include C runtime dlls in distribution.
-    from distutils import msvccompiler
-    from platform import architecture
-    VC_VERSION = msvccompiler.get_build_version()
-    ARCH = "x64" if architecture()[0] == "64bit" else "x86"
+    ARCH = "x64" if platform.machine().endswith('64') else "x86"
 
 try:
     import numpy
@@ -30,37 +27,46 @@ SUPPORT_CODE_INCLUDE = './cpp_layer'
 
 QL_LIBRARY = 'QuantLib'
 
-# FIXME: would be good to be able to customize the path with environment
-# variables in place of hardcoded paths ...
+# Include/library paths can be overridden via environment variables:
+#   QUANTLIB_INCLUDE_DIR, BOOST_INCLUDE_DIR, QUANTLIB_LIBRARY_DIR, QL_LIBRARY_NAME
 if sys.platform == 'darwin':
+    _ql_inc = os.environ.get('QUANTLIB_INCLUDE_DIR', '/usr/local/include')
+    _boost_inc = os.environ.get('BOOST_INCLUDE_DIR', '/usr/local/include')
+    _ql_lib = os.environ.get('QUANTLIB_LIBRARY_DIR', '/usr/local/lib')
     INCLUDE_DIRS = [
-        '/usr/local/include', '.', '../sources/boost_1_55_0',
+        _ql_inc, _boost_inc, '.',
         SUPPORT_CODE_INCLUDE
     ]
-    LIBRARY_DIRS = ["/usr/local/lib"]
+    LIBRARY_DIRS = [_ql_lib]
 
 elif sys.platform == 'win32':
-    # With MSVC2008, the library is called QuantLib.lib but with MSVC2010, the
-    # naming is QuantLib-vc100-mt
-    if VC_VERSION >= 10.0:
-        QL_LIBRARY = 'QuantLib-%s-mt' % (ARCH,)    # 'QuantLib-vc%d0-%s-mt' % (VC_VERSION, ARCH)
+    QL_LIBRARY = os.environ.get(
+        'QL_LIBRARY_NAME', 'QuantLib-%s-mt' % (ARCH,))
+
+    _ql_inc = os.environ.get(
+        'QUANTLIB_INCLUDE_DIR', r'c:\Users\fumito\QuantLib-1.41')
+    _boost_inc = os.environ.get(
+        'BOOST_INCLUDE_DIR', r'c:\Users\fumito\boost_1_78_0')
+    _ql_lib = os.environ.get(
+        'QUANTLIB_LIBRARY_DIR', r'c:\Users\fumito\QuantLib-1.41\lib')
 
     INCLUDE_DIRS = [
-        r'c:\Users\fumito\QuantLib-1.41',  # QuantLib headers
-        r'c:\Users\fumito\boost_1_78_0',  # Boost headers
+        _ql_inc,
+        _boost_inc,
         '.',
         SUPPORT_CODE_INCLUDE
     ]
     LIBRARY_DIRS = [
-        r"c:\Users\fumito\QuantLib-1.41\build\vc%d0\%s\Release" % (
-            VC_VERSION, ("x64" if ARCH == "x64" else "Win32")),  # for the dll lib
-        r"c:\Users\fumito\QuantLib-1.41\lib",
+        _ql_lib,
         '.',
         r'.\dll',
     ]
-elif sys.platform.startswith('linux'):   # 'linux' on Py3, 'linux2' on Py2
-    INCLUDE_DIRS = ['/usr/local/include', '/usr/include', '.', SUPPORT_CODE_INCLUDE]
-    LIBRARY_DIRS = ['/usr/local/lib', '/usr/lib']
+elif sys.platform.startswith('linux'):
+    _ql_inc = os.environ.get('QUANTLIB_INCLUDE_DIR', '/usr/local/include')
+    _boost_inc = os.environ.get('BOOST_INCLUDE_DIR', '/usr/include')
+    _ql_lib = os.environ.get('QUANTLIB_LIBRARY_DIR', '/usr/local/lib')
+    INCLUDE_DIRS = [_ql_inc, _boost_inc, '/usr/include', '.', SUPPORT_CODE_INCLUDE]
+    LIBRARY_DIRS = [_ql_lib, '/usr/lib']
 
 if HAS_NUMPY:
     INCLUDE_DIRS.append(numpy.get_include())
@@ -98,13 +104,7 @@ def get_extra_link_args():
         if DEBUG:
             args.append('/DEBUG')
     elif sys.platform == 'darwin':
-        major, minor = [
-            int(item) for item in platform.mac_ver()[0].split('.')[:2]]
-        if major == 10 and minor >= 9:
-            # On Mac OS 10.9 we link against the libstdc++ library.
-            args = ['-stdlib=libstdc++', '-mmacosx-version-min=10.6']
-        else:
-            args = []
+        args = []  # Default libc++ is correct on modern macOS
     else:
         args = ['-Wl,--strip-all']
 
@@ -191,45 +191,40 @@ class pyql_build_ext(build_ext):
     def run(self):
         build_ext.run(self)
 
+        # When building under cibuildwheel, skip DLL bundling --
+        # delvewheel/auditwheel/delocate handle it instead.
+        if os.environ.get('CIBUILDWHEEL'):
+            return
+
         # Find the quantlib dll and copy it to the built package
         if sys.platform == "win32":
-            # Find the visual studio runtime redist dlls
             dlls = []
-            if VC_INCLUDE_REDIST:
-                plat_name = msvc9compiler.get_platform()
-                plat_spec = msvc9compiler.PLAT_TO_VCVARS[plat_name]
-
-                # look for the compiler executable
-                vc_env = msvc9compiler.query_vcvarsall(VC_VERSION, plat_spec)
-                for path in vc_env['path'].split(os.pathsep):
-                    if os.path.exists(os.path.join(path, "cl.exe")):
-                        crt_dir = "Microsoft.VC%d0.CRT" % VC_VERSION
-                        redist_dir = os.path.join(path, "..", ".redist", ARCH, crt_dir)
-                        if not os.path.exists(redist_dir):
-                            redist_dir = os.path.join(path, "..", "..", "redist", ARCH, crt_dir)
-                        break
-                else:
-                    raise RuntimeError("Can't find cl.exe")
-
-                assert os.path.exists(redist_dir), "Can't find CRT redist dlls '%s'" % redist_dir
-                dlls.extend(glob.glob(os.path.join(redist_dir, "msvc*.dll")))
 
             for libdir in LIBRARY_DIRS:
                 if os.path.exists(os.path.join(libdir, QL_LIBRARY + ".dll")):
                     dlls.append(os.path.join(libdir, QL_LIBRARY + ".dll"))
                     break
             else:
-                raise AssertionError("%s.dll not found" % QL_LIBRARY)
+                log.warn("%s.dll not found in %s", QL_LIBRARY, LIBRARY_DIRS)
 
-            for dll in dlls:
-                self.copy_file(dll, os.path.join(self.build_lib, "lifelib_pyql", os.path.basename(dll)))
+            if dlls:
+                # For inplace builds, copy to the package source dir;
+                # otherwise copy to the build_lib staging directory.
+                if self.inplace:
+                    dest_dir = os.path.join(os.path.dirname(__file__), "lifelib_pyql")
+                else:
+                    dest_dir = os.path.join(self.build_lib, "lifelib_pyql")
+                os.makedirs(dest_dir, exist_ok=True)
 
-            # Write the list of dlls to be pre-loaded
-            filename = os.path.join(self.build_lib, "lifelib_pyql", "preload_dlls.txt")
-            log.info("writing preload dlls list to %s", filename)
-            if not self.dry_run:
-                with open(filename, "wt") as fh:
-                    fh.write("\n".join(map(os.path.basename, dlls)))
+                for dll in dlls:
+                    self.copy_file(dll, os.path.join(dest_dir, os.path.basename(dll)))
+
+                # Write the list of dlls to be pre-loaded
+                filename = os.path.join(dest_dir, "preload_dlls.txt")
+                log.info("writing preload dlls list to %s", filename)
+                if not self.dry_run:
+                    with open(filename, "wt") as fh:
+                        fh.write("\n".join(map(os.path.basename, dlls)))
 
 if __name__ == '__main__':
     setup(

@@ -1,0 +1,127 @@
+name: Build Wheels
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ==========================================================================
+  # Source distribution
+  # ==========================================================================
+  build_sdist:
+    name: Build sdist
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install build deps
+        run: pip install build cython numpy
+
+      - name: Build sdist
+        run: python -m build --sdist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sdist
+          path: dist/*.tar.gz
+
+  # ==========================================================================
+  # Linux wheels (x86_64)
+  # ==========================================================================
+  build_linux:
+    name: Linux wheels
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install cibuildwheel
+        run: pip install cibuildwheel==2.22.0
+
+      - name: Build wheels
+        run: cibuildwheel --output-dir wheelhouse
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wheels-linux
+          path: wheelhouse/*.whl
+
+  # ==========================================================================
+  # macOS wheels (Intel + Apple Silicon)
+  # ==========================================================================
+  build_macos:
+    name: "macOS wheels (${{ matrix.arch }})"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-13
+            arch: x86_64
+          - os: macos-14
+            arch: arm64
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install cibuildwheel
+        run: pip install cibuildwheel==2.22.0
+
+      - name: Build wheels
+        run: cibuildwheel --output-dir wheelhouse
+        env:
+          CIBW_ARCHS_MACOS: ${{ matrix.arch }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wheels-macos-${{ matrix.arch }}
+          path: wheelhouse/*.whl
+
+  # ==========================================================================
+  # Windows wheels (x64)
+  # ==========================================================================
+  build_windows:
+    name: Windows wheels
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install cibuildwheel and delvewheel
+        run: pip install cibuildwheel==2.22.0 delvewheel
+
+      - name: Build wheels
+        run: cibuildwheel --output-dir wheelhouse
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wheels-windows
+          path: wheelhouse/*.whl
+
+  # ==========================================================================
+  # Publish — only on release events, calls the reusable publish workflow
+  # ==========================================================================
+  publish:
+    name: Publish to PyPI
+    if: github.event_name == 'release'
+    needs: [build_sdist, build_linux, build_macos, build_windows]
+    uses: ./.github/workflows/publish.yml
+    secrets: inherit

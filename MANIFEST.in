@@ -1,2 +1,5 @@
 global-include *.dll
 include lifelib_pyql/preload_dlls.txt
+recursive-include cpp_layer *.cpp *.hpp
+recursive-include lifelib_pyql *.pxd *.pyx *.pxi *.in
+recursive-include ci *
