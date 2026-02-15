@@ -1,11 +1,8 @@
-BSD 3-Clause License
+This software is OSI Certified Open Source Software.
+OSI Certified is a certification mark of the Open Source Initiative.
 
-Copyright (c) 2026, lifelib-dev contributors
+Copyright (c) 2006, Enthought, Inc.
 All rights reserved.
-
-This project is a fork of PyQL, originally developed by Enthought, Inc.,
-Didrik Pinte, and Patrick Henaff. The original PyQL license is preserved
-in LICENSE_ORIGINAL_PYQL.txt.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -15,9 +12,9 @@ modification, are permitted provided that the following conditions are met:
  * Redistributions in binary form must reproduce the above copyright notice,
    this list of conditions and the following disclaimer in the documentation
    and/or other materials provided with the distribution.
- * Neither the name of the copyright holder nor the names of its contributors
-   may be used to endorse or promote products derived from this software
-   without specific prior written permission.
+ * Neither the name of Enthought, Inc. nor the names of its contributors may
+   be used to endorse or promote products derived from this software without
+   specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -29,4 +26,9 @@ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
 ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+The software contained in the traits/protocols/ directory is
+the pyprotocols project (http://peak.telecommunity.com/PyProtocols.html),
+it is originaly licensed under the terms of the Python Software
+Foundation License, which is compatible with the above terms.
 
