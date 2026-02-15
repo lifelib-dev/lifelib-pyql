@@ -83,7 +83,7 @@ def get_define_macros():
 
 def get_extra_compile_args():
     if sys.platform == 'win32':
-        args = ['/GR', '/FD', '/Zm250', '/EHsc', '/std:c++latest']
+        args = ['/GR', '/FD', '/Zm250', '/EHsc', '/std:c++latest', '/FS']
         if DEBUG:
             args.append('/Z7')
     else:
