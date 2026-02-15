@@ -2,10 +2,9 @@
 # Called by cibuildwheel via CIBW_BEFORE_ALL_WINDOWS.
 # Downloads a pre-built QuantLib zip from a GitHub Release asset.
 #
-# Expected zip structure:
-#   include/    - QuantLib + Boost headers
-#   lib/        - QuantLib-x64-mt.lib (import library)
-#   bin/        - QuantLib-x64-mt.dll
+# Expected zip structure (mirrors local dev directories):
+#   QuantLib-1.41/      - QuantLib headers + lib/ + bin/
+#   boost_1_78_0/       - Boost headers
 
 $ErrorActionPreference = "Stop"
 

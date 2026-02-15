@@ -228,8 +228,8 @@ class pyql_build_ext(build_ext):
 
 if __name__ == '__main__':
     setup(
-        name = 'lifelib_pyql',
-        version = '0.1',
+        name = 'lifelib-pyql',
+        version = '0.0.1',
         author = 'Didrik Pinte,Patrick Henaff',
         license = 'BSD',
         packages = find_packages(),

@@ -8,8 +8,8 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "lifelib_pyql"
-version = "0.1"
+name = "lifelib-pyql"
+version = "0.0.1"
 description = "QuantLib Cython wrappers"
 readme = "README.md"
 license = { file = "LICENSE.txt" }
@@ -54,5 +54,5 @@ environment = { QUANTLIB_INCLUDE_DIR="/usr/local/include", BOOST_INCLUDE_DIR="/u
 
 [tool.cibuildwheel.windows]
 before-all = "powershell -ExecutionPolicy Bypass -File {project}\\ci\\install_quantlib_windows.ps1"
-environment = { QUANTLIB_INCLUDE_DIR='C:\quantlib-deps\include', BOOST_INCLUDE_DIR='C:\quantlib-deps\include', QUANTLIB_LIBRARY_DIR='C:\quantlib-deps\lib', QL_LIBRARY_NAME="QuantLib-x64-mt" }
-repair-wheel-command = "delvewheel repair --add-path C:\\quantlib-deps\\bin -w {dest_dir} {wheel}"
+environment = { QUANTLIB_INCLUDE_DIR='C:\quantlib-deps\QuantLib-1.41', BOOST_INCLUDE_DIR='C:\quantlib-deps\boost_1_78_0', QUANTLIB_LIBRARY_DIR='C:\quantlib-deps\QuantLib-1.41\lib', QL_LIBRARY_NAME="QuantLib-x64-mt" }
+repair-wheel-command = "delvewheel repair --add-path C:\\quantlib-deps\\QuantLib-1.41\\lib -w {dest_dir} {wheel}"
