@@ -54,5 +54,5 @@ environment = { QUANTLIB_INCLUDE_DIR="/usr/local/include", BOOST_INCLUDE_DIR="/u
 
 [tool.cibuildwheel.windows]
 before-all = "powershell -ExecutionPolicy Bypass -File {project}\\ci\\install_quantlib_windows.ps1"
-environment = { QUANTLIB_INCLUDE_DIR='C:\quantlib-deps\QuantLib-1.41', BOOST_INCLUDE_DIR='C:\quantlib-deps\boost_1_78_0', QUANTLIB_LIBRARY_DIR='C:\quantlib-deps\QuantLib-1.41\lib', QL_LIBRARY_NAME="QuantLib-x64-mt" }
+environment = { QUANTLIB_INCLUDE_DIR="C:\\quantlib-deps\\QuantLib-1.41", BOOST_INCLUDE_DIR="C:\\quantlib-deps\\boost_1_78_0", QUANTLIB_LIBRARY_DIR="C:\\quantlib-deps\\QuantLib-1.41\\lib", QL_LIBRARY_NAME="QuantLib-x64-mt" }
 repair-wheel-command = "delvewheel repair --add-path C:\\quantlib-deps\\QuantLib-1.41\\lib -w {dest_dir} {wheel}"
