@@ -1,4 +1,4 @@
-"""
+﻿"""
  Copyright (C) 2013, Enthought Inc
  Copyright (C) 2013, Patrick Henaff
 
@@ -7,17 +7,17 @@
  FOR A PARTICULAR PURPOSE.  See the license for more details.
 """
 
-from quantlib.time.calendars.target import TARGET
-from quantlib.settings import Settings
-from quantlib.time.schedule import Schedule
+from lifelib_pyql.time.calendars.target import TARGET
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.time.schedule import Schedule
 
-from quantlib.time.date import (Period, Days, Months)
-from quantlib.time.daycounter import DayCounter
-from quantlib.compounding import Compounding
+from lifelib_pyql.time.date import (Period, Days, Months)
+from lifelib_pyql.time.daycounter import DayCounter
+from lifelib_pyql.compounding import Compounding
 
-from quantlib.util.converter import qldate_to_pydate, pydate_to_qldate
+from lifelib_pyql.util.converter import qldate_to_pydate, pydate_to_qldate
 
-from quantlib.util.rates import make_term_structure
+from lifelib_pyql.util.rates import make_term_structure
 
 
 def zbt_libor_yield(instruments, yields, pricing_date,

@@ -1,13 +1,13 @@
-from quantlib.time.calendars.null_calendar import NullCalendar
-from quantlib.time.calendars.weekends_only import WeekendsOnly
-from quantlib.time.calendars.germany import Germany
-from quantlib.time.calendars.united_states import UnitedStates
-import quantlib.time.calendars.united_kingdom as uk
-import quantlib.time.calendars.japan as jp
-import quantlib.time.calendars.switzerland as sw
-import quantlib.time.calendars.canada as ca
-from quantlib.time.calendars.target import TARGET
-from quantlib.util.object_registry import ObjectRegistry
+﻿from lifelib_pyql.time.calendars.null_calendar import NullCalendar
+from lifelib_pyql.time.calendars.weekends_only import WeekendsOnly
+from lifelib_pyql.time.calendars.germany import Germany
+from lifelib_pyql.time.calendars.united_states import UnitedStates
+import lifelib_pyql.time.calendars.united_kingdom as uk
+import lifelib_pyql.time.calendars.japan as jp
+import lifelib_pyql.time.calendars.switzerland as sw
+import lifelib_pyql.time.calendars.canada as ca
+from lifelib_pyql.time.calendars.target import TARGET
+from lifelib_pyql.util.object_registry import ObjectRegistry
 
 #ISO-3166 country codes (http://en.wikipedia.org/wiki/ISO_3166-1)
 ISO_3166_CALENDARS = {

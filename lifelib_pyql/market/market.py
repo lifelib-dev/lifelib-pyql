@@ -1,25 +1,25 @@
-from quantlib.market.conventions.swap import params as swap_params
-from quantlib.indexes.api import IborIndex
-from quantlib.instruments.swap import Swap
-from quantlib.instruments.vanillaswap import VanillaSwap
-from quantlib.pricingengines.swap import DiscountingSwapEngine
-from quantlib.quotes import SimpleQuote
-from quantlib.settings import Settings
-from quantlib.termstructures.yields.api import (
+﻿from lifelib_pyql.market.conventions.swap import params as swap_params
+from lifelib_pyql.indexes.api import IborIndex
+from lifelib_pyql.instruments.swap import Swap
+from lifelib_pyql.instruments.vanillaswap import VanillaSwap
+from lifelib_pyql.pricingengines.swap import DiscountingSwapEngine
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.termstructures.yields.api import (
     FixedRateBondHelper, DepositRateHelper, FuturesRateHelper, SwapRateHelper,
     PiecewiseYieldCurve, HandleYieldTermStructure, BootstrapTrait
 )
-from quantlib.math.interpolation import LogLinear
-from quantlib.time.api import (
+from lifelib_pyql.math.interpolation import LogLinear
+from lifelib_pyql.time.api import (
     Date, Period, Years, Days, JointCalendar, UnitedStates, UnitedKingdom,
     pydate_from_qldate, qldate_from_pydate, DayCounter,
     BusinessDayConvention, DateGeneration, Following, calendar_from_name,
     Schedule, Frequency
 
 )
-from quantlib.util.converter import pydate_to_qldate
+from lifelib_pyql.util.converter import pydate_to_qldate
 
-import quantlib.time.imm as imm
+import lifelib_pyql.time.imm as imm
 
 
 def libor_market(market='USD(NY)', **kwargs):

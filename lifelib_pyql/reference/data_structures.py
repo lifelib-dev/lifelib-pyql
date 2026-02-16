@@ -1,16 +1,16 @@
-""" Definition of canonical data structures used in the
+﻿""" Definition of canonical data structures used in the
 high-level functions of pyql. The data structures are all pandas DataFrames,
 with defined column names and types. The data frames are empty, and should be
 used as follows:
 
->>> import quantlib.reference.data_structures as df
+>>> import lifelib_pyql.reference.data_structures as df
 >>> x = df.option_quotes.reindex(index=range(10))
 """
 
 import numpy as np
 from pandas import DataFrame
 
-import quantlib.reference.names as nm
+import lifelib_pyql.reference.names as nm
 
 
 def option_quotes_template():

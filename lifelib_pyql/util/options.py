@@ -1,4 +1,4 @@
-"""
+﻿"""
  Copyright (C) 2012, Enthought Inc
  Copyright (C) 2012, Patrick Henaff
 
@@ -8,26 +8,26 @@
 """
 
 import numpy as np
-import quantlib.reference.names as nm
-import quantlib.reference.data_structures as ds
+import lifelib_pyql.reference.names as nm
+import lifelib_pyql.reference.data_structures as ds
 from pandas import DataFrame
 
-from quantlib.instruments.vanillaoption import VanillaOption
-from quantlib.exercise import EuropeanExercise
-from quantlib.payoffs import PlainVanillaPayoff
-from quantlib.option import OptionType
-from quantlib.models.equity.heston_model import HestonModel
-from quantlib.processes.heston_process import HestonProcess
-from quantlib.quotes import SimpleQuote
-from quantlib.settings import Settings
-from quantlib.util.converter import pydate_to_qldate, df_to_zero_curve
+from lifelib_pyql.instruments.vanillaoption import VanillaOption
+from lifelib_pyql.exercise import EuropeanExercise
+from lifelib_pyql.payoffs import PlainVanillaPayoff
+from lifelib_pyql.option import OptionType
+from lifelib_pyql.models.equity.heston_model import HestonModel
+from lifelib_pyql.processes.heston_process import HestonProcess
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.util.converter import pydate_to_qldate, df_to_zero_curve
 
-from quantlib.instruments.api import EuropeanOption
-from quantlib.pricingengines.api import AnalyticEuropeanEngine, AnalyticHestonEngine
-from quantlib.processes.api import BlackScholesMertonProcess
-from quantlib.termstructures.yields.api import FlatForward
-from quantlib.termstructures.volatility.api import BlackConstantVol
-from quantlib.time.api import Actual360, today, NullCalendar
+from lifelib_pyql.instruments.api import EuropeanOption
+from lifelib_pyql.pricingengines.api import AnalyticEuropeanEngine, AnalyticHestonEngine
+from lifelib_pyql.processes.api import BlackScholesMertonProcess
+from lifelib_pyql.termstructures.yields.api import FlatForward
+from lifelib_pyql.termstructures.volatility.api import BlackConstantVol
+from lifelib_pyql.time.api import Actual360, today, NullCalendar
 
 
 def options_to_rates(options, t_min=1. / 12., n_min=6):

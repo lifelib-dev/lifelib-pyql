@@ -1,4 +1,4 @@
-"""
+﻿"""
  Copyright (C) 2011, Enthought Inc
  Copyright (C) 2011, Patrick Henaff
 
@@ -13,9 +13,9 @@ import re
 import datetime
 
 import six
-from quantlib.time.api import Date, Actual365Fixed
-import quantlib.time.date as dt
-from quantlib.termstructures.yields.zero_curve import ZeroCurve
+from lifelib_pyql.time.api import Date, Actual365Fixed
+import lifelib_pyql.time.date as dt
+from lifelib_pyql.termstructures.yields.zero_curve import ZeroCurve
 
 _dayOfWeekName = ['Monday', 'Tuesday', 'Wednesday', 'Thursday',
                   'Friday', 'Saturday', 'Sunday']

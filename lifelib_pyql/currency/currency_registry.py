@@ -1,9 +1,9 @@
-from quantlib.currency.currencies import (
+﻿from lifelib_pyql.currency.currencies import (
     USDCurrency, EURCurrency, GBPCurrency, JPYCurrency, CHFCurrency,
     AUDCurrency, DKKCurrency, INRCurrency, HKDCurrency, NOKCurrency,
     NZDCurrency, PLNCurrency, SEKCurrency, SGDCurrency, ZARCurrency
 )
-from quantlib.util.object_registry import ObjectRegistry
+from lifelib_pyql.util.object_registry import ObjectRegistry
 
 REGISTERED_CURRENCY = [
     USDCurrency, EURCurrency, GBPCurrency, JPYCurrency, CHFCurrency,

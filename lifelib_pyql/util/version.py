@@ -1,6 +1,6 @@
-import re
+﻿import re
 
-from quantlib.settings import Settings
+from lifelib_pyql.settings import Settings
 
 
 def _to_int(s):

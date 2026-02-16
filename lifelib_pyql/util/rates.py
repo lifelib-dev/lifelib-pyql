@@ -1,4 +1,4 @@
-"""
+﻿"""
  Copyright (C) 2013, Enthought Inc
  Copyright (C) 2013, Patrick Henaff
 
@@ -13,22 +13,22 @@
 import re
 import numpy as np
 
-from quantlib.currency.api import USDCurrency
-from quantlib.indexes.ibor.libor import Libor
-from quantlib.quotes import SimpleQuote
-from quantlib.settings import Settings
-from quantlib.termstructures.yields.rate_helpers import \
+from lifelib_pyql.currency.api import USDCurrency
+from lifelib_pyql.indexes.ibor.libor import Libor
+from lifelib_pyql.quotes import SimpleQuote
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.termstructures.yields.rate_helpers import \
     DepositRateHelper, SwapRateHelper
-from quantlib.termstructures.yields.api import (
+from lifelib_pyql.termstructures.yields.api import (
     FlatForward, PiecewiseYieldCurve, BootstrapTrait
 )
-from quantlib.math.interpolation import LogLinear
-from quantlib.time.api import (
+from lifelib_pyql.math.interpolation import LogLinear
+from lifelib_pyql.time.api import (
     TARGET, Period, Months, Years, Days, ModifiedFollowing, Unadjusted,
     Actual360, Thirty360, Annual, ActualActual, JointCalendar,
     UnitedStates, UnitedKingdom, NullCalendar, Date
 )
-from quantlib.util.converter import pydate_to_qldate, qldate_to_pydate
+from lifelib_pyql.util.converter import pydate_to_qldate, qldate_to_pydate
 
 _label_re_list = [ \
     # Swap

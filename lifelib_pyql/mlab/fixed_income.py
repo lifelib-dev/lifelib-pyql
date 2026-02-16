@@ -1,4 +1,4 @@
-"""
+﻿"""
  Copyright (C) 2013, Enthought Inc
  Copyright (C) 2013, Patrick Henaff
 
@@ -8,33 +8,33 @@
 """
 
 import numpy as np
-from quantlib.instruments.bonds import (
+from lifelib_pyql.instruments.bonds import (
     FixedRateBond
 )
 
-from quantlib.compounding import Compounding
+from lifelib_pyql.compounding import Compounding
 
-from quantlib.pricingengines.bond import DiscountingBondEngine
-from quantlib.time.api import (
+from lifelib_pyql.pricingengines.bond import DiscountingBondEngine
+from lifelib_pyql.time.api import (
     Unadjusted, ModifiedFollowing, Following)
 
-from quantlib.time.calendars.null_calendar import NullCalendar
-from quantlib.time.calendars.target import TARGET
-from quantlib.time.date import (
+from lifelib_pyql.time.calendars.null_calendar import NullCalendar
+from lifelib_pyql.time.calendars.target import TARGET
+from lifelib_pyql.time.date import (
     Date, Days, Period, Years)
 
-from quantlib.time.schedule import Schedule
-from quantlib.time.dategeneration import DateGeneration
-from quantlib.settings import Settings
-from quantlib.termstructures.yields.api import (
+from lifelib_pyql.time.schedule import Schedule
+from lifelib_pyql.time.dategeneration import DateGeneration
+from lifelib_pyql.settings import Settings
+from lifelib_pyql.termstructures.yields.api import (
     FlatForward, HandleYieldTermStructure
 )
 
-from quantlib.time.daycounter import DayCounter
+from lifelib_pyql.time.daycounter import DayCounter
 
-from quantlib.util.converter import pydate_to_qldate
+from lifelib_pyql.util.converter import pydate_to_qldate
 
-from quantlib.mlab.util import common_shape, array_call
+from lifelib_pyql.mlab.util import common_shape, array_call
 
 DEBUG = False
 
