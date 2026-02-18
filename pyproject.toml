@@ -38,7 +38,7 @@ exclude = ["test*"]
 [tool.cibuildwheel]
 build = "cp310-* cp311-* cp312-* cp313-* cp314-*"
 skip = "*-musllinux_* *-win32 *-manylinux_i686"
-before-build = "pip install numpy cython"
+before-build = "rm -rf {project}/build && pip install numpy cython"
 test-requires = ["pandas", "tabulate", "six"]
 test-command = "python -m unittest discover -s {project}/test -v"
 build-verbosity = 1
