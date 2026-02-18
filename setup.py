@@ -96,8 +96,10 @@ def get_extra_compile_args():
         args = ['/GR', '/FD', '/Zm250', '/EHsc', '/std:c++latest', '/FS']
         if DEBUG:
             args.append('/Z7')
+    elif sys.platform == 'darwin':
+        args = ["-std=c++17", "-flto=auto"]
     else:
-        args = ["-flto=auto"]
+        args = ["-std=c++17", "-flto=auto"]
 
     return args
 
