@@ -30,9 +30,13 @@ QL_LIBRARY = 'QuantLib'
 # Include/library paths can be overridden via environment variables:
 #   QUANTLIB_INCLUDE_DIR, BOOST_INCLUDE_DIR, QUANTLIB_LIBRARY_DIR, QL_LIBRARY_NAME
 if sys.platform == 'darwin':
-    _ql_inc = os.environ.get('QUANTLIB_INCLUDE_DIR', '/usr/local/include')
-    _boost_inc = os.environ.get('BOOST_INCLUDE_DIR', '/usr/local/include')
-    _ql_lib = os.environ.get('QUANTLIB_LIBRARY_DIR', '/usr/local/lib')
+    import subprocess
+    _brew_prefix = subprocess.check_output(
+        ['brew', '--prefix'], text=True
+    ).strip()
+    _ql_inc = os.environ.get('QUANTLIB_INCLUDE_DIR', os.path.join(_brew_prefix, 'include'))
+    _boost_inc = os.environ.get('BOOST_INCLUDE_DIR', os.path.join(_brew_prefix, 'include'))
+    _ql_lib = os.environ.get('QUANTLIB_LIBRARY_DIR', os.path.join(_brew_prefix, 'lib'))
     INCLUDE_DIRS = [
         _ql_inc, _boost_inc, '.',
         SUPPORT_CODE_INCLUDE

@@ -50,7 +50,6 @@ environment = { QUANTLIB_INCLUDE_DIR="/usr/local/include", BOOST_INCLUDE_DIR="/u
 
 [tool.cibuildwheel.macos]
 before-all = "brew install boost quantlib"
-environment = { QUANTLIB_INCLUDE_DIR="/usr/local/include", BOOST_INCLUDE_DIR="/usr/local/include", QUANTLIB_LIBRARY_DIR="/usr/local/lib" }
 
 [tool.cibuildwheel.windows]
 before-all = "powershell -ExecutionPolicy Bypass -File {project}/ci/install_quantlib_windows.ps1"
