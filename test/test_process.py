@@ -10,7 +10,7 @@ from lifelib_pyql.time.api import (
 from lifelib_pyql.termstructures.yields.api import HandleYieldTermStructure
 from lifelib_pyql.quotes import SimpleQuote
 
-from .utilities import flat_rate
+from utilities import flat_rate
 
 
 class ProcessTestCase(unittest.TestCase):

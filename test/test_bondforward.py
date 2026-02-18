@@ -5,7 +5,7 @@ from lifelib_pyql.instruments.api import BondForward, FixedRateBond
 from lifelib_pyql.termstructures.yield_term_structure import HandleYieldTermStructure
 from lifelib_pyql.pricingengines.api import DiscountingBondEngine
 from lifelib_pyql.position import Position
-from .utilities import flat_rate
+from utilities import flat_rate
 
 def build_bond(issue, maturity, cpn):
     sch = Schedule.from_rule(issue, maturity, Period(Annual), TARGET(), Following, Following, DateGeneration.Backward, False)

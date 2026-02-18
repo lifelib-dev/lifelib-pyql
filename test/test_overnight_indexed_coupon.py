@@ -5,7 +5,7 @@ from lifelib_pyql.settings import Settings
 from lifelib_pyql.termstructures.yields.api import HandleYieldTermStructure, FlatForward
 from lifelib_pyql.time.api import Actual360
 from lifelib_pyql.indexes.api import Sofr
-from .utilities import flat_rate
+from utilities import flat_rate
 
 class TestOvernightIndexedCoupon(unittest.TestCase):
 

@@ -6,7 +6,7 @@ from lifelib_pyql.settings import Settings
 from lifelib_pyql.time.api import Date, Days, Weeks, Months, Years, Following, Actual360
 from lifelib_pyql.termstructures.yields.api import HandleYieldTermStructure
 
-from .utilities import flat_rate
+from utilities import flat_rate
 import math
 import unittest
 

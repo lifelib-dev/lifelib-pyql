@@ -19,7 +19,7 @@ from lifelib_pyql.time.api import (
     JointCalendar, Poland
 )
 from lifelib_pyql.settings import Settings
-from .utilities import flat_rate
+from utilities import flat_rate
 
 class RateHelpersTestCase(unittest.TestCase):
 

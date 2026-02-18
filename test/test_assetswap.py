@@ -5,7 +5,7 @@ from lifelib_pyql.instruments.api import FixedRateBond, AssetSwap
 from lifelib_pyql.pricingengines.api import DiscountingBondEngine, DiscountingSwapEngine
 from lifelib_pyql.termstructures.yields.api import HandleYieldTermStructure
 from lifelib_pyql.indexes.api import Euribor
-from .utilities import flat_rate
+from utilities import flat_rate
 
 class TestMarketASWSpread(unittest.TestCase):
     def setUp(self):

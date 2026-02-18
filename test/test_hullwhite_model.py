@@ -20,7 +20,7 @@ from lifelib_pyql.models.shortrate.calibrationhelpers.swaption_helper \
 
 from lifelib_pyql.math.optimization import LevenbergMarquardt, EndCriteria
 
-from .utilities import flat_rate
+from utilities import flat_rate
 
 class HullWhiteModelTestCase(unittest.TestCase):
 

@@ -12,7 +12,7 @@ from lifelib_pyql.models.api import HullWhite
 from lifelib_pyql.settings import Settings
 from lifelib_pyql.pricingengines.api import DiscountingSwapEngine, TreeSwaptionEngine
 from lifelib_pyql.exercise import BermudanExercise
-from .utilities import flat_rate
+from utilities import flat_rate
 
 
 class BermudanSwaptionTest(unittest.TestCase):

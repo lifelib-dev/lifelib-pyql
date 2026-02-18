@@ -32,7 +32,7 @@ from lifelib_pyql.pricingengines.api import (
 from lifelib_pyql.methods.finitedifferences.solvers.fdmbackwardsolver import (
     FdmSchemeDesc)
 
-from .utilities import flat_rate
+from utilities import flat_rate
 
 
 class TestHHWCalibration(unittest.TestCase):

@@ -40,7 +40,7 @@ build = "cp310-* cp311-* cp312-* cp313-* cp314-*"
 skip = "*-musllinux_* *-win32 *-manylinux_i686"
 before-build = "pip install numpy cython"
 test-requires = ["pandas", "tabulate", "six"]
-test-command = "cd {project} && python -m unittest discover -s test -v"
+test-command = "python -m unittest discover -s {project}/test -v"
 build-verbosity = 1
 
 [tool.cibuildwheel.linux]

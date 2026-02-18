@@ -41,7 +41,7 @@ from lifelib_pyql.payoffs import PlainVanillaPayoff
 
 from lifelib_pyql.methods.finitedifferences.solvers.fdmbackwardsolver import FdmSchemeDesc
 
-from .utilities import flat_rate
+from utilities import flat_rate
 
 from math import sin, exp
 

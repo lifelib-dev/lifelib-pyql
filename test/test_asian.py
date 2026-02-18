@@ -25,7 +25,7 @@ from lifelib_pyql.termstructures.volatility.api import BlackConstantVol
 import contextlib
 import unittest
 
-from .utilities import flat_rate
+from utilities import flat_rate
 
 def relative_error(x1, x2, reference):
     if reference:

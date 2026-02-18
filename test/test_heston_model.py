@@ -31,7 +31,7 @@ from lifelib_pyql.quotes import SimpleQuote
 from lifelib_pyql.termstructures.yields.zero_curve import ZeroCurve
 
 from lifelib_pyql.pricingengines.vanilla.mceuropeanhestonengine import MCEuropeanHestonEngine
-from .utilities import flat_rate
+from utilities import flat_rate
 
 
 class HestonModelTestCase(unittest.TestCase):

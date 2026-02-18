@@ -16,7 +16,7 @@ from lifelib_pyql.quotes import SimpleQuote
 from lifelib_pyql.sim.simulate import simulate_process
 from lifelib_pyql.time_grid import TimeGrid
 
-from .utilities import flat_rate
+from utilities import flat_rate
 
 
 class SimTestCase(unittest.TestCase):
