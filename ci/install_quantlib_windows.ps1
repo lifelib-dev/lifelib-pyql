@@ -66,6 +66,23 @@ Set-Content $PlatformCmake -Value $patched -NoNewline
 Write-Host "==> Patched Platform.cmake:"
 Select-String -Path $PlatformCmake -Pattern "Patched|EXPORT_ALL" | Write-Host
 
+# Also patch ql/CMakeLists.txt to add RUNTIME DESTINATION for DLL install.
+# The upstream install() only has ARCHIVE and LIBRARY destinations, so the
+# DLL (which is RUNTIME on Windows) is not installed by cmake --install.
+Write-Host "==> Patching ql/CMakeLists.txt to add RUNTIME DESTINATION"
+$qlCmake = "$QLSrcDir\ql\CMakeLists.txt"
+$qlContent = Get-Content $qlCmake -Raw
+$searchStr = 'LIBRARY DESTINATION ${QL_INSTALL_LIBDIR})'
+$replaceStr = 'LIBRARY DESTINATION ${QL_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${QL_INSTALL_BINDIR})'
+if ($qlContent.Contains($searchStr)) {
+    $qlContent = $qlContent.Replace($searchStr, $replaceStr)
+    Set-Content $qlCmake -Value $qlContent -NoNewline
+    Write-Host "==> Patched: added RUNTIME DESTINATION"
+} else {
+    Write-Warning "ql/CMakeLists.txt install() patch target not found"
+}
+
 # ---------------------------------------------------------------------------
 # 4. Build QuantLib as shared library (DLL)
 # ---------------------------------------------------------------------------
