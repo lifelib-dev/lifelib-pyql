@@ -57,7 +57,7 @@ $patched = $original -replace `
     'message\(FATAL_ERROR\s*\r?\n\s*"Shared library \(DLL\) builds for QuantLib on MSVC are not supported"\)', `
     '# Patched: DLL build enabled (FATAL_ERROR removed by lifelib-pyql CI)'
 if ($patched -eq $original) {
-    Write-Warning "Platform.cmake patch pattern did not match — file may have changed"
+    Write-Warning "Platform.cmake patch pattern did not match - file may have changed"
     Write-Host "==> Dumping relevant section for debugging:"
     Select-String -Path $PlatformCmake -Pattern "FATAL_ERROR|BUILD_SHARED|EXPORT_ALL" | Write-Host
 }
