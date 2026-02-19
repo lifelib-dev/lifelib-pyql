@@ -4,7 +4,7 @@
 # Builds QuantLib from source with -DBUILD_SHARED_LIBS=ON after patching
 # cmake/Platform.cmake to remove the MSVC DLL build block.
 #
-# Requires: CMake, Visual Studio 2022 (C++ workload), Boost headers.
+# Requires: CMake, Visual Studio 2022 (C++ workload), 7z.
 
 $ErrorActionPreference = "Stop"
 
@@ -12,33 +12,38 @@ $QuantLibVersion = if ($env:QUANTLIB_VERSION) { $env:QUANTLIB_VERSION } else { "
 $BoostVersion    = if ($env:BOOST_VERSION)    { $env:BOOST_VERSION }    else { "1.87.0" }
 $BoostVersionU   = $BoostVersion -replace '\.', '_'
 $DestDir         = "C:\quantlib-deps"
-$BuildJobs       = if ($env:BUILD_JOBS)       { $env:BUILD_JOBS }       else { (Get-CimInstance Win32_Processor).NumberOfLogicalProcessors }
+$BuildJobs       = if ($env:BUILD_JOBS) { $env:BUILD_JOBS } else {
+    (Get-CimInstance Win32_Processor).NumberOfLogicalProcessors
+}
+
+New-Item -ItemType Directory -Path $DestDir -Force | Out-Null
 
 # ---------------------------------------------------------------------------
-# 1. Download and extract Boost headers
+# 1. Download and extract Boost headers (7z is much smaller/faster than zip)
 # ---------------------------------------------------------------------------
-Write-Host "==> Downloading Boost $BoostVersion headers"
-$BoostUrl  = "https://archives.boost.io/release/$BoostVersion/source/boost_${BoostVersionU}.zip"
-$BoostZip  = "$env:TEMP\boost.zip"
-Invoke-WebRequest -Uri $BoostUrl -OutFile $BoostZip -UseBasicParsing
+Write-Host "==> Downloading Boost $BoostVersion (7z archive)"
+$BoostUrl = "https://archives.boost.io/release/$BoostVersion/source/boost_${BoostVersionU}.7z"
+$Boost7z  = "$env:TEMP\boost.7z"
+Invoke-WebRequest -Uri $BoostUrl -OutFile $Boost7z -UseBasicParsing
 
 Write-Host "==> Extracting Boost headers to $DestDir"
-Expand-Archive -Path $BoostZip -DestinationPath $DestDir -Force
+7z x $Boost7z -o"$DestDir" -y | Select-String -Pattern "^(Extracting|Everything)" | Write-Host
+if ($LASTEXITCODE -ne 0) { throw "7z extraction failed with exit code $LASTEXITCODE" }
 
-$BoostDir = "$DestDir\boost_$BoostVersionU"
-Write-Host "==> Boost headers at $BoostDir"
+$BoostIncludeDir = "$DestDir\boost_$BoostVersionU"
+Write-Host "==> Boost headers at $BoostIncludeDir"
 
 # ---------------------------------------------------------------------------
 # 2. Download and extract QuantLib source
 # ---------------------------------------------------------------------------
 Write-Host "==> Downloading QuantLib $QuantLibVersion source"
-$QLUrl = "https://github.com/lballabio/QuantLib/releases/download/v${QuantLibVersion}/QuantLib-${QuantLibVersion}.tar.gz"
+$QLUrl   = "https://github.com/lballabio/QuantLib/releases/download/v${QuantLibVersion}/QuantLib-${QuantLibVersion}.tar.gz"
 $QLTarGz = "$env:TEMP\QuantLib.tar.gz"
 Invoke-WebRequest -Uri $QLUrl -OutFile $QLTarGz -UseBasicParsing
 
 Write-Host "==> Extracting QuantLib source"
-# tar is available on windows-2022 runners
 tar xzf $QLTarGz -C $env:TEMP
+if ($LASTEXITCODE -ne 0) { throw "tar extraction failed with exit code $LASTEXITCODE" }
 
 $QLSrcDir = "$env:TEMP\QuantLib-$QuantLibVersion"
 
@@ -47,36 +52,52 @@ $QLSrcDir = "$env:TEMP\QuantLib-$QuantLibVersion"
 # ---------------------------------------------------------------------------
 Write-Host "==> Patching cmake/Platform.cmake to enable DLL builds"
 $PlatformCmake = "$QLSrcDir\cmake\Platform.cmake"
-$content = Get-Content $PlatformCmake -Raw
-$content = $content -replace 'message\(FATAL_ERROR\s*\r?\n\s*"Shared library \(DLL\) builds for QuantLib on MSVC are not supported"\)', `
+$original = Get-Content $PlatformCmake -Raw
+$patched = $original -replace `
+    'message\(FATAL_ERROR\s*\r?\n\s*"Shared library \(DLL\) builds for QuantLib on MSVC are not supported"\)', `
     '# Patched: DLL build enabled (FATAL_ERROR removed by lifelib-pyql CI)'
-Set-Content $PlatformCmake -Value $content -NoNewline
+if ($patched -eq $original) {
+    Write-Warning "Platform.cmake patch pattern did not match — file may have changed"
+    Write-Host "==> Dumping relevant section for debugging:"
+    Select-String -Path $PlatformCmake -Pattern "FATAL_ERROR|BUILD_SHARED|EXPORT_ALL" | Write-Host
+}
+Set-Content $PlatformCmake -Value $patched -NoNewline
 
 Write-Host "==> Patched Platform.cmake:"
-Select-String -Path $PlatformCmake -Pattern "Patched|EXPORT_ALL"
+Select-String -Path $PlatformCmake -Pattern "Patched|EXPORT_ALL" | Write-Host
 
 # ---------------------------------------------------------------------------
 # 4. Build QuantLib as shared library (DLL)
 # ---------------------------------------------------------------------------
 $QLInstallDir = "$DestDir\QuantLib-$QuantLibVersion"
+$QLBuildDir   = "$QLSrcDir\build"
 
 Write-Host "==> Configuring QuantLib (shared library build)"
-cmake -S $QLSrcDir -B "$QLSrcDir\build" `
-    -G "Visual Studio 17 2022" -A x64 `
-    -DCMAKE_BUILD_TYPE=Release `
-    -DCMAKE_INSTALL_PREFIX=$QLInstallDir `
-    -DBUILD_SHARED_LIBS=ON `
-    -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON `
-    -DBOOST_ROOT=$BoostDir `
-    -DQL_BUILD_BENCHMARK=OFF `
-    -DQL_BUILD_EXAMPLES=OFF `
-    -DQL_BUILD_TEST_SUITE=OFF
+$cmakeArgs = @(
+    "-S", $QLSrcDir
+    "-B", $QLBuildDir
+    "-G", "Visual Studio 17 2022"
+    "-A", "x64"
+    "-DCMAKE_INSTALL_PREFIX=$QLInstallDir"
+    "-DBUILD_SHARED_LIBS=ON"
+    "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON"
+    "-DBoost_INCLUDE_DIR=$BoostIncludeDir"
+    "-DQL_BUILD_BENCHMARK=OFF"
+    "-DQL_BUILD_EXAMPLES=OFF"
+    "-DQL_BUILD_TEST_SUITE=OFF"
+    "-Wno-dev"
+)
+Write-Host "  cmake $($cmakeArgs -join ' ')"
+cmake @cmakeArgs
+if ($LASTEXITCODE -ne 0) { throw "CMake configure failed with exit code $LASTEXITCODE" }
 
 Write-Host "==> Building QuantLib ($BuildJobs parallel jobs)"
-cmake --build "$QLSrcDir\build" --config Release --parallel $BuildJobs
+cmake --build $QLBuildDir --config Release --parallel $BuildJobs
+if ($LASTEXITCODE -ne 0) { throw "CMake build failed with exit code $LASTEXITCODE" }
 
 Write-Host "==> Installing QuantLib to $QLInstallDir"
-cmake --install "$QLSrcDir\build" --config Release
+cmake --install $QLBuildDir --config Release
+if ($LASTEXITCODE -ne 0) { throw "CMake install failed with exit code $LASTEXITCODE" }
 
 # ---------------------------------------------------------------------------
 # 5. Verify the DLL was produced
