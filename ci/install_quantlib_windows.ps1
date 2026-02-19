@@ -91,7 +91,7 @@ Write-Host "  cmake $($cmakeArgs -join ' ')"
 cmake @cmakeArgs
 if ($LASTEXITCODE -ne 0) { throw "CMake configure failed with exit code $LASTEXITCODE" }
 
-Write-Host "==> Building QuantLib ($BuildJobs parallel jobs)"
+Write-Host "==> Building QuantLib with $BuildJobs parallel jobs"
 cmake --build $QLBuildDir --config Release --parallel $BuildJobs
 if ($LASTEXITCODE -ne 0) { throw "CMake build failed with exit code $LASTEXITCODE" }
 
