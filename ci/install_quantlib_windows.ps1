@@ -61,7 +61,7 @@ if ($patched -eq $original) {
     Write-Host "==> Dumping relevant section for debugging:"
     Select-String -Path $PlatformCmake -Pattern "FATAL_ERROR|BUILD_SHARED|EXPORT_ALL" | Write-Host
 }
-Set-Content $PlatformCmake -Value $patched -NoNewline
+[System.IO.File]::WriteAllText($PlatformCmake, $patched)
 
 Write-Host "==> Patched Platform.cmake:"
 Select-String -Path $PlatformCmake -Pattern "Patched|EXPORT_ALL" | Write-Host
@@ -77,7 +77,7 @@ $replaceStr = 'LIBRARY DESTINATION ${QL_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${QL_INSTALL_BINDIR})'
 if ($qlContent.Contains($searchStr)) {
     $qlContent = $qlContent.Replace($searchStr, $replaceStr)
-    Set-Content $qlCmake -Value $qlContent -NoNewline
+    [System.IO.File]::WriteAllText($qlCmake, $qlContent)
     Write-Host "==> Patched: added RUNTIME DESTINATION"
 } else {
     Write-Warning "ql/CMakeLists.txt install() patch target not found"
@@ -91,9 +91,11 @@ if ($qlContent.Contains($searchStr)) {
 # ---------------------------------------------------------------------------
 Write-Host "==> Patching QuantLib headers for DLL data symbol export"
 
-# Add QL_EXPORT macro to qldefines.hpp
-$qlDefines = "$QLSrcDir\ql\qldefines.hpp"
-$defContent = Get-Content $qlDefines -Raw
+# Add QL_EXPORT macro to qldefines.hpp.cfg (the CMake template).
+# CMake's configure_file() generates qldefines.hpp in the build directory
+# from this .cfg template, so we must patch the template, not the output.
+$qlDefinesCfg = "$QLSrcDir\ql\qldefines.hpp.cfg"
+$defContent = Get-Content $qlDefinesCfg -Raw
 $exportMacro = @'
 
 // DLL export/import macro for classes with static data members
@@ -110,16 +112,16 @@ $exportMacro = @'
 '@
 if (-not $defContent.Contains('QL_EXPORT')) {
     # Insert before the final #endif (the include guard).
-    # We use string manipulation instead of -replace to avoid PowerShell
-    # interpreting $1 backreferences as empty variables in double-quoted strings.
     $lastEndif = $defContent.LastIndexOf('#endif')
     if ($lastEndif -ge 0) {
         $before = $defContent.Substring(0, $lastEndif)
         $after  = $defContent.Substring($lastEndif)
         $defContent = $before + $exportMacro + "`n`n" + $after
     }
-    Set-Content $qlDefines -Value $defContent -NoNewline
-    Write-Host "==> Added QL_EXPORT macro to qldefines.hpp"
+    [System.IO.File]::WriteAllText($qlDefinesCfg, $defContent)
+    Write-Host "==> Added QL_EXPORT macro to qldefines.hpp.cfg"
+    Write-Host "==> Last 20 lines of patched qldefines.hpp.cfg:"
+    Get-Content $qlDefinesCfg -Tail 20 | ForEach-Object { Write-Host "  $_" }
 }
 
 # Apply QL_EXPORT to classes with static const data members
@@ -131,8 +133,12 @@ $ndContent = $ndContent.Replace(
 $ndContent = $ndContent.Replace(
     'class MoroInverseCumulativeNormal {',
     'class QL_EXPORT MoroInverseCumulativeNormal {')
-Set-Content $normalDistHeader -Value $ndContent -NoNewline
+[System.IO.File]::WriteAllText($normalDistHeader, $ndContent)
 Write-Host "==> Patched normaldistribution.hpp with QL_EXPORT"
+Write-Host "==> Verifying QL_EXPORT in normaldistribution.hpp:"
+Select-String -Path $normalDistHeader -Pattern "QL_EXPORT" | ForEach-Object { Write-Host "  $_" }
+Write-Host "==> Verifying QL_EXPORT define in qldefines.hpp.cfg:"
+Select-String -Path $qlDefinesCfg -Pattern "QL_EXPORT" | ForEach-Object { Write-Host "  $_" }
 
 # ---------------------------------------------------------------------------
 # 4. Build QuantLib as shared library (DLL)
@@ -159,6 +165,15 @@ $cmakeArgs = @(
 Write-Host "  cmake $($cmakeArgs -join ' ')"
 cmake @cmakeArgs
 if ($LASTEXITCODE -ne 0) { throw "CMake configure failed with exit code $LASTEXITCODE" }
+
+# Verify the generated qldefines.hpp contains QL_EXPORT
+$generatedDefines = "$QLBuildDir\ql\qldefines.hpp"
+if (Test-Path $generatedDefines) {
+    Write-Host "==> Verifying QL_EXPORT in generated $generatedDefines:"
+    Select-String -Path $generatedDefines -Pattern "QL_EXPORT" | ForEach-Object { Write-Host "  $_" }
+} else {
+    Write-Warning "Generated qldefines.hpp not found at $generatedDefines"
+}
 
 Write-Host "==> Building QuantLib with $BuildJobs parallel jobs"
 cmake --build $QLBuildDir --config Release --parallel $BuildJobs
