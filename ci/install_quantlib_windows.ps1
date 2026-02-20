@@ -84,6 +84,50 @@ if ($qlContent.Contains($searchStr)) {
 }
 
 # ---------------------------------------------------------------------------
+# 3b. Patch QuantLib headers to export static const data members.
+#     CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS does not export static const class
+#     data members. We inject a QL_EXPORT macro and apply it to classes
+#     that have static const members referenced by inline functions.
+# ---------------------------------------------------------------------------
+Write-Host "==> Patching QuantLib headers for DLL data symbol export"
+
+# Add QL_EXPORT macro to qldefines.hpp
+$qlDefines = "$QLSrcDir\ql\qldefines.hpp"
+$defContent = Get-Content $qlDefines -Raw
+$exportMacro = @'
+
+// DLL export/import macro for classes with static data members
+#if defined(QL_COMPILATION) && defined(_MSC_VER)
+#  define QL_EXPORT __declspec(dllexport)
+#  define QL_IMPORT __declspec(dllimport)
+#elif defined(_MSC_VER)
+#  define QL_EXPORT __declspec(dllimport)
+#  define QL_IMPORT __declspec(dllimport)
+#else
+#  define QL_EXPORT
+#  define QL_IMPORT
+#endif
+'@
+if (-not $defContent.Contains('QL_EXPORT')) {
+    # Insert before the final #endif
+    $defContent = $defContent -replace '(#endif\s*)$', "$exportMacro`n`$1"
+    Set-Content $qlDefines -Value $defContent -NoNewline
+    Write-Host "==> Added QL_EXPORT macro to qldefines.hpp"
+}
+
+# Apply QL_EXPORT to classes with static const data members
+$normalDistHeader = "$QLSrcDir\ql\math\distributions\normaldistribution.hpp"
+$ndContent = Get-Content $normalDistHeader -Raw
+$ndContent = $ndContent.Replace(
+    'class InverseCumulativeNormal {',
+    'class QL_EXPORT InverseCumulativeNormal {')
+$ndContent = $ndContent.Replace(
+    'class MoroInverseCumulativeNormal {',
+    'class QL_EXPORT MoroInverseCumulativeNormal {')
+Set-Content $normalDistHeader -Value $ndContent -NoNewline
+Write-Host "==> Patched normaldistribution.hpp with QL_EXPORT"
+
+# ---------------------------------------------------------------------------
 # 4. Build QuantLib as shared library (DLL)
 # ---------------------------------------------------------------------------
 $QLInstallDir = "$DestDir\QuantLib-$QuantLibVersion"
@@ -112,114 +156,6 @@ if ($LASTEXITCODE -ne 0) { throw "CMake configure failed with exit code $LASTEXI
 Write-Host "==> Building QuantLib with $BuildJobs parallel jobs"
 cmake --build $QLBuildDir --config Release --parallel $BuildJobs
 if ($LASTEXITCODE -ne 0) { throw "CMake build failed with exit code $LASTEXITCODE" }
-
-# ---------------------------------------------------------------------------
-# 4b. Generate supplementary .def file for unexported data symbols.
-#     CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS misses static const data members.
-#     We scan the built .obj files with dumpbin, find SECT/External symbols
-#     of type "const" that are not already in the auto-generated .def, and
-#     append them with DATA annotation.
-# ---------------------------------------------------------------------------
-Write-Host "==> Generating supplementary .def for static const data symbols"
-
-# Locate dumpbin.exe from VS2022 installation
-$dumpbin = Get-ChildItem -Recurse "C:\Program Files\Microsoft Visual Studio\2022" `
-    -Filter "dumpbin.exe" -ErrorAction SilentlyContinue |
-    Where-Object { $_.FullName -match 'Hostx64\\x64' } |
-    Select-Object -First 1
-if (-not $dumpbin) {
-    # Fallback: search via vswhere
-    $vsPath = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" `
-        -latest -property installationPath 2>$null
-    if ($vsPath) {
-        $dumpbin = Get-ChildItem -Recurse $vsPath -Filter "dumpbin.exe" -ErrorAction SilentlyContinue |
-            Where-Object { $_.FullName -match 'Hostx64\\x64' } |
-            Select-Object -First 1
-    }
-}
-if ($dumpbin) {
-    Write-Host "==> Found dumpbin at $($dumpbin.FullName)"
-} else {
-    Write-Warning "dumpbin.exe not found - skipping data symbol export"
-}
-
-$autoDefFile = Get-ChildItem -Recurse $QLBuildDir -Filter "ql_library.dir" |
-    ForEach-Object { Get-ChildItem -Recurse $_.FullName -Filter "*.def" } |
-    Select-Object -First 1
-$objDir = Get-ChildItem -Recurse $QLBuildDir -Filter "ql_library.dir" |
-    Select-Object -First 1
-
-if ($objDir -and $dumpbin) {
-    # Get all EXTERNAL symbols from object files that are in a SECT (defined)
-    $objFiles = Get-ChildItem -Recurse $objDir.FullName -Filter "*.obj"
-    $allSymbols = @()
-    foreach ($obj in $objFiles) {
-        $dump = & $dumpbin.FullName /SYMBOLS $obj.FullName 2>$null
-        # Lines like: "00A SECT5  notype       External     | ?a1_@InverseCumulativeNormal@QuantLib@@0NB"
-        # Const data: decorated name ends with @0NB (static const double)
-        foreach ($line in $dump) {
-            if ($line -match 'SECT\S+\s+notype\s+External\s+\|\s+(\S+)') {
-                $sym = $Matches[1]
-                # Static const data members have @0NB or @0NA suffix in MSVC mangling
-                if ($sym -match '@0N[AB]$') {
-                    $allSymbols += $sym
-                }
-            }
-        }
-    }
-    $allSymbols = $allSymbols | Sort-Object -Unique
-
-    if ($allSymbols.Count -gt 0) {
-        # Read the auto-generated .def to see what's already exported
-        $alreadyExported = @{}
-        if ($autoDefFile) {
-            foreach ($line in Get-Content $autoDefFile.FullName) {
-                $trimmed = $line.Trim()
-                if ($trimmed -and -not $trimmed.StartsWith('EXPORTS') -and -not $trimmed.StartsWith('LIBRARY')) {
-                    $alreadyExported[$trimmed -replace '\s+DATA$',''] = $true
-                }
-            }
-        }
-
-        $missing = $allSymbols | Where-Object { -not $alreadyExported.ContainsKey($_) }
-        Write-Host "==> Found $($allSymbols.Count) const data symbols, $($missing.Count) not in auto .def"
-
-        if ($missing.Count -gt 0) {
-            # Append to auto-generated .def, or create a new one and add to linker flags
-            if ($autoDefFile) {
-                $defPath = $autoDefFile.FullName
-                $missing | ForEach-Object { Add-Content $defPath "    $_ DATA" }
-                Write-Host "==> Appended $($missing.Count) DATA exports to $defPath"
-            } else {
-                # Create supplementary .def and inject via CMAKE_SHARED_LINKER_FLAGS
-                $defPath = "$QLBuildDir\quantlib_extra_exports.def"
-                "EXPORTS" | Set-Content $defPath
-                $missing | ForEach-Object { Add-Content $defPath "    $_ DATA" }
-                Write-Host "==> Created supplementary .def at $defPath with $($missing.Count) symbols"
-
-                # Reconfigure with the extra .def
-                cmake $QLBuildDir "-DCMAKE_SHARED_LINKER_FLAGS=/DEF:$defPath"
-            }
-
-            # Force re-link by deleting the DLL. MSBuild skips linking
-            # if no .obj changed, even when the .def file was modified.
-            $builtDll = Get-ChildItem -Recurse "$QLBuildDir\ql\Release" -Filter "QuantLib*.dll" -ErrorAction SilentlyContinue
-            if ($builtDll) {
-                Remove-Item $builtDll.FullName -Force
-                Write-Host "==> Deleted $($builtDll.Name) to force re-link"
-            }
-
-            # Rebuild to pick up the new exports
-            Write-Host "==> Rebuilding QuantLib with supplementary exports"
-            cmake --build $QLBuildDir --config Release --parallel $BuildJobs
-            if ($LASTEXITCODE -ne 0) { throw "CMake rebuild with .def failed" }
-        }
-    } else {
-        Write-Host "==> No const data symbols found (this is unexpected)"
-    }
-} else {
-    Write-Warning "Could not find ql_library.dir - skipping data symbol export"
-}
 
 Write-Host "==> Installing QuantLib to $QLInstallDir"
 cmake --install $QLBuildDir --config Release
