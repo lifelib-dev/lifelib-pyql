@@ -109,8 +109,15 @@ $exportMacro = @'
 #endif
 '@
 if (-not $defContent.Contains('QL_EXPORT')) {
-    # Insert before the final #endif
-    $defContent = $defContent -replace '(#endif\s*)$', "$exportMacro`n`$1"
+    # Insert before the final #endif (the include guard).
+    # We use string manipulation instead of -replace to avoid PowerShell
+    # interpreting $1 backreferences as empty variables in double-quoted strings.
+    $lastEndif = $defContent.LastIndexOf('#endif')
+    if ($lastEndif -ge 0) {
+        $before = $defContent.Substring(0, $lastEndif)
+        $after  = $defContent.Substring($lastEndif)
+        $defContent = $before + $exportMacro + "`n`n" + $after
+    }
     Set-Content $qlDefines -Value $defContent -NoNewline
     Write-Host "==> Added QL_EXPORT macro to qldefines.hpp"
 }
