@@ -201,6 +201,14 @@ if ($objDir -and $dumpbin) {
                 cmake $QLBuildDir "-DCMAKE_SHARED_LINKER_FLAGS=/DEF:$defPath"
             }
 
+            # Force re-link by deleting the DLL. MSBuild skips linking
+            # if no .obj changed, even when the .def file was modified.
+            $builtDll = Get-ChildItem -Recurse "$QLBuildDir\ql\Release" -Filter "QuantLib*.dll" -ErrorAction SilentlyContinue
+            if ($builtDll) {
+                Remove-Item $builtDll.FullName -Force
+                Write-Host "==> Deleted $($builtDll.Name) to force re-link"
+            }
+
             # Rebuild to pick up the new exports
             Write-Host "==> Rebuilding QuantLib with supplementary exports"
             cmake --build $QLBuildDir --config Release --parallel $BuildJobs
