@@ -121,18 +121,40 @@ if ($LASTEXITCODE -ne 0) { throw "CMake build failed with exit code $LASTEXITCOD
 #     append them with DATA annotation.
 # ---------------------------------------------------------------------------
 Write-Host "==> Generating supplementary .def for static const data symbols"
+
+# Locate dumpbin.exe from VS2022 installation
+$dumpbin = Get-ChildItem -Recurse "C:\Program Files\Microsoft Visual Studio\2022" `
+    -Filter "dumpbin.exe" -ErrorAction SilentlyContinue |
+    Where-Object { $_.FullName -match 'Hostx64\\x64' } |
+    Select-Object -First 1
+if (-not $dumpbin) {
+    # Fallback: search via vswhere
+    $vsPath = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" `
+        -latest -property installationPath 2>$null
+    if ($vsPath) {
+        $dumpbin = Get-ChildItem -Recurse $vsPath -Filter "dumpbin.exe" -ErrorAction SilentlyContinue |
+            Where-Object { $_.FullName -match 'Hostx64\\x64' } |
+            Select-Object -First 1
+    }
+}
+if ($dumpbin) {
+    Write-Host "==> Found dumpbin at $($dumpbin.FullName)"
+} else {
+    Write-Warning "dumpbin.exe not found - skipping data symbol export"
+}
+
 $autoDefFile = Get-ChildItem -Recurse $QLBuildDir -Filter "ql_library.dir" |
     ForEach-Object { Get-ChildItem -Recurse $_.FullName -Filter "*.def" } |
     Select-Object -First 1
 $objDir = Get-ChildItem -Recurse $QLBuildDir -Filter "ql_library.dir" |
     Select-Object -First 1
 
-if ($objDir) {
+if ($objDir -and $dumpbin) {
     # Get all EXTERNAL symbols from object files that are in a SECT (defined)
     $objFiles = Get-ChildItem -Recurse $objDir.FullName -Filter "*.obj"
     $allSymbols = @()
     foreach ($obj in $objFiles) {
-        $dump = & dumpbin /SYMBOLS $obj.FullName 2>$null
+        $dump = & $dumpbin.FullName /SYMBOLS $obj.FullName 2>$null
         # Lines like: "00A SECT5  notype       External     | ?a1_@InverseCumulativeNormal@QuantLib@@0NB"
         # Const data: decorated name ends with @0NB (static const double)
         foreach ($line in $dump) {
