@@ -135,8 +135,17 @@ $ndContent = $ndContent.Replace(
     'class QL_EXPORT MoroInverseCumulativeNormal {')
 [System.IO.File]::WriteAllText($normalDistHeader, $ndContent)
 Write-Host "==> Patched normaldistribution.hpp with QL_EXPORT"
-Write-Host "==> Verifying QL_EXPORT in normaldistribution.hpp:"
-Select-String -Path $normalDistHeader -Pattern "QL_EXPORT" | ForEach-Object { Write-Host "  $_" }
+
+# Apply QL_EXPORT to LinearTsrPricer (static const defaultLowerBound/defaultUpperBound
+# referenced by inline Settings constructor)
+$linearTsrHeader = "$QLSrcDir\ql\cashflows\lineartsrpricer.hpp"
+$ltContent = Get-Content $linearTsrHeader -Raw
+$ltContent = $ltContent.Replace(
+    'class LinearTsrPricer : public CmsCouponPricer, public MeanRevertingPricer {',
+    'class QL_EXPORT LinearTsrPricer : public CmsCouponPricer, public MeanRevertingPricer {')
+[System.IO.File]::WriteAllText($linearTsrHeader, $ltContent)
+Write-Host "==> Patched lineartsrpricer.hpp with QL_EXPORT"
+
 Write-Host "==> Verifying QL_EXPORT define in qldefines.hpp.cfg:"
 Select-String -Path $qlDefinesCfg -Pattern "QL_EXPORT" | ForEach-Object { Write-Host "  $_" }
 
