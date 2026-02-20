@@ -167,12 +167,12 @@ cmake @cmakeArgs
 if ($LASTEXITCODE -ne 0) { throw "CMake configure failed with exit code $LASTEXITCODE" }
 
 # Verify the generated qldefines.hpp contains QL_EXPORT
-$generatedDefines = "$QLBuildDir\ql\qldefines.hpp"
+$generatedDefines = "${QLBuildDir}\ql\qldefines.hpp"
 if (Test-Path $generatedDefines) {
-    Write-Host "==> Verifying QL_EXPORT in generated $generatedDefines:"
+    Write-Host "==> Verifying QL_EXPORT in generated ${generatedDefines}:"
     Select-String -Path $generatedDefines -Pattern "QL_EXPORT" | ForEach-Object { Write-Host "  $_" }
 } else {
-    Write-Warning "Generated qldefines.hpp not found at $generatedDefines"
+    Write-Warning "Generated qldefines.hpp not found at ${generatedDefines}"
 }
 
 Write-Host "==> Building QuantLib with $BuildJobs parallel jobs"
