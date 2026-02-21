@@ -142,17 +142,10 @@ $ndContent = $ndContent.Replace(
 [System.IO.File]::WriteAllText($normalDistHeader, $ndContent)
 Write-Host "==> Patched normaldistribution.hpp with QL_EXPORT"
 
-# Apply QL_IMPORT_ONLY to LinearTsrPricer (static const defaultLowerBound/defaultUpperBound
-# referenced by inline Settings constructor). These symbols ARE exported by
-# CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS via .def file, so class-level dllexport
-# would conflict (C2487). We only need dllimport on the consumer side.
-$linearTsrHeader = "$QLSrcDir\ql\cashflows\lineartsrpricer.hpp"
-$ltContent = Get-Content $linearTsrHeader -Raw
-$ltContent = $ltContent.Replace(
-    'class LinearTsrPricer : public CmsCouponPricer, public MeanRevertingPricer {',
-    'class QL_IMPORT_ONLY LinearTsrPricer : public CmsCouponPricer, public MeanRevertingPricer {')
-[System.IO.File]::WriteAllText($linearTsrHeader, $ltContent)
-Write-Host "==> Patched lineartsrpricer.hpp with QL_IMPORT_ONLY"
+# NOTE: LinearTsrPricer::defaultLowerBound/defaultUpperBound are exported by
+# CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS via .def file, so they should be available
+# through the import library without needing __declspec annotations.
+# Class-level dllexport/dllimport both cause C2487 with static const members.
 
 Write-Host "==> Verifying QL_EXPORT define in qldefines.hpp.cfg:"
 Select-String -Path $qlDefinesCfg -Pattern "QL_EXPORT" | ForEach-Object { Write-Host "  $_" }
