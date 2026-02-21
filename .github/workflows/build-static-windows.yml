@@ -1,0 +1,45 @@
+name: Build Windows Wheels (Static QuantLib)
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: build-static-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build_windows:
+    name: Windows wheels (static)
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install cibuildwheel and delvewheel
+        run: pip install cibuildwheel==2.22.0 delvewheel
+
+      - name: Build wheels
+        run: cibuildwheel --output-dir wheelhouse
+        env:
+          # Override pyproject.toml cibuildwheel settings to use the
+          # static (pre-built) QuantLib instead of the DLL build.
+          CIBW_BEFORE_ALL_WINDOWS: >-
+            powershell -ExecutionPolicy Bypass
+            -File {project}/ci/install_quantlib_windows_static.ps1
+          CIBW_ENVIRONMENT_WINDOWS: >-
+            QUANTLIB_INCLUDE_DIR=C:/quantlib-deps/QuantLib-1.41
+            BOOST_INCLUDE_DIR=C:/quantlib-deps/boost_1_78_0
+            QUANTLIB_LIBRARY_DIR=C:/quantlib-deps/QuantLib-1.41/lib
+            QL_LIBRARY_NAME=QuantLib-x64-mt
+          CIBW_REPAIR_WHEEL_COMMAND_WINDOWS: >-
+            delvewheel repair
+            --add-path C:/quantlib-deps/QuantLib-1.41/lib
+            -w {dest_dir} {wheel}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wheels-windows-static
+          path: wheelhouse/*.whl
