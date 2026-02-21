@@ -60,8 +60,11 @@ elif sys.platform == 'win32':
         '.',
         SUPPORT_CODE_INCLUDE
     ]
+    # _ql_bin: sibling bin/ dir where DLL builds place the .dll file
+    _ql_bin = os.path.join(os.path.dirname(_ql_lib), 'bin')
     LIBRARY_DIRS = [
         _ql_lib,
+        _ql_bin,
         '.',
         r'.\dll',
     ]
