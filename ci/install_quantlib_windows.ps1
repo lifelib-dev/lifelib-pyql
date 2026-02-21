@@ -11,7 +11,7 @@ $ErrorActionPreference = "Stop"
 $QuantLibVersion = if ($env:QUANTLIB_VERSION) { $env:QUANTLIB_VERSION } else { "1.41" }
 $BoostVersion    = if ($env:BOOST_VERSION)    { $env:BOOST_VERSION }    else { "1.87.0" }
 $BoostVersionU   = $BoostVersion -replace '\.', '_'
-$DestDir         = "C:\quantlib-deps"
+$DestDir         = if ($env:QUANTLIB_DEPS_DIR) { $env:QUANTLIB_DEPS_DIR } else { "C:\quantlib-deps" }
 $BuildJobs       = if ($env:BUILD_JOBS) { $env:BUILD_JOBS } else {
     (Get-CimInstance Win32_Processor).NumberOfLogicalProcessors
 }
