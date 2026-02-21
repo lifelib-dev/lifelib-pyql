@@ -98,16 +98,22 @@ $qlDefinesCfg = "$QLSrcDir\ql\qldefines.hpp.cfg"
 $defContent = Get-Content $qlDefinesCfg -Raw
 $exportMacro = @'
 
-// DLL export/import macro for classes with static data members
+// DLL export/import macros for classes with static data members.
+// QL_EXPORT: dllexport when building QuantLib, dllimport when consuming.
+//   Use on classes whose static const members are NOT exported by
+//   CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS (e.g. private static const).
+// QL_IMPORT_ONLY: empty when building QuantLib, dllimport when consuming.
+//   Use on classes whose members ARE already exported via .def file;
+//   class-level dllexport would conflict (C2487).
 #if defined(QL_COMPILATION) && defined(_MSC_VER)
 #  define QL_EXPORT __declspec(dllexport)
-#  define QL_IMPORT __declspec(dllimport)
+#  define QL_IMPORT_ONLY
 #elif defined(_MSC_VER)
 #  define QL_EXPORT __declspec(dllimport)
-#  define QL_IMPORT __declspec(dllimport)
+#  define QL_IMPORT_ONLY __declspec(dllimport)
 #else
 #  define QL_EXPORT
-#  define QL_IMPORT
+#  define QL_IMPORT_ONLY
 #endif
 '@
 if (-not $defContent.Contains('QL_EXPORT')) {
@@ -136,15 +142,17 @@ $ndContent = $ndContent.Replace(
 [System.IO.File]::WriteAllText($normalDistHeader, $ndContent)
 Write-Host "==> Patched normaldistribution.hpp with QL_EXPORT"
 
-# Apply QL_EXPORT to LinearTsrPricer (static const defaultLowerBound/defaultUpperBound
-# referenced by inline Settings constructor)
+# Apply QL_IMPORT_ONLY to LinearTsrPricer (static const defaultLowerBound/defaultUpperBound
+# referenced by inline Settings constructor). These symbols ARE exported by
+# CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS via .def file, so class-level dllexport
+# would conflict (C2487). We only need dllimport on the consumer side.
 $linearTsrHeader = "$QLSrcDir\ql\cashflows\lineartsrpricer.hpp"
 $ltContent = Get-Content $linearTsrHeader -Raw
 $ltContent = $ltContent.Replace(
     'class LinearTsrPricer : public CmsCouponPricer, public MeanRevertingPricer {',
-    'class QL_EXPORT LinearTsrPricer : public CmsCouponPricer, public MeanRevertingPricer {')
+    'class QL_IMPORT_ONLY LinearTsrPricer : public CmsCouponPricer, public MeanRevertingPricer {')
 [System.IO.File]::WriteAllText($linearTsrHeader, $ltContent)
-Write-Host "==> Patched lineartsrpricer.hpp with QL_EXPORT"
+Write-Host "==> Patched lineartsrpricer.hpp with QL_IMPORT_ONLY"
 
 Write-Host "==> Verifying QL_EXPORT define in qldefines.hpp.cfg:"
 Select-String -Path $qlDefinesCfg -Pattern "QL_EXPORT" | ForEach-Object { Write-Host "  $_" }
