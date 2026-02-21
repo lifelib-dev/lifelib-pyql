@@ -142,10 +142,18 @@ $ndContent = $ndContent.Replace(
 [System.IO.File]::WriteAllText($normalDistHeader, $ndContent)
 Write-Host "==> Patched normaldistribution.hpp with QL_EXPORT"
 
-# NOTE: LinearTsrPricer::defaultLowerBound/defaultUpperBound are exported by
-# CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS via .def file, so they should be available
-# through the import library without needing __declspec annotations.
-# Class-level dllexport/dllimport both cause C2487 with static const members.
+# Patch LinearTsrPricer: annotate individual static const members with QL_EXPORT.
+# Class-level __declspec causes C2487, but member-level works fine.
+# These are private static const members that CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS skips.
+$linearTsrHeader = "$QLSrcDir\ql\cashflows\lineartsrpricer.hpp"
+$ltContent = Get-Content $linearTsrHeader -Raw
+# Replace the comma-separated declaration with two QL_EXPORT declarations.
+# Use regex to handle both LF and CRLF line endings.
+$ltContent = $ltContent -replace `
+    'static const Real defaultLowerBound,\s+defaultUpperBound;', `
+    'QL_EXPORT static const Real defaultLowerBound; QL_EXPORT static const Real defaultUpperBound;'
+[System.IO.File]::WriteAllText($linearTsrHeader, $ltContent)
+Write-Host "==> Patched lineartsrpricer.hpp: QL_EXPORT on static const members"
 
 Write-Host "==> Verifying QL_EXPORT define in qldefines.hpp.cfg:"
 Select-String -Path $qlDefinesCfg -Pattern "QL_EXPORT" | ForEach-Object { Write-Host "  $_" }
