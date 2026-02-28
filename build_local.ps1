@@ -44,6 +44,18 @@ Write-Host "  QUANTLIB_LIBRARY_DIR = $env:QUANTLIB_LIBRARY_DIR"
 Write-Host "  QL_LIBRARY_NAME      = $env:QL_LIBRARY_NAME"
 
 # ---------------------------------------------------------------------------
-# 3. Build
+# 3. Copy QuantLib DLL into the package so it can be found at runtime
+# ---------------------------------------------------------------------------
+$DllSrc = "$DepsDir\QuantLib-$QLVersion\bin\QuantLib-x64-mt.dll"
+$DllDst = "$RepoRoot\lifelib_pyql\QuantLib-x64-mt.dll"
+if (Test-Path $DllSrc) {
+    Write-Host "==> Copying QuantLib DLL to lifelib_pyql/"
+    Copy-Item $DllSrc $DllDst -Force
+} else {
+    Write-Warning "QuantLib DLL not found at $DllSrc — runtime loading may fail"
+}
+
+# ---------------------------------------------------------------------------
+# 4. Build
 # ---------------------------------------------------------------------------
 & "$RepoRoot\make.ps1" build
