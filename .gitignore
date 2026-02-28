@@ -4,6 +4,7 @@ docs/build
 .ropeproject/*
 quantlib.egg-info/*
 QuantLib.dll
+quantlib-deps/
 symbol_win*.def
 *.cpp
 *.so

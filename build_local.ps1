@@ -1,20 +1,28 @@
 # Build lifelib-pyql locally against QuantLib DLL.
-# Run this after ci/install_quantlib_windows.ps1 has installed QuantLib.
+# Downloads QuantLib dependencies and builds the extensions.
 #
 # Usage:
-#   powershell -ExecutionPolicy Bypass -File build_local.ps1
-#
-# Override QUANTLIB_DEPS_DIR if you installed to a custom location:
-#   $env:QUANTLIB_DEPS_DIR = "C:\Users\fumito\quantlib-deps"
 #   powershell -ExecutionPolicy Bypass -File build_local.ps1
 
 $ErrorActionPreference = "Stop"
 
-$DepsDir = if ($env:QUANTLIB_DEPS_DIR) { $env:QUANTLIB_DEPS_DIR } else { "C:\quantlib-deps" }
+$RepoRoot = Split-Path -Parent $MyInvocation.MyCommand.Definition
+$DepsDir = Join-Path $RepoRoot "quantlib-deps"
+
 $QLVersion = if ($env:QUANTLIB_VERSION) { $env:QUANTLIB_VERSION } else { "1.41" }
 $BoostVersion = if ($env:BOOST_VERSION) { $env:BOOST_VERSION } else { "1.87.0" }
 $BoostVersionU = $BoostVersion -replace '\.', '_'
 
+# ---------------------------------------------------------------------------
+# 1. Download and extract QuantLib dependencies
+# ---------------------------------------------------------------------------
+Write-Host "==> Installing QuantLib dependencies to $DepsDir"
+$env:QUANTLIB_DEPS_DIR = $DepsDir
+& "$RepoRoot\ci\install_quantlib_windows.ps1"
+
+# ---------------------------------------------------------------------------
+# 2. Set environment variables for the build
+# ---------------------------------------------------------------------------
 $env:QUANTLIB_INCLUDE_DIR = "$DepsDir\QuantLib-$QLVersion\include"
 $env:BOOST_INCLUDE_DIR    = "$DepsDir\boost_$BoostVersionU"
 $env:QUANTLIB_LIBRARY_DIR = "$DepsDir\QuantLib-$QLVersion\lib"
@@ -26,5 +34,7 @@ Write-Host "  BOOST_INCLUDE_DIR    = $env:BOOST_INCLUDE_DIR"
 Write-Host "  QUANTLIB_LIBRARY_DIR = $env:QUANTLIB_LIBRARY_DIR"
 Write-Host "  QL_LIBRARY_NAME      = $env:QL_LIBRARY_NAME"
 
-# python setup.py build_ext --inplace -j 8
-./make build
+# ---------------------------------------------------------------------------
+# 3. Build
+# ---------------------------------------------------------------------------
+& "$RepoRoot\make.ps1" build
