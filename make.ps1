@@ -31,7 +31,7 @@ function Invoke-Uninstall {
 function Invoke-Tests {
     Invoke-Build
     if ($LASTEXITCODE -eq 0) {
-        python -m unittest discover -v
+        python -m unittest discover -s ./test -v
     }
 }
 
