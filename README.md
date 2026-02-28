@@ -32,6 +32,32 @@ schedules[0]       # returns a single Schedule object
 schedules[0:1]     # returns a new Schedules slice
 ```
 
+- **`FixedRateBonds`** -- A vectorized collection of fixed-rate bonds stored as parallel NumPy arrays. It bulk-stores bond parameters and reconstructs individual QuantLib `FixedRateBond` objects on demand via indexing.
+
+```python
+from lifelib_pyql.portfolio.api import Schedules, FixedRateBonds
+from lifelib_pyql.time.daycounters.actual_actual import ActualActual
+from lifelib_pyql.time.businessdayconvention import Following
+import numpy as np
+
+bonds = FixedRateBonds(
+    settlement_days=np.array([3, 3, 3]),
+    face_amounts=np.array([100.0, 100.0, 100.0]),
+    schedules=schedules,                        # a Schedules object
+    coupons=np.array([0.05, 0.04, 0.06]),       # one coupon rate per bond
+    accrual_day_counter=ActualActual(ActualActual.ISMA),
+    payment_convention=Following,
+    redemptions=100.0,                          # scalar broadcasts to all
+    issue_dates=np.array(['2024-01-15', '2024-03-01', '2024-06-01'],
+                         dtype='datetime64[D]'),
+)
+
+bonds[0]           # returns a single FixedRateBond object
+bonds[0:2]         # returns a new FixedRateBonds slice
+len(bonds)         # number of bonds in the collection
+bonds.coupons      # 1D or 2D array of coupon rates
+```
+
 ## Prerequisites
 
 * [QuantLib](http://www.quantlib.org) 1.41 or higher (with [Boost](https://www.boost.org/) 1.78.0+)
