@@ -3,6 +3,11 @@
 #
 # Usage:
 #   powershell -ExecutionPolicy Bypass -File build_local.ps1
+#   powershell -ExecutionPolicy Bypass -File build_local.ps1 -SkipDeps
+
+param(
+    [switch]$SkipDeps = $false
+)
 
 $ErrorActionPreference = "Stop"
 
@@ -16,9 +21,13 @@ $BoostVersionU = $BoostVersion -replace '\.', '_'
 # ---------------------------------------------------------------------------
 # 1. Download and extract QuantLib dependencies
 # ---------------------------------------------------------------------------
-Write-Host "==> Installing QuantLib dependencies to $DepsDir"
-$env:QUANTLIB_DEPS_DIR = $DepsDir
-& "$RepoRoot\ci\install_quantlib_windows.ps1"
+if (-not $SkipDeps) {
+    Write-Host "==> Installing QuantLib dependencies to $DepsDir"
+    $env:QUANTLIB_DEPS_DIR = $DepsDir
+    & "$RepoRoot\ci\install_quantlib_windows.ps1"
+} else {
+    Write-Host "==> Skipping QuantLib dependency download (-SkipDeps)"
+}
 
 # ---------------------------------------------------------------------------
 # 2. Set environment variables for the build
