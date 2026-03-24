@@ -5,6 +5,7 @@ from distutils import log
 import glob
 import os
 import platform
+import re
 import sys
 
 from Cython.Distutils import build_ext
@@ -22,6 +23,15 @@ except ImportError:
     HAS_NUMPY = False
 
 DEBUG = False
+
+def _get_version():
+    """Read __version__ from __init__.py without importing the package."""
+    init_path = os.path.join(os.path.dirname(__file__) or '.', 'lifelib_pyql', '__init__.py')
+    with open(init_path) as f:
+        match = re.search(r"^__version__\s*=\s*['\"]([^'\"]+)['\"]", f.read(), re.MULTILINE)
+    if not match:
+        raise RuntimeError("Cannot find __version__ in lifelib_pyql/__init__.py")
+    return match.group(1)
 
 SUPPORT_CODE_INCLUDE = './cpp_layer'
 
@@ -238,7 +248,7 @@ class pyql_build_ext(build_ext):
 if __name__ == '__main__':
     setup(
         name = 'lifelib-pyql',
-        version = __import__('lifelib_pyql').__version__,
+        version = _get_version(),
         author = 'Didrik Pinte,Patrick Henaff',
         license = 'BSD',
         packages = find_packages(),
