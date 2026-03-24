@@ -18,3 +18,13 @@ symbol_win*.def
 *.*~
 *.*#
 *.ipynb_checkpoints
+
+# Template-generated yield curve files
+lifelib_pyql/termstructures/yields/discount_curve.pxd
+lifelib_pyql/termstructures/yields/discount_curve.pyx
+lifelib_pyql/termstructures/yields/forward_curve.pxd
+lifelib_pyql/termstructures/yields/forward_curve.pyx
+lifelib_pyql/termstructures/yields/piecewise_yield_curve.pxd
+lifelib_pyql/termstructures/yields/piecewise_yield_curve.pyx
+lifelib_pyql/termstructures/yields/zero_curve.pxd
+lifelib_pyql/termstructures/yields/zero_curve.pyx
