@@ -9,7 +9,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "lifelib-pyql"
-version = "0.0.1"
+dynamic = ["version"]
 description = "QuantLib Cython wrappers"
 readme = "README.md"
 license = { file = "LICENSE.txt" }
@@ -23,6 +23,9 @@ dependencies = [
     "pandas",
     "six"
 ]
+
+[tool.setuptools.dynamic]
+version = {attr = "lifelib_pyql.__version__"}
 
 [tool.setuptools]
 include-package-data = true
