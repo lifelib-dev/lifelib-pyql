@@ -117,11 +117,27 @@ jobs:
           path: wheelhouse/*.whl
 
   # ==========================================================================
-  # Publish — only on release events, calls the reusable publish workflow
+  # Publish — only on release events, runs directly (not via reusable workflow)
+  # to allow OIDC trusted publishing with id-token: write permissions.
   # ==========================================================================
   publish:
     name: Publish to PyPI
     if: github.event_name == 'release'
     needs: [build_sdist, build_linux, build_macos, build_windows]
-    uses: ./.github/workflows/publish.yml
-    secrets: inherit
+    runs-on: ubuntu-24.04
+    environment: pypi
+    permissions:
+      id-token: write   # Required for PyPI trusted publishing
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+
+      - name: List dist contents
+        run: ls -lR dist/
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
