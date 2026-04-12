@@ -34,8 +34,6 @@ exclude_patterns = ['_build']
 source_suffix = '.rst'
 master_doc = 'index'
 
-html_theme = 'alabaster'
-html_theme_options = {
-    'font_size': 11,
-}
+html_theme = 'pydata_sphinx_theme'
+html_theme_options = {}
 html_static_path = []
