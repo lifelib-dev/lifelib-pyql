@@ -26,9 +26,10 @@ if sys.platform == 'win32':
         except OSError:
             pass
 
-    # Fallback: add package directory to PATH
+    # Fallback: register the package directory as a DLL search path
     if not os.path.isdir(_libs_dir) and not os.path.isfile(_preload_path):
-        os.environ["PATH"] = _pkg_dir + ";" + os.environ.get("PATH", "")
+        if hasattr(os, 'add_dll_directory'):
+            os.add_dll_directory(_pkg_dir)
 
 elif sys.platform == "linux":
     import ctypes
