@@ -37,15 +37,18 @@ cdef class FixedRateBonds:
 
     Parameters
     ----------
-    settlement_days : ndarray[int]
-        Settlement days per bond, shape (N,).
-    face_amounts : ndarray[float]
-        Face amounts per bond, shape (N,).
+    settlement_days : int or ndarray[int]
+        Settlement days. Scalar broadcasts to all bonds; array must have
+        shape (N,).
+    face_amounts : float or ndarray[float]
+        Face amounts. Scalar broadcasts to all bonds; array must have
+        shape (N,).
     schedules : Schedules
         Payment schedules for all bonds.
-    coupons : ndarray[float]
-        Coupon rates. Shape (N,) for a single coupon per bond,
-        or (N, M) for up to M coupons per bond (NaN-padded).
+    coupons : float or ndarray[float]
+        Coupon rates. Scalar broadcasts to all bonds. Shape (N,) for a
+        single coupon per bond, or (N, M) for up to M coupons per bond
+        (NaN-padded).
     accrual_day_counter : DayCounter
         Day counter for accrual (shared across all bonds).
     payment_convention : BusinessDayConvention, optional
@@ -65,30 +68,21 @@ cdef class FixedRateBonds:
 
         cdef Py_ssize_t n = len(schedules)
 
-        cdef cnp.ndarray sd_arr = np.asarray(settlement_days, dtype=np.int64)
-        cdef cnp.ndarray fa_arr = np.asarray(face_amounts, dtype=np.float64)
-        cdef cnp.ndarray cpn_arr = np.asarray(coupons, dtype=np.float64)
+        cdef cnp.ndarray sd_arr = np.broadcast_to(
+            np.asarray(settlement_days, dtype=np.int64), (n,)).copy()
+        cdef cnp.ndarray fa_arr = np.broadcast_to(
+            np.asarray(face_amounts, dtype=np.float64), (n,)).copy()
 
-        if sd_arr.shape[0] != n:
-            raise ValueError(
-                f"settlement_days length {sd_arr.shape[0]} != "
-                f"schedules length {n}")
-        if fa_arr.shape[0] != n:
-            raise ValueError(
-                f"face_amounts length {fa_arr.shape[0]} != "
-                f"schedules length {n}")
-        if cpn_arr.ndim == 1:
-            if cpn_arr.shape[0] != n:
-                raise ValueError(
-                    f"coupons length {cpn_arr.shape[0]} != "
-                    f"schedules length {n}")
+        cdef cnp.ndarray cpn_arr = np.asarray(coupons, dtype=np.float64)
+        if cpn_arr.ndim < 2:
+            cpn_arr = np.broadcast_to(cpn_arr, (n,)).copy()
         elif cpn_arr.ndim == 2:
             if cpn_arr.shape[0] != n:
                 raise ValueError(
                     f"coupons rows {cpn_arr.shape[0]} != "
                     f"schedules length {n}")
         else:
-            raise ValueError("coupons must be 1D or 2D array")
+            raise ValueError("coupons must be scalar, 1D, or 2D array")
 
         # Handle redemptions: scalar broadcast or array
         cdef cnp.ndarray red_arr = np.broadcast_to(

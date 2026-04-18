@@ -49,13 +49,13 @@ schedules = Schedules(
 )
 
 bonds = FixedRateBonds(
-    settlement_days=settlement_days,
+    settlement_days=0,
     face_amounts=face_amounts,
     schedules=schedules,
     coupons=coupons,
     accrual_day_counter=ActualActual(ActualActual.ISMA),
     payment_convention=Following,
-    redemptions=100.0,
+    redemptions=face_amounts,
     issue_dates=effective_dates,
 )
 
